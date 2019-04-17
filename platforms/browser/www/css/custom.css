@@ -1,3 +1,16 @@
+/* Sales Tracker  - Start */
+.app-version{
+    /* position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%); */
+    color: #F0F0F0;
+}
+.app-background{
+    background: url(../img/background.jpg);
+    background-size: cover;
+}
+/* Sales Tracker  - End */
 .welcome-screen-toolbar{
     background:transparent !important;
 }

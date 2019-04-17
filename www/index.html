@@ -148,54 +148,56 @@
     </div>
     <div class="view view-main view-init ios-edges" data-url="/">
       <div class="page">
-        <div class="page-content">
+        <div class="page-content app-background">
           <div class="block login-screen-section">
             <div class="block padding no-margin text-align-center">
               <img width="120" src="img/logo.png" />
             </div>
             <div class="block no-margin-top text-align-center">
-              <form class="list show-hairlines-ios no-hairlines text-align-left no-margin" id="login-form">
-                <ul class="no-hairlines-between">
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <div class="item-title item-floating-label">*Mobile Or Email</div>
-                      <div class="item-input-wrap">
-                        <input type="text" name="mobile_email" autocomplete="mobile_email" required validate>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <div class="item-title item-floating-label">*PIN</div>
-                      <div class="item-input-wrap">
-                        <input class="input-end" type="password" name="pin" autocomplete="pin" required validate>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <a href="#" onclick="resetPIN()">Forgot Password?</a>
-                    </div>
-                  </li>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <a href="#" onclick="login()" class="font-16 button button-fill button-round">LOG IN</a>
-                    </div>
-                  </li>
-                  <!-- <li class="item-content item-input">
-                        <div class="item-inner text-align-center">
-                          Don't have an account? <br /><a href="/register/">Sign Up</a>
+              <div class="card no-box-shadow">
+                <div class="card-content card-content-padding">
+                  <form class="list show-hairlines-ios no-hairlines text-align-left no-margin" id="login-form">
+                    <ul class="no-hairlines-between">
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-floating-label">Email</div>
+                          <div class="item-input-wrap">
+                            <input type="email" name="email" required validate>
+                          </div>
                         </div>
-                      </li> -->
-                </ul>
-              </form>
-              <div class="block text-align-center">
-                <div class="item-inner text-align-center font-16">
-                  Don't have an account? <br /><a href="/register/">Sign Up</a>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-floating-label">Password</div>
+                          <div class="item-input-wrap">
+                            <input class="input-end" type="password" name="password" required validate>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <a href="#" onclick="login()" class="font-16 button button-fill button-round margin-top">LOG
+                            IN</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </form>
+                  <div class="block text-align-center margin">
+                    <div class="item-inner text-align-center font-16">
+                      <a href="#" onclick="resetPassword()">Forgot Password?</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="block text-align-center margin color-white">&copy; Techstreet Solutions Pvt. Ltd.</div>
+            <div class="block text-align-center no-margin">
+              <div class="chip chip-outline color-white">
+                <div class="chip-label">Version 1.0.0</div>
+              </div>
+            </div>
           </div>
+          <!-- <div class="app-version">Version 1.0.0 <br/> &copy; Techstreet Solutions Pvt. Ltd.</div> -->
         </div>
       </div>
     </div>
