@@ -11,66 +11,6 @@
     background-size: cover;
 }
 /* Sales Tracker  - End */
-.welcome-screen-toolbar{
-    background:transparent !important;
-}
-.tabbar-label{
-    font-size: 11px;
-}
-.dashboard-menu-disabled{
-    border: 1px solid #ccc;
-    background: #F0F0F0;
-}
-.dashboard-menu-disabled img{
-    height: 42px;
-    padding-top: 12px;
-}
-.dashboard-menu-disabled p{
-    margin-top: 12px;
-    margin-bottom: 0;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding-bottom: 12px;
-}
-.dashboard-menu{
-    /* border: 1px solid #ccc; */
-    box-shadow: 0px 0px 5px 0px #f88980;
-}
-.dashboard-menu img{
-    height: 42px;
-    padding-top: 12px;
-}
-.dashboard-menu p{
-    margin-top: 12px;
-    margin-bottom: 0;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding-bottom: 12px;
-}
-.ss-80{
-    width: 80% !important;
-    padding-left: 10px;
-    padding-top: 10px;
-}
-.banner-image{
-    width:100%;
-    border-radius: 6px;
-}
-.welcome-image{
-    width:100%;
-    object-fit: fill;
-}
-.md .tabbar a.link, .md .tabbar-labels a.link, .md .tabbar a.tab-link, .md .tabbar-labels a.tab-link{
-    text-transform: none !important;
-}
-.tab-link-active i, .tab-link-active span{
-    color: #f44336 !important;
-}
-/* .md .tabbar .tab-link-highlight, .md .tabbar-labels .tab-link-highlight{
-    background: #000000;
-} */
 .preloader-block{
     display: block !important;
 }
@@ -97,6 +37,9 @@
 }
 .color-red{
     color: #f44336 !important;
+}
+.color-green{
+    color: #4caf50 !important;
 }
 .timeline-item-divider{
     background-color: #f44336 !important;

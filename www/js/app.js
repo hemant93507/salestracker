@@ -41,12 +41,7 @@ var mainView = app.views.create('.view-main', {
   }
 });
 
-var BaseURL = 'http://main.knowfakes.com/webservice/json_knowfakes.php';
-var id = 'M$H$';
-var subid = 'M$H$1';
-var appid = 'WEB1';
-var user_auth = '07EEAD0EF1DF68F73605351AA4B1346C';
-var ip = '103.61.255.34';
+var BaseURL = 'http://brandstudioz.co.in/sales-tracker/public/api/';
 
 function statusMessage(status) {
   if (status == 0) {
@@ -74,24 +69,18 @@ function empty(val) {
 
 function login() {
   if ($$('#login-form')[0].checkValidity()) {
-    var mobile_email = $$('#login-form input[name=mobile_email]').val();
-    var pin = $$('#login-form input[name=pin]').val();
+    var username = $$('#login-form input[name=email]').val();
+    var password = $$('#login-form input[name=password]').val();
     var obj = {
-      id: id,
-      subid: subid,
-      appid: appid,
-      user_auth: user_auth,
-      ip: ip,
-      type: "login",
-      mobile_email: mobile_email,
-      pin: pin,
-      user_type: "Individual"
+      username: username,
+      password: password,
     };
     app.request({
-      url: BaseURL,
+      url: BaseURL + 'login',
       method: 'POST',
       dataType: 'json',
-      data: JSON.stringify(obj),
+      data: obj,
+      contentType: 'application/json',
       beforeSend: function (xhr) {
         var spinnerOptions = { dimBackground: true };
         SpinnerPlugin.activityStart('Loading...', spinnerOptions);
@@ -101,15 +90,14 @@ function login() {
       },
       success: function (data, status, xhr) {
         console.log(data);
-        if (data.resCode == '3100') {
-          localStorage.setItem("KnowFakesMobileEmail", mobile_email);
+        if (data.ErrorCode == '0') {
           localStorage.setItem("User", JSON.stringify(data));
           app.views.main.router.navigate({
             name: 'dashboard',
           });
         }
         else {
-          window.plugins.toast.show(data.resMsg, 'long', 'bottom');
+          window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
         }
       },
       complete: function (xhr, status) {
@@ -119,27 +107,16 @@ function login() {
   }
 }
 
-function testMe(){
+function testMe() {
   console.log('test me is running');
-}
-
-function closeWelcomescreen(){
-  $$('.login-screen-section').show();
-  $$('.welcome-screen-section').hide();
-  $$('.welcome-screen-toolbar').hide();
-}
-
-function nextWelcomescreen(){
-  var welcomeSwiper = app.swiper.get('.welcome-swiper-container');
-  welcomeSwiper.slideNext();
 }
 
 function shareApp() {
   if (app.device.android) {
-    var url = 'https://play.google.com/store/apps/details?id=com.marstimithya.knowfakes';
+    var url = 'https://play.google.com/store/apps/details?id=com.techstreet.salestracker';
   }
   if (app.device.ios) {
-    var url = 'https://play.google.com/store/apps/details?id=com.marstimithya.knowfakes';
+    var url = 'https://play.google.com/store/apps/details?id=com.techstreet.salestracker';
   }
   var options = {
     url: url,
@@ -150,30 +127,23 @@ function shareApp() {
 }
 
 function logout() {
-  localStorage.removeItem("KnowFakesMobileEmail");
   localStorage.removeItem("User");
   app.views.main.router.navigate('/');
 }
 
-function resetPIN(){
-  app.dialog.prompt('Please Enter Mobile Number or Email ID', 'Forgot PIN', function (mobile_email) {
-    if(mobile_email != ''){
+function resetPassword() {
+  app.dialog.prompt('Please Enter Your Email ID', 'Forgot Password', function (email) {
+    if (email != '') {
       var obj = {
-        id: id,
-        subid: subid,
-        appid: appid,
-        user_auth: user_auth,
-        ip: ip,
-        type: "reset_pin",
-        mobile_email: mobile_email
+        email: email
       };
       app.request({
-        url: BaseURL,
+        url: BaseURL + 'forgotpassword',
         method: 'POST',
         dataType: 'json',
-        data: JSON.stringify(obj),
+        data: obj,
+        contentType: 'application/json',
         beforeSend: function (xhr) {
-          //app.preloader.show();
           var spinnerOptions = { dimBackground: false };
           SpinnerPlugin.activityStart(null, spinnerOptions);
         },
@@ -181,15 +151,14 @@ function resetPIN(){
           alert("Error: " + status);
         },
         success: function (data, status, xhr) {
-          if(data.resCode == '3103'){
-            app.dialog.alert("PIN has been sent to your Mobile or Email");
+          if (data.ErrorCode == '0') {
+            app.dialog.alert("A new password has been sent to your Email ID");
           }
-          else{
-            app.dialog.alert(data.resMsg);
+          else {
+            app.dialog.alert(data.ErrorMessage);
           }
         },
         complete: function (xhr, status) {
-          //app.preloader.hide();
           SpinnerPlugin.activityStop();
         }
       })
