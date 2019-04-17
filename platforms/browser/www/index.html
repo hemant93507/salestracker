@@ -10,7 +10,7 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#2196f3">
   <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
-  <title>KnowFakes</title>
+  <title>Sales Tracker</title>
   <link rel="stylesheet" href="framework7/css/framework7.css">
   <link rel="stylesheet" href="plugins/framework7-plugin-keypad/framework7.keypad.css">
   <link rel="stylesheet" href="plugins/css-loader/style.css">
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="plugins/animate/animate.css">
 </head>
 
-<body class="color-theme-red">
+<body class="color-theme-green">
   <div id="app">
     <div class="statusbar"></div>
     <div class="panel panel-left panel-cover">
@@ -148,12 +148,6 @@
     </div>
     <div class="view view-main view-init ios-edges" data-url="/">
       <div class="page">
-        <div class="toolbar toolbar-bottom-md welcome-screen-toolbar">
-          <div class="toolbar-inner">
-            <a href="#" onclick="closeWelcomescreen()" class="link font-16">SKIP</a>
-            <a href="#" onclick="nextWelcomescreen()" class="link font-16 welcome-screen-next">NEXT</a>
-          </div>
-        </div>
         <div class="page-content">
           <div class="block login-screen-section">
             <div class="block padding no-margin text-align-center">
@@ -180,7 +174,7 @@
                   </li>
                   <li class="item-content item-input">
                     <div class="item-inner">
-                      <a href="#" onclick="resetPIN()">Forgot PIN?</a>
+                      <a href="#" onclick="resetPIN()">Forgot Password?</a>
                     </div>
                   </li>
                   <li class="item-content item-input">
@@ -195,29 +189,11 @@
                       </li> -->
                 </ul>
               </form>
-              <div class="block margin-top margin-bottom text-align-center social-sepeartion"><span
-                  style="color:#282829">OR</span></div>
-              <div class="block no-margin no-padding">
-                <div class="row">
-                  <div class="col"><img onclick="facebookLogin()" style="width:100%" src="img/facebook.png" /></div>
-                  <div class="col"><img onclick="googleLogin()" style="width:100%" src="img/google.png" /></div>
-                </div>
-              </div>
               <div class="block text-align-center">
                 <div class="item-inner text-align-center font-16">
                   Don't have an account? <br /><a href="/register/">Sign Up</a>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="block welcome-screen-section no-margin no-padding">
-            <div data-pagination='{"el": ".swiper-pagination"}' class="swiper-container swiper-init welcome-swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide"><img class="welcome-image" src="img/welcome1.jpg" /></div>
-                <div class="swiper-slide"><img class="welcome-image" src="img/welcome2.jpg" /></div>
-                <div class="swiper-slide"><img class="welcome-image" src="img/welcome3.jpg" /></div>
-              </div>
-              <div class="swiper-pagination" style="bottom: 18px;"></div>
             </div>
           </div>
         </div>

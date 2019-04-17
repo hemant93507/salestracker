@@ -6,10 +6,10 @@ Framework7.use(Framework7Keypad);
 
 // Init App
 var app = new Framework7({
-  id: 'com.techstreet.hunt',
+  id: 'com.techstreet.salestracker',
   root: '#app',
   theme: 'md',
-  name: 'Hunt',
+  name: 'Sales Tracker',
   view: {
     animate: true,
     xhrCache: false,
@@ -17,7 +17,7 @@ var app = new Framework7({
     unloadTabContent: true,
   },
   dialog: {
-    title: 'KnowFakes',
+    title: 'Sales Tracker',
   },
   routes: routes,
 });
@@ -27,29 +27,15 @@ var mainView = app.views.create('.view-main', {
   url: '/',
   on: {
     init: function (event, page) {
-      var User = localStorage.KnowFakesUser;
+      var User = localStorage.User;
       if (User) {
         $$('.login-screen-section').hide();
-        $$('.welcome-screen-section').hide();
-        $$('.welcome-screen-toolbar').hide();
         this.router.navigate({
           name: 'dashboard',
         });
       }
       else {
-        $$('.login-screen-section').hide();
-        $$('.welcome-screen-section').show();
-        var welcomeSwiper = app.swiper.get('.welcome-swiper-container');
-        welcomeSwiper.on('slideChange', function () {
-          if(this.isEnd){
-            $$('.welcome-screen-next').text('FINISH');
-            $$('.welcome-screen-next').attr('onclick','closeWelcomescreen()');
-          }
-          else{
-            $$('.welcome-screen-next').text('NEXT');
-            $$('.welcome-screen-next').attr('onclick','nextWelcomescreen()');
-          }
-        });
+        $$('.login-screen-section').show();
       }
     },
   }
@@ -86,118 +72,6 @@ function empty(val) {
   }
 }
 
-function facebookLogin() {
-  facebookConnectPlugin.login(["email", "public_profile"],
-    function (data) {
-      facebookConnectPlugin.api("/me?fields=id,name,email",["public_profile"],
-        function (response) {
-          var obj = {
-            provider: 'facebook',
-            access_token: data.accessToken,
-            name: response.name,
-            email: response.email,
-          };
-          app.request({
-            url: BaseURL + '/sociallogin',
-            method: 'POST',
-            dataType: 'json',
-            data: obj,
-            contentType: 'application/json',
-            beforeSend: function (xhr) {
-              var spinnerOptions = { dimBackground: true };
-              SpinnerPlugin.activityStart('Loading...', spinnerOptions);
-            },
-            error: function (xhr, status) {
-              alert(statusMessage(status));
-            },
-            success: function (data, status, xhr) {
-              if (data.ErrorCode == '0') {
-                if (empty(data.User.gender) || empty(data.User.mobile_number)) {
-                  app.views.main.router.navigate({
-                    name: 'complete-profile',
-                    params: { 'email': response.email },
-                  });
-                }
-                else {
-                  localStorage.setItem('User', JSON.stringify(data.User));
-                  app.views.main.router.navigate({
-                    name: 'dashboard',
-                  });
-                }
-              }
-              else {
-                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-              }
-            },
-            complete: function (xhr, status) {
-              SpinnerPlugin.activityStop();
-            }
-          })
-        },
-        function (err) {
-          //alert(JSON.stringify(err));
-        }
-      );
-    },
-    function (err) {
-      //alert(JSON.stringify(err));
-    }
-  );
-}
-
-function googleLogin() {
-  window.plugins.googleplus.login(
-    {},
-    function (response) {
-      var obj = {
-        provider: 'google',
-        access_token: response.accessToken,
-        name: response.displayName,
-        email: response.email,
-      };
-      app.request({
-        url: BaseURL + '/sociallogin',
-        method: 'POST',
-        dataType: 'json',
-        data: obj,
-        contentType: 'application/json',
-        beforeSend: function (xhr) {
-          var spinnerOptions = { dimBackground: true };
-          SpinnerPlugin.activityStart('Loading...', spinnerOptions);
-        },
-        error: function (xhr, status) {
-          alert(statusMessage(status));
-        },
-        success: function (data, status, xhr) {
-          if (data.ErrorCode == '0') {
-            if (empty(data.User.gender) || empty(data.User.mobile_number)) {
-              app.views.main.router.navigate({
-                name: 'complete-profile',
-                params: { 'email': response.email },
-              });
-            }
-            else {
-              localStorage.setItem('User', JSON.stringify(data.User));
-              app.views.main.router.navigate({
-                name: 'dashboard',
-              });
-            }
-          }
-          else {
-            window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-          }
-        },
-        complete: function (xhr, status) {
-          SpinnerPlugin.activityStop();
-        }
-      })
-    },
-    function (msg) {
-      //alert('error: ' + msg);
-    }
-  );
-}
-
 function login() {
   if ($$('#login-form')[0].checkValidity()) {
     var mobile_email = $$('#login-form input[name=mobile_email]').val();
@@ -229,7 +103,7 @@ function login() {
         console.log(data);
         if (data.resCode == '3100') {
           localStorage.setItem("KnowFakesMobileEmail", mobile_email);
-          localStorage.setItem("KnowFakesUser", JSON.stringify(data));
+          localStorage.setItem("User", JSON.stringify(data));
           app.views.main.router.navigate({
             name: 'dashboard',
           });
@@ -277,7 +151,7 @@ function shareApp() {
 
 function logout() {
   localStorage.removeItem("KnowFakesMobileEmail");
-  localStorage.removeItem("KnowFakesUser");
+  localStorage.removeItem("User");
   app.views.main.router.navigate('/');
 }
 
