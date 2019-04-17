@@ -1,0 +1,185 @@
+<template>
+  <div class="page" id="otp-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">One Time Password</div>
+      </div>
+    </div>
+    <div class="page-content bg-gray">
+      <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="block text-align-center">
+            <div class="card padding">
+              <div class="card-content">
+                <div class="padding">
+                  <h4 class="no-margin color-blue">Verify OTP & Set Your Pin</h4>
+                </div>
+                <form class="list show-hairlines-ios no-hairlines text-align-left" id="otp-form">
+                  <ul class="no-hairlines-between">
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-floating-label">*Enter OTP</div>
+                        <div class="item-input-wrap">
+                          <input type="tel" maxlength="6" name="otp" autocomplete="otp" required validate>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-floating-label">*PIN (4 digit)</div>
+                        <div class="item-input-wrap">
+                          <input type="password" name="pin" autocomplete="pin" required validate>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <a style="float:right" @click="resendOTP" href="javascript:">Resend OTP</a>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <button @click="verifyOTP" type="button" class="button button-raised button-fill button-big">VERIFY</button>
+                      </div>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        console.log('page init');
+      }
+    },
+    methods: {
+      resendOTP: function () {
+        var session = this.$route.params.session;
+        var mobile = this.$route.params.mobile;
+        var obj = {
+          id: id,
+          subid: subid,
+          appid: appid,
+          user_auth: user_auth,
+          ip: ip,
+          type: "resend_otp",
+          mobile: mobile,
+        };
+        app.request({
+          url: BaseURL,
+          method: 'POST',
+          dataType: 'json',
+          data: JSON.stringify(obj),
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          error: function (xhr, status) {
+            alert("Error: " + status);
+          },
+          success: function (data, status, xhr) {
+            app.dialog.alert(data.resMsg);
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      },
+      verifyOTP: function () {
+        if (!$$('#otp-form')[0].checkValidity()) {
+          app.dialog.alert('Please fill out the form correctly');
+        }
+        else {
+          var session = this.$route.params.session;
+          var mobile = this.$route.params.mobile;
+          var otp = $$('#otp-form input[name=otp]').val();
+          var pin = $$('#otp-form input[name=pin]').val();
+          var obj = {
+            id: id,
+            subid: subid,
+            appid: appid,
+            user_auth: user_auth,
+            ip: ip,
+            type: "confirm_otp",
+            session: session,
+            mobile: mobile,
+            otp: otp,
+            pin: pin,
+          };
+          console.log(obj);
+          app.request({
+            url: BaseURL,
+            method: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(obj),
+            //contentType: 'application/json',
+            beforeSend: function (xhr) {
+              app.preloader.show();
+            },
+            error: function (xhr, status) {
+              alert("Error: " + status);
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              if (data.resCode == '3103') {
+                var obj = {
+                  id: id,
+                  subid: subid,
+                  appid: appid,
+                  user_auth: user_auth,
+                  ip: ip,
+                  type: "login",
+                  mobile_email: mobile,
+                  pin: pin,
+                  user_type: "Individual"
+                };
+                app.request({
+                  url: BaseURL,
+                  method: 'POST',
+                  dataType: 'json',
+                  data: JSON.stringify(obj),
+                  beforeSend: function (xhr) {
+                    app.preloader.show();
+                  },
+                  error: function (xhr, status) {
+                    alert("Error: " + status);
+                  },
+                  success: function (data2, status, xhr) {
+                    if (data2.resCode == '3100') {
+                      localStorage.setItem("KnowFakesUser", JSON.stringify(data2));
+                      window.location.href = "dashboard.html";
+                    }
+                    else {
+                      app.dialog.alert(data2.resMsg);
+                    }
+                  },
+                  complete: function (xhr, status) {
+                    app.preloader.hide();
+                  }
+                })
+              }
+              else {
+                app.dialog.alert(data.resMsg);
+              }
+            },
+            complete: function (xhr, status) {
+              app.preloader.hide();
+            }
+          })
+        }
+      }
+    },
+  }
+</script>

@@ -1,0 +1,19 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "SalesTracker",
+  "short_name": "SalesTracker",
+  "version": "com.techstreet.salestracker",
+  "description": "A sales person tracking app.",
+  "author": "Techstreet Team",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "orientation": "portrait",
+  "start_url": "index.html",
+  "theme_color": "#2196f3"
+}

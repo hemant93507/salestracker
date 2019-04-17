@@ -1,0 +1,75 @@
+<template>
+  <div class="page">
+    <div class="navbar navbar-main bg-color-white color-red">
+      <div class="navbar-inner sliding">
+        <div class="left"></div>
+        <div class="title"><img width="60" src="img/logo-trimmed.png" /></div>
+        <div class="right">
+          <a href="#" data-popover=".dashboard-popover" class="popover-open link icon-only">
+            <i class="icon material-icons">more_vert</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="popover dashboard-popover">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a class="color-black list-button item-link popover-close" href="#" onclick="shareApp()">Share App</a></li>
+            <li><a onclick="logout()" class="color-black list-button item-link popover-close" href="#">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="popover demo-popover">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a class="color-black list-button item-link popover-close" href="#">Share</a></li>
+            <li><a class="color-black list-button item-link popover-close" href="#">Report</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="toolbar toolbar-bottom-md tabbar color-theme-white">
+      <div class="toolbar-inner">
+        <a href="/dashboard/" class="tab-link" data-route-tab-id="tab-1">
+          <i class="icon material-icons color-gray">home</i>
+          <span class="tabbar-label color-gray">Home</span>
+        </a>
+        <a href="#" class="tab-link" data-route-tab-id="tab-2">
+          <i class="icon material-icons color-gray">history</i>
+          <span class="tabbar-label color-gray">History</span>
+        </a>
+        <a href="/dashboard/tab-3/" class="tab-link" data-route-tab-id="tab-3">
+          <i class="icon material-icons color-gray">settings_overscan</i>
+          <span class="tabbar-label color-gray">Scan</span>
+        </a>
+        <a href="#" class="tab-link" data-route-tab-id="tab-4">
+          <i class="icon material-icons color-gray">help_outline</i>
+          <span class="tabbar-label color-gray">Help</span>
+        </a>
+        <a href="#" class="tab-link" data-route-tab-id="tab-5">
+          <i class="icon material-icons color-gray">person_outline</i>
+          <span class="tabbar-label color-gray">Profile</span>
+        </a>
+      </div>
+    </div>
+    <div class="tabs tabs-routable">
+      <div class="tab page-content" id="tab-1"></div>
+      <div class="tab page-content" id="tab-2"></div>
+      <div class="tab page-content" id="tab-3"></div>
+      <div class="tab page-content" id="tab-4"></div>
+      <div class="tab page-content" id="tab-5"></div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      tabInit: function (el, tab) {
+
+      }
+    },
+  }
+</script>

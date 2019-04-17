@@ -1,0 +1,39 @@
+<template>
+  <div class="page" id="about-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-red color-theme-white">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title color-white">Profile</div>
+      </div>
+    </div>
+    <div class="page-content">
+        {{#each data}} 
+          <p>{{club}}</p>
+        {{/each}}
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var self = this;
+        app.request({
+          url: BaseURL + '/getfeed',
+          method: 'POST',
+          dataType: 'json',
+          contentType: 'application/json',
+          success: function (data, status, xhr) {
+            self.$setState({
+                data: data.Posts
+            });
+          }
+        });
+      }
+    }
+  }
+</script>

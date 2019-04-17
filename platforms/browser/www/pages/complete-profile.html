@@ -1,0 +1,100 @@
+<template>
+  <div class="page" id="completeprofile-page">
+    <div class="page-content no-padding-top">
+      <div class="block padding no-margin bg-color-red text-align-center">
+        <img width="100" src="img/logo-white-small.png" />
+      </div>
+      <div class="block text-align-center">
+        <h3 style="color:#282829">COMPLETE BASIC INFORMATION</h3>
+        <div class="block no-margin" style="color:#282829">Note: * Marked fields are mandatory</div>
+        <form class="list show-hairlines-ios no-hairlines text-align-left" id="completeprofile-form">
+          <ul class="no-hairlines-between">
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">*Gender</div>
+                <div class="item-input-wrap input-dropdown-wrap">
+                  <select name="gender" placeholder="Please choose...">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">*Mobile Number</div>
+                <div class="item-input-wrap">
+                  <input type="tel" name="mobile_number" placeholder="Mobile Number" maxlength="10" pattern="[0-9]{10,10}"
+                    data-error-message="Enter 10 digit mobile number" required validate>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner margin-top">
+                <a href="#" @click="CompleteProfile"
+                  class="font-16 button button-raised button-fill button-big">SUBMIT</a>
+              </div>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function (page) {
+        $$('.input-end').keypress(function (e) {
+          if (e.keyCode == 13) {
+            this.blur();
+          }
+        });
+      }
+    },
+    methods: {
+      CompleteProfile: function () {
+        if ($$('#completeprofile-form')[0].checkValidity()) {
+          var email = this.$route.params.email;
+          var gender = $$('#completeprofile-form select[name=gender]').val();
+          var mobile_number = $$('#completeprofile-form input[name=mobile_number]').val();
+          var obj = {
+            email: decodeURIComponent(email),
+            mobile_number: mobile_number,
+            gender: gender,
+          };
+          // alert(JSON.stringify(obj));
+          app.request({
+            url: BaseURL + '/updateprofile',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+              var spinnerOptions = { dimBackground: false };
+              SpinnerPlugin.activityStart(null, spinnerOptions);
+            },
+            error: function (xhr, status) {
+              alert(statusMessage(status));
+            },
+            success: function (data, status, xhr) {
+              if (data.ErrorCode == '0') {
+                // alert(JSON.stringify(data.User));
+                localStorage.setItem('User', JSON.stringify(data.User));
+                app.views.main.router.navigate({
+                  name: 'dashboard',
+                });
+              }
+              else {
+                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+              }
+            },
+            complete: function (xhr, status) {
+              SpinnerPlugin.activityStop();
+            }
+          })
+        }
+      }
+    }
+  }
+</script>

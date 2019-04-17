@@ -1,0 +1,138 @@
+<template>
+  <div class="page" id="new-post-page">
+    <div class="navbar navbar-main bg-color-white color-red">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons color-black">arrow_back</i>
+          </a>
+        </div>
+        <div class="title color-black">New Post</div>
+        <div class="right">
+          <a class="margin-right" href="#" @click="share">Share</a>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <img class="post-image" style="width:100%;height: 90vw;object-fit: cover;" src="{{photo}}" />
+      <div class="block-title margin-top no-margin-bottom">Add Caption</div>
+      <div class="list no-hairlines">
+        <ul>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-input-wrap">
+                <textarea class="resizable" name="caption" placeholder="Write something..."></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title margin-top">Select Club</div>
+      <div class="block">
+        <div class="loader-item">
+          <div class="loader10"></div>
+        </div>
+        <div class="selected-chip">
+          <div class="chip">
+            <div class="chip-label" data-id="">Example Chip</div>
+            <a @click="close" href="#" class="chip-delete"></a>
+          </div>
+        </div>
+        <div class="club-chips">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function(){
+      return{
+        photo : this.photo
+      }
+    },
+    on: {
+      pageInit: function (page) {
+        $$('#new-post-page .selected-chip').hide();
+        $$('#new-post-page .club-chips').show();
+        var obj = {
+          latitude: '28.543370',
+          longitude: '77.209910',
+        };
+        app.request({
+          url: BaseURL + '/nearestclub',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          contentType: 'application/json',
+          beforeSend: function (xhr) {
+            $$('#new-post-page .loader-item').show();
+          },
+          success: function (data, status, xhr) {
+            if (data.ErrorCode == '0') {
+              var Club = data.Club;
+              for (var i = 0; i < Club.length; i++) {
+                var id = Club[i].id;
+                var name = Club[i].name;
+                var html = `
+                <div class="chip">
+                  <div class="chip-label" onclick="selectClubChip(this)" data-id="${id}">${name}</div>
+                </div>
+                `;
+                $$('#new-post-page .club-chips').append(html);
+              }
+            }
+          },
+          complete: function (xhr, status) {
+            $$('#new-post-page .loader-item').hide();
+          }
+        })
+      },
+    },
+    methods: {
+      close: function () {
+        $$('#new-post-page .club-chips').show();
+        $$('#new-post-page .selected-chip').hide();
+      },
+      share: function () {
+        app.dialog.preloader('Please wait...');
+        var User = JSON.parse(localStorage.User);
+        var user_id = User.user_id;
+        var caption = $$('#new-post-page textarea[name=caption]').val();
+        var club_id = $$('#new-post-page .selected-chip .chip-label').attr('data-id');
+        var path = $$('#new-post-page img.post-image').attr('src');
+        getFileContentAsBase64(path, function (base64Image) {
+          var photo = base64Image;
+          var obj = {
+            user_id: user_id,
+            description: caption,
+            club_id: club_id,
+            photo: photo,
+          }
+          app.request({
+            url: BaseURL + '/postfeed',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            contentType: 'application/json',
+            error: function (xhr, status) {
+              alert(statusMessage(status));
+            },
+            success: function (data, status, xhr) {
+              if (data.ErrorCode == '0') {
+                app.views.main.router.navigate('/dashboard/');
+              }
+              else{
+                app.dialog.alert(data.ErrorMessage);
+              }
+            },
+            complete: function (xhr, status) {
+              app.dialog.close();
+            }
+          })
+        });
+      }
+    }
+  }
+</script>
