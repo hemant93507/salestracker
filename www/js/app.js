@@ -13,8 +13,7 @@ var app = new Framework7({
   view: {
     animate: true,
     xhrCache: false,
-    stackPages: true,
-    unloadTabContent: true,
+    stackPages: false,
   },
   dialog: {
     title: 'Sales Tracker',
@@ -80,6 +79,7 @@ function login() {
   if ($$('#login-form')[0].checkValidity()) {
     var username = $$('#login-form input[name=email]').val();
     var password = $$('#login-form input[name=password]').val();
+    console.log(username);
     var obj = {
       username: username,
       password: password,
@@ -141,11 +141,6 @@ function shareApp() {
   var onSuccess = function (result) { };
   var onError = function (msg) { };
   window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
-}
-
-function logout() {
-  localStorage.removeItem("User");
-  app.views.main.router.navigate('/');
 }
 
 function resetPassword() {

@@ -17,7 +17,7 @@
           <ul>
             <li><a class="color-black list-button item-link popover-close" href="#" onclick="shareApp()">Share App</a>
             </li>
-            <li><a onclick="logout()" class="color-black list-button item-link popover-close" href="#">Logout</a></li>
+            <li><a @click="logout" class="color-black list-button item-link popover-close" href="#">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -86,3 +86,13 @@
     </div>
   </div>
 </template>
+<script>
+  return {
+    methods: {
+      logout: function () {
+        localStorage.removeItem("User");
+        app.views.main.router.navigate('/');
+      }
+    },
+  }
+</script>
