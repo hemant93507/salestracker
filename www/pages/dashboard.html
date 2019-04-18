@@ -15,20 +15,73 @@
       <div class="popover-inner">
         <div class="list">
           <ul>
-            <li><a class="color-black list-button item-link popover-close" href="#" onclick="shareApp()">Share App</a></li>
+            <li><a class="color-black list-button item-link popover-close" href="#" onclick="shareApp()">Share App</a>
+            </li>
             <li><a onclick="logout()" class="color-black list-button item-link popover-close" href="#">Logout</a></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="popover demo-popover">
-      <div class="popover-inner">
-        <div class="list">
-          <ul>
-            <li><a class="color-black list-button item-link popover-close" href="#">Share</a></li>
-            <li><a class="color-black list-button item-link popover-close" href="#">Report</a></li>
-          </ul>
+    <div class="page-content">
+      <div class="block">
+        <div class="row">
+          <div class="col text-align-center">
+            <div class="gauge gauge-init" data-type="circle" data-value="0.35" data-value-text="35%"
+              data-value-text-color="#4caf50" data-value-font-size="36" data-value-font-weight="700"
+              data-border-width="20" data-label-text="Attendance Today" data-border-color="#4caf50"
+              data-border-bg-color="#ffeb3b" data-bg-color="#ffffff">
+            </div>
+          </div>
+          <div class="col text-align-center">
+            <div class="list no-hairlines">
+              <ul>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-inner">
+                      <div class="item-title">Present</div>
+                      <div class="item-after">15</div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-inner">
+                      <div class="item-title">Absent</div>
+                      <div class="item-after">5</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="block-title font-16" style="padding-left:8px">Attendance Today</div>
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell color-green">Employee ID</th>
+              <th class="label-cell color-green">Employee Name</th>
+              <th class="label-cell color-green">Check-In</th>
+              <th class="label-cell color-green">Check-Out</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-cell">20</td>
+              <td class="label-cell">Hemant</td>
+              <td class="label-cell">10:12 AM</td>
+              <td class="label-cell">07:14 PM</td>
+            </tr>
+            <tr>
+              <td class="label-cell">25</td>
+              <td class="label-cell">Abhishek</td>
+              <td class="label-cell">10:00 AM</td>
+              <td class="label-cell">07:05 PM</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -30,9 +30,18 @@ var mainView = app.views.create('.view-main', {
       var User = localStorage.User;
       if (User) {
         $$('.login-screen-section').hide();
-        this.router.navigate({
-          name: 'dashboard',
-        });
+        var user_data = JSON.parse(User);
+        var user_group = user_data.User.user_group;
+        if (user_group == '1') {
+          this.router.navigate({
+            name: 'dashboard',
+          });
+        }
+        else {
+          this.router.navigate({
+            name: 'user-dashboard',
+          });
+        }
       }
       else {
         $$('.login-screen-section').show();
@@ -92,9 +101,17 @@ function login() {
         console.log(data);
         if (data.ErrorCode == '0') {
           localStorage.setItem("User", JSON.stringify(data));
-          app.views.main.router.navigate({
-            name: 'dashboard',
-          });
+          var user_group = data.User.user_group;
+          if (user_group == '1') {
+            app.views.main.router.navigate({
+              name: 'dashboard',
+            });
+          }
+          else {
+            app.views.main.router.navigate({
+              name: 'user-dashboard',
+            });
+          }
         }
         else {
           window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');

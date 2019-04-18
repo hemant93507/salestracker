@@ -1,0 +1,80 @@
+<template>
+  <div class="page">
+    <div class="navbar navbar-main bg-color-white color-green">
+      <div class="navbar-inner sliding">
+        <div class="left"></div>
+        <div class="title">Dashboard</div>
+        <div class="right">
+          <a href="#" data-popover=".dashboard-popover" class="popover-open link icon-only">
+            <i class="icon material-icons">more_vert</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="popover dashboard-popover">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a class="color-black list-button item-link popover-close" href="#" onclick="shareApp()">Share App</a>
+            </li>
+            <li><a onclick="logout()" class="color-black list-button item-link popover-close" href="#">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <div class="list no-hairlines">
+          <ul>
+            <li>
+              <a href="#" class="item-link item-content">
+                <div class="item-inner">
+                  <div class="item-title">Client Visit Today</div>
+                  <div class="item-after">0</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-link item-content">
+                <div class="item-inner">
+                  <div class="item-title">Hours Spent Today</div>
+                  <div class="item-after">0</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="block text-align-center">
+          <button class="button button-round button-outline">Check In</button>
+        </div>
+      </div>
+      <div class="block-title font-16 text-decoration-underline" style="padding-left:8px">Attendance This Month</div>
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell color-green">In Date</th>
+              <th class="label-cell color-green">Check-In</th>
+              <th class="label-cell color-green">Check-Out</th>
+              <th class="label-cell color-green">Out Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-cell">18-Apr-2019</td>
+              <td class="label-cell">10:00 AM</td>
+              <td class="label-cell">-</td>
+              <td class="label-cell">-</td>
+            </tr>
+            <tr>
+              <td class="label-cell">15-Apr-2019</td>
+              <td class="label-cell">10:05 AM</td>
+              <td class="label-cell">07:15 PM</td>
+              <td class="label-cell">15-Apr-2019</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>

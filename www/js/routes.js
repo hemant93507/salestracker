@@ -5,18 +5,14 @@ var routes = [
     url: './index.html',
     name: 'home',
   },
+  
   // Register page
   {
     path: '/register/',
     componentUrl: './pages/register.html',
     name: 'register',
   },
-  // Complete Profile
-  {
-    path: '/complete-profile/:email/',
-    componentUrl: './pages/complete-profile.html',
-    name: 'complete-profile',
-  },
+
   // OTP
   {
     path: '/otp/:session/:mobile/',
@@ -36,6 +32,11 @@ var routes = [
     path: '/dashboard/',
     componentUrl: './pages/dashboard.html',
     name: 'dashboard',
+  },
+  {
+    path: '/user-dashboard/',
+    componentUrl: './pages/user-dashboard.html',
+    name: 'user-dashboard',
   },
   
   // Default route (404 page)
