@@ -14,7 +14,6 @@ var app = new Framework7({
     animate: true,
     xhrCache: false,
     stackPages: true,
-    unloadTabContent: true,
   },
   dialog: {
     title: 'Sales Tracker',
@@ -35,11 +34,13 @@ var mainView = app.views.create('.view-main', {
         if (user_group == '1') {
           this.router.navigate({
             name: 'dashboard',
+            history: false,
           });
         }
         else {
           this.router.navigate({
             name: 'user-dashboard',
+            history: false,
           });
         }
       }
@@ -80,6 +81,7 @@ function login() {
   if ($$('#login-form')[0].checkValidity()) {
     var username = $$('#login-form input[name=email]').val();
     var password = $$('#login-form input[name=password]').val();
+    console.log(username);
     var obj = {
       username: username,
       password: password,
@@ -105,11 +107,13 @@ function login() {
           if (user_group == '1') {
             app.views.main.router.navigate({
               name: 'dashboard',
+              history: false,
             });
           }
           else {
             app.views.main.router.navigate({
               name: 'user-dashboard',
+              history: false,
             });
           }
         }
@@ -141,11 +145,6 @@ function shareApp() {
   var onSuccess = function (result) { };
   var onError = function (msg) { };
   window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
-}
-
-function logout() {
-  localStorage.removeItem("User");
-  app.views.main.router.navigate('/');
 }
 
 function resetPassword() {
