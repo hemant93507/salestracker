@@ -1,0 +1,82 @@
+<template>
+  <div class="page" id="attendance-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Attendance</div>
+        <div class="right">
+          <a href="#" class="link icon-only">
+            <i class="icon material-icons">filter_list</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <!-- <form class="list show-hairlines-ios no-hairlines text-align-left no-margin-bottom margin-top">
+        <div class="row">
+          <div class="col-35">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="From Date" name="FromDate">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-35">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="To Date" name="ToDate">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-30">
+            <a href="#" class="button button-outline">Search</a>
+          </div>
+        </div>
+      </form> -->
+      <div class="block-title font-16" style="padding-left:8px">April, 2019</div>
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell color-green">In Date</th>
+              <th class="label-cell color-green">Check-In</th>
+              <th class="label-cell color-green">Check-Out</th>
+              <th class="label-cell color-green">Out Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-cell">18-Apr-2019</td>
+              <td class="label-cell">10:00 AM</td>
+              <td class="label-cell">-</td>
+              <td class="label-cell">-</td>
+            </tr>
+            <tr>
+              <td class="label-cell">15-Apr-2019</td>
+              <td class="label-cell">10:05 AM</td>
+              <td class="label-cell">07:15 PM</td>
+              <td class="label-cell">15-Apr-2019</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+
+      }
+    }
+  }
+</script>

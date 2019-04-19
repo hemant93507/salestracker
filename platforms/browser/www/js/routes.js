@@ -5,7 +5,7 @@ var routes = [
     url: './index.html',
     name: 'home',
   },
-  
+
   // Register page
   {
     path: '/register/',
@@ -19,14 +19,35 @@ var routes = [
     componentUrl: './pages/otp.html',
     name: 'otp',
   },
-  
+
   // Profile page
   {
     path: '/profile/',
     componentUrl: './pages/profile.html',
     name: 'profile',
   },
-  
+
+  // Attendance page
+  {
+    path: '/attendance/',
+    componentUrl: './pages/attendance.html',
+    name: 'attendance',
+  },
+
+  // Client visit page
+  {
+    path: '/client-visit/',
+    componentUrl: './pages/client-visit.html',
+    name: 'client-visit',
+  },
+
+  // Add Client
+  {
+    path: '/add-client/',
+    componentUrl: './pages/add-client.html',
+    name: 'add-client',
+  },
+
   // Dashboard page
   {
     path: '/dashboard/',
@@ -38,7 +59,7 @@ var routes = [
     componentUrl: './pages/user-dashboard.html',
     name: 'user-dashboard',
   },
-  
+
   // Default route (404 page)
   {
     path: '(.*)',

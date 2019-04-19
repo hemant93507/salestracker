@@ -1,0 +1,68 @@
+<template>
+  <div class="page" id="attendance-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Add Client</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list no-hairlines margin">
+        <ul class="no-hairlines-between">
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Name</div>
+              <div class="item-input-wrap">
+                <input type="text" name="Name">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Email</div>
+              <div class="item-input-wrap">
+                <input type="email" name="Email">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Phone</div>
+              <div class="item-input-wrap">
+                <input type="tel" name="Phone">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Address</div>
+              <div class="item-input-wrap">
+                <textarea name="Address" class="resizable" placeholder="Address"></textarea>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner margin-top">
+                <i style="font-size:48px;vertical-align: middle;margin-top: -9px;" class="material-icons color-green">add_a_photo</i>
+                Add Photo
+            </div>
+          </li>
+        </ul>
+        <a href="#" class="button button-outline button-round margin">Submit</a>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+
+      }
+    }
+  }
+</script>
