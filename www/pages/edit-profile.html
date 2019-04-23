@@ -1,0 +1,62 @@
+<template>
+  <div class="page" id="editprofile-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Edit Profile</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list no-hairlines margin">
+        <ul>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Name</div>
+              <div class="item-input-wrap">
+                <input type="text" placeholder="Enter Name">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Email</div>
+              <div class="item-input-wrap">
+                <input type="email" placeholder="Enter Email">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Mobile</div>
+              <div class="item-input-wrap">
+                <input type="tel" placeholder="Enter Mobile">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Address</div>
+              <div class="item-input-wrap">
+                <textarea name="Address" class="resizable" placeholder="Address"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a href="#" class="button button-outline button-round margin">Update</a>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+
+      }
+    }
+  }
+</script>

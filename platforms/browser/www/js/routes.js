@@ -27,6 +27,13 @@ var routes = [
     name: 'profile',
   },
 
+  // Edit Profile page
+  {
+    path: '/edit-profile/',
+    componentUrl: './pages/edit-profile.html',
+    name: 'edit-profile',
+  },
+
   // Feedback page
   {
     path: '/feedback/',
