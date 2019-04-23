@@ -1,17 +1,80 @@
 <template>
   <div class="page" id="profile-page">
     <div class="navbar">
-      <div class="navbar-inner sliding bg-color-red color-theme-white">
+      <div class="navbar-inner sliding bg-color-white  color-green">
         <div class="left">
           <a href="#" class="link back">
             <i class="material-icons">arrow_back</i>
           </a>
         </div>
-        <div class="title color-white">Profile</div>
+        <div class="title">My Profile</div>
+        <div class="right">
+          <a href="/edit-profile/" class="link icon-only">
+            <i class="icon material-icons">edit</i>
+          </a>
+        </div>
       </div>
     </div>
     <div class="page-content">
-      
+      <div class="block margin text-align-center">
+        <img class="img-round" width="100" src="img/avatar.jpg" />
+        <h2 class="no-margin color-darkgray">Md Danish</h2>
+        <h3 class="no-margin color-gray">danish@techstreet.in</h3>
+      </div>
+      <div class="list media-list no-hairlines no-margin">
+        <ul class="user-profile-info">
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Employee ID</div>
+                <div class="item-title-row">
+                  <div class="item-title">${data.EmployeeID}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Name</div>
+                <div class="item-title-row">
+                  <div class="item-title">${data.Name}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Email</div>
+                <div class="item-title-row">
+                  <div class="item-title">${data.Email}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Mobile</div>
+                <div class="item-title-row">
+                  <div class="item-title">${data.Mobile}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Address</div>
+                <div class="item-title-row">
+                  <div class="item-title">${data.Address}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

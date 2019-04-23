@@ -27,6 +27,20 @@ var routes = [
     name: 'profile',
   },
 
+  // Feedback page
+  {
+    path: '/feedback/',
+    componentUrl: './pages/feedback.html',
+    name: 'feedback',
+  },
+
+  // Change password
+  {
+    path: '/change-password/',
+    componentUrl: './pages/change-password.html',
+    name: 'change-password',
+  },
+
   // Attendance page
   {
     path: '/attendance/',

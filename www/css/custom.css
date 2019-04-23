@@ -22,6 +22,9 @@
 .no-background-image{
     background-image: none !important;
 }
+.img-round{
+    border-radius: 50%;
+}
 /* Sales Tracker  - End */
 .preloader-block{
     display: block !important;

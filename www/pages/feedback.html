@@ -1,0 +1,56 @@
+<template>
+  <div class="page" id="feedback-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Feedback</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list no-hairlines margin">
+        <ul class="no-hairlines-between">
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">Type</div>
+              <div class="item-input-wrap input-dropdown-wrap">
+                <select>
+                  <option value="Bug">Bug</option>
+                  <option value="Feedback">Feedback</option>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">Comments</div>
+              <div class="item-input-wrap">
+                <textarea name="Comments" class="resizable" placeholder="Comments"></textarea>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner margin-top">
+              <i style="font-size:48px;vertical-align: middle;margin-top: -9px;"
+                class="material-icons color-green">add_a_photo</i>
+              Add Photo
+            </div>
+          </li>
+        </ul>
+        <a href="#" class="button button-outline button-round margin">Submit</a>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+
+      }
+    }
+  }
+</script>
