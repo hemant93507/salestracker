@@ -51,7 +51,7 @@
         <div class="block text-align-center">
           <div class="row">
             <div class="col-50">
-              <button class="button button-round button-outline">Check In</button>
+              <button @click="{{checkin_event}}" class="button button-round button-outline">{{checkin_text}}</button>
             </div>
             <div class="col-50">
               <a href="/client-visit/" class="button button-round button-outline">Client Visit</a>
@@ -64,7 +64,85 @@
 </template>
 <script>
   return {
+    data: function () {
+      return {
+        checkin_event: 'checkin',
+        checkin_text: 'Check In',
+      }
+    },
     methods: {
+      checkin: function () {
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'checkin',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          error: function (xhr, status) {
+            alert(statusMessage(status));
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                checkin_event: 'checkout',
+                checkin_text: 'Check Out',
+              });
+              window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+            }
+            else {
+              app.dialog.alert(data.ErrorMessage);
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      },
+      checkout: function () {
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'checkout',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          error: function (xhr, status) {
+            alert(statusMessage(status));
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                checkin_event: 'checkin',
+                checkin_text: 'Check In',
+              });
+              window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+            }
+            else {
+              app.dialog.alert(data.ErrorMessage);
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      },
       logout: function () {
         localStorage.removeItem("User");
         app.views.main.router.navigate('/');

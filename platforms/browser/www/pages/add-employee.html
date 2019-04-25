@@ -1,0 +1,170 @@
+<template>
+  <div class="page" id="addemployee-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Add Employee</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list no-hairlines margin">
+        <ul class="no-hairlines-between">
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Name</div>
+              <div class="item-input-wrap">
+                <input type="text" name="name">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Email</div>
+              <div class="item-input-wrap">
+                <input type="email" name="email">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Mobile</div>
+              <div class="item-input-wrap">
+                <input type="tel" name="mobile_number">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Password</div>
+              <div class="item-input-wrap">
+                <input type="password" name="password">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Confirm Password</div>
+              <div class="item-input-wrap">
+                <input type="password" name="confirm_password">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Gender</div>
+              <div class="item-input-wrap input-dropdown-wrap">
+                <select name="gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">Date of Birth</div>
+              <div class="item-input-wrap">
+                <input type="text" name="dob">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">Date of Joining</div>
+              <div class="item-input-wrap">
+                <input type="text" name="doj">
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Address</div>
+              <div class="item-input-wrap">
+                <textarea name="address" class="resizable" placeholder="address"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a href="#" @click="submit" class="button button-outline button-round margin">Submit</a>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var dobCalendar = app.calendar.create({
+          inputEl: '#addemployee-page input[name=dob]',
+          openIn: 'customModal',
+          header: true,
+          dateFormat: 'dd-M-yyyy',
+          closeOnSelect: true
+        });
+        var dojCalendar = app.calendar.create({
+          inputEl: '#addemployee-page input[name=doj]',
+          openIn: 'customModal',
+          header: true,
+          dateFormat: 'dd-M-yyyy',
+          closeOnSelect: true
+        });
+      }
+    },
+    methods: {
+      submit: function () {
+        var name = $$('#addemployee-page input[name=name]').val();
+        var email = $$('#addemployee-page input[name=email]').val();
+        var mobile_number = $$('#addemployee-page input[name=mobile_number]').val();
+        var password = $$('#addemployee-page input[name=password]').val();
+        var confirm_password = $$('#addemployee-page input[name=confirm_password]').val();
+        var gender = $$('#addemployee-page select[name=gender]').val();
+        var dob = $$('#addemployee-page input[name=dob]').val();
+        var doj = $$('#addemployee-page input[name=doj]').val();
+        var address = $$('#addemployee-page textarea[name=address]').val();
+        var obj = {
+          name: name,
+          email: email,
+          mobile_number: mobile_number,
+          password: password,
+          confirm_password: confirm_password,
+          gender: gender,
+          dob: dob,
+          doj: doj,
+          address: address,
+        };
+        app.request({
+          url: BaseURL + 'add-employee',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          contentType: 'application/json',
+          beforeSend: function (xhr) {
+            var spinnerOptions = { dimBackground: true };
+            SpinnerPlugin.activityStart('Loading...', spinnerOptions);
+          },
+          error: function (xhr, status) {
+            alert(statusMessage(status));
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              app.views.main.router.navigate({
+                name: 'employees',
+              });
+            }
+            else {
+              window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+            }
+          },
+          complete: function (xhr, status) {
+            SpinnerPlugin.activityStop();
+          }
+        })
+      }
+    },
+  }
+</script>

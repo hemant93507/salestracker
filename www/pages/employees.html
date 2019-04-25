@@ -1,0 +1,56 @@
+<template>
+  <div class="page" id="attendance-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Employees</div>
+        <div class="right">
+          <a href="/add-employee/" class="link icon-only">
+            <i class="icon material-icons">add_circle_outline</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell color-green">Name</th>
+              <th class="label-cell color-green">Email</th>
+              <th class="label-cell color-green">Phone</th>
+              <th class="label-cell color-green">Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-cell">Abhishek</td>
+              <td class="label-cell">abhishek@techstreet.in</td>
+              <td class="label-cell">8556234598</td>
+              <td class="label-cell">Noida, Uttar Pradesh</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Hemant</td>
+              <td class="label-cell">hemant@techstreet.in</td>
+              <td class="label-cell">9582457465</td>
+              <td class="label-cell">Noida, Uttar Pradesh</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+
+      }
+    }
+  }
+</script>

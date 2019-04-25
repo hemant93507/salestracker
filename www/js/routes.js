@@ -62,11 +62,25 @@ var routes = [
     name: 'client-visit',
   },
 
+  // Employees page
+  {
+    path: '/employees/',
+    componentUrl: './pages/employees.html',
+    name: 'employees',
+  },
+
   // Add Client
   {
     path: '/add-client/',
     componentUrl: './pages/add-client.html',
     name: 'add-client',
+  },
+
+  // Add Client
+  {
+    path: '/add-employee/',
+    componentUrl: './pages/add-employee.html',
+    name: 'add-employee',
   },
 
   // Dashboard page

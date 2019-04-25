@@ -2,7 +2,11 @@
   <div class="page">
     <div class="navbar navbar-main bg-color-white color-green">
       <div class="navbar-inner sliding">
-        <div class="left"></div>
+        <div class="left">
+          <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon material-icons">menu</i>
+          </a>
+        </div>
         <div class="title">Dashboard</div>
         <div class="right">
           <a href="#" data-popover=".dashboard-popover" class="popover-open link icon-only">
@@ -88,6 +92,12 @@
 </template>
 <script>
   return {
+    on: {
+      pageInit: function () {
+        // $$('.panel-left .profile-menu a').attr('href','/admin-profile/');
+        // $$('.panel-left .profile-menu .item-title').text('My Profile');
+      }
+    },
     methods: {
       logout: function () {
         localStorage.removeItem("User");
