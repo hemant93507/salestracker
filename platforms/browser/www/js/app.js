@@ -90,7 +90,7 @@ function login() {
       method: 'POST',
       dataType: 'json',
       data: obj,
-      contentType: 'application/json',
+      //contentType: 'application/json',
       beforeSend: function (xhr) {
         var spinnerOptions = { dimBackground: true };
         SpinnerPlugin.activityStart('Loading...', spinnerOptions);
@@ -160,7 +160,7 @@ function resetPassword() {
         method: 'POST',
         dataType: 'json',
         data: obj,
-        contentType: 'application/json',
+        //contentType: 'application/json',
         beforeSend: function (xhr) {
           var spinnerOptions = { dimBackground: false };
           SpinnerPlugin.activityStart(null, spinnerOptions);

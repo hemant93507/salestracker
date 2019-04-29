@@ -81,10 +81,10 @@
         };
         app.request({
           url: BaseURL + 'user-dashboard',
-          method: 'GET',
+          method: 'POST',
           dataType: 'json',
           data: obj,
-          contentType: 'application/json',
+          //contentType: 'application/json',
           success: function (data, status, xhr) {
             console.log(data);
             if (data.ErrorCode == '0') {
@@ -125,7 +125,7 @@
             method: 'POST',
             dataType: 'json',
             data: obj,
-            contentType: 'application/json',
+            //contentType: 'application/json',
             beforeSend: function (xhr) {
               app.preloader.show();
             },
@@ -166,7 +166,7 @@
           method: 'POST',
           dataType: 'json',
           data: obj,
-          contentType: 'application/json',
+          //contentType: 'application/json',
           beforeSend: function (xhr) {
             app.preloader.show();
           },
