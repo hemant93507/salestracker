@@ -34,15 +34,15 @@
               <a href="#" class="item-link item-content">
                 <div class="item-inner">
                   <div class="item-title">Client Visit Today</div>
-                  <div class="item-after">0</div>
+                  <div class="item-after">{{ClientVisitToday}}</div>
                 </div>
               </a>
             </li>
             <li>
               <a href="#" class="item-link item-content">
                 <div class="item-inner">
-                  <div class="item-title">Hours Spent Today</div>
-                  <div class="item-after">0</div>
+                  <div class="item-title">Time Spent Today</div>
+                  <div class="item-after">{{TimeSpentToday}}</div>
                 </div>
               </a>
             </li>
@@ -70,42 +70,90 @@
         checkin_text: 'Check In',
       }
     },
-    methods: {
-      checkin: function () {
+    on: {
+      pageInit: function () {
         var self = this;
+        var checkin_event = 'checkin';
+        var checkin_text = 'Check In';
         var data = JSON.parse(localStorage.User);
         var obj = {
           email: data.User.email,
         };
         app.request({
-          url: BaseURL + 'checkin',
-          method: 'POST',
+          url: BaseURL + 'user-dashboard',
+          method: 'GET',
           dataType: 'json',
           data: obj,
           contentType: 'application/json',
-          beforeSend: function (xhr) {
-            app.preloader.show();
-          },
-          error: function (xhr, status) {
-            alert(statusMessage(status));
-          },
           success: function (data, status, xhr) {
             console.log(data);
             if (data.ErrorCode == '0') {
+              if (data.CheckedIn == true) {
+                checkin_event = 'checkout';
+                checkin_text = 'Check Out';
+              }
               self.$setState({
-                checkin_event: 'checkout',
-                checkin_text: 'Check Out',
+                TimeSpentToday: data.TimeSpentToday,
+                ClientVisitToday: data.ClientVisitToday,
+                checkin_event: checkin_event,
+                checkin_text: checkin_text,
               });
-              window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-            }
-            else {
-              app.dialog.alert(data.ErrorMessage);
             }
           },
-          complete: function (xhr, status) {
-            app.preloader.hide();
-          }
         })
+      }
+    },
+    methods: {
+      checkin: function () {
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 3000
+        }
+        function onSuccess(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          var obj = {
+            email: data.User.email,
+            latitude: latitude,
+            longitude: longitude,
+          };
+          app.request({
+            url: BaseURL + 'checkin',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+              app.preloader.show();
+            },
+            error: function (xhr, status) {
+              alert(statusMessage(status));
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              if (data.ErrorCode == '0') {
+                self.$setState({
+                  checkin_event: 'checkout',
+                  checkin_text: 'Check Out',
+                });
+                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+              }
+              else {
+                app.dialog.alert(data.ErrorMessage);
+              }
+            },
+            complete: function (xhr, status) {
+              app.preloader.hide();
+            }
+          })
+        };
+        function onError(error) {
+          console.log(error);
+        }
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
       },
       checkout: function () {
         var self = this;
