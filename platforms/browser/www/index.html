@@ -214,11 +214,8 @@
       }
       function onBackKeyDown(e) {
         e.preventDefault();
-        if (app.views.main.router.url == "/" || app.views.main.router.url == "/dashboard/") {
+        if (app.views.main.router.url == "/" || app.views.main.router.url == "/dashboard/" || app.views.main.router.url == "/user-dashboard/") {
           navigator.app.exitApp();
-        }
-        else if (app.views.main.router.url == "/dashboard/tab-2/" || app.views.main.router.url == "/dashboard/tab-3/" || app.views.main.router.url == "/dashboard/tab-4/" || app.views.main.router.url == "/dashboard/tab-5/") {
-          app.views.main.router.navigate('/dashboard/');
         }
         else {
           mainView.router.back();
