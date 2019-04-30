@@ -84,7 +84,7 @@ function locationFromLatLon_success(result) {
   reverse_location = location;
 }
 function locationFromLatLon_failure(err) {
-  reverse_location = 'NA';
+  reverse_location = err;
 }
 
 function locationFromLatLon(lat, lon) {
