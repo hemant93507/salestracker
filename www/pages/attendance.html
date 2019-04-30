@@ -41,30 +41,24 @@
           </div>
         </div>
       </form> -->
-      <div class="block-title font-16" style="padding-left:8px">April, 2019</div>
+      <div class="block-title font-16" style="padding-left:8px">{{CurrentMonth}}, {{CurrentYear}}</div>
       <div class="data-table">
         <table>
           <thead>
             <tr>
-              <th class="label-cell color-green">In Date</th>
               <th class="label-cell color-green">Check-In</th>
               <th class="label-cell color-green">Check-Out</th>
-              <th class="label-cell color-green">Out Date</th>
+              <th class="label-cell color-green">Location</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="label-cell">18-Apr-2019</td>
-              <td class="label-cell">10:00 AM</td>
-              <td class="label-cell">-</td>
-              <td class="label-cell">-</td>
-            </tr>
-            <tr>
-              <td class="label-cell">15-Apr-2019</td>
-              <td class="label-cell">10:05 AM</td>
-              <td class="label-cell">07:15 PM</td>
-              <td class="label-cell">15-Apr-2019</td>
-            </tr>
+            {{#each Result}}
+              <tr>
+                <td class="label-cell">{{check_in}}</td>
+                <td class="label-cell">{{check_out}}</td>
+                <td class="label-cell">{{js "locationFromLatLon(this.latitude,this.longitude)"}}</td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       </div>
@@ -73,10 +67,43 @@
 </template>
 <script>
   return {
+    data: function(){
+      var CurrentMonth = moment().format('MMMM');
+      var CurrentYear = moment().format('YYYY');
+      return{
+        CurrentMonth : CurrentMonth,
+        CurrentYear: CurrentYear,
+      }
+    },
     on: {
       pageInit: function () {
-
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'attendance',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                Result: data.Result,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
       }
-    }
+    },
   }
 </script>
