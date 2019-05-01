@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="navbar-inner sliding bg-color-white color-green">
         <div class="left">
-          <a href="#" class="link back">
+          <a href="/user-dashboard/" class="link back" data-force="true">
             <i class="material-icons">arrow_back</i>
           </a>
         </div>
@@ -24,25 +24,23 @@
         <table>
           <thead>
             <tr>
-              <th class="label-cell color-green">Name</th>
-              <th class="label-cell color-green">Email</th>
-              <th class="label-cell color-green">Phone</th>
-              <th class="label-cell color-green">Address</th>
+              <th class="label-cell color-green">Party Name</th>
+              <th class="label-cell color-green">Party Email</th>
+              <th class="label-cell color-green">Party Phone</th>
+              <th class="label-cell color-green">Party Address</th>
+              <th class="label-cell color-green">Location Image</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="label-cell">Abhishek</td>
-              <td class="label-cell">abhishek@techstreet.in</td>
-              <td class="label-cell">8556234598</td>
-              <td class="label-cell">Noida, Uttar Pradesh</td>
-            </tr>
-            <tr>
-              <td class="label-cell">Hemant</td>
-              <td class="label-cell">hemant@techstreet.in</td>
-              <td class="label-cell">9582457465</td>
-              <td class="label-cell">Noida, Uttar Pradesh</td>
-            </tr>
+            {{#each Result}}
+              <tr>
+                <td class="label-cell">{{party_name}}</td>
+                <td class="label-cell">{{party_email}}</td>
+                <td class="label-cell">{{party_phone}}</td>
+                <td class="label-cell">{{party_address}}</td>
+                <td class="label-cell">{{location_image}}</td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       </div>
@@ -51,10 +49,43 @@
 </template>
 <script>
   return {
+    data: function(){
+      var CurrentMonth = moment().format('MMMM');
+      var CurrentYear = moment().format('YYYY');
+      return{
+        CurrentMonth : CurrentMonth,
+        CurrentYear: CurrentYear,
+      }
+    },
     on: {
       pageInit: function () {
-
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'client-visit',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                Result: data.Result,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
       }
-    }
+    },
   }
 </script>

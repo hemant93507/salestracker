@@ -11,48 +11,49 @@
       </div>
     </div>
     <div class="page-content">
-      <form class="list no-hairlines margin">
+      <form class="list no-hairlines margin" id="clientvisit-form">
         <ul class="no-hairlines-between">
           <li class="item-content item-input">
             <div class="item-inner">
-              <div class="item-title item-floating-label">*Name</div>
+              <div class="item-title item-floating-label">*Party Name</div>
               <div class="item-input-wrap">
-                <input type="text" name="Name">
+                <input type="text" name="party_name" required validate>
               </div>
             </div>
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <div class="item-title item-floating-label">*Email</div>
+              <div class="item-title item-floating-label">*Party Email</div>
               <div class="item-input-wrap">
-                <input type="email" name="Email">
+                <input type="email" name="party_email" required validate>
               </div>
             </div>
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <div class="item-title item-floating-label">*Phone</div>
+              <div class="item-title item-floating-label">*Party Phone</div>
               <div class="item-input-wrap">
-                <input type="tel" name="Phone">
+                <input type="tel" name="party_phone" required validate>
               </div>
             </div>
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
-              <div class="item-title item-floating-label">*Address</div>
+              <div class="item-title item-floating-label">*Party Address</div>
               <div class="item-input-wrap">
-                <textarea name="Address" class="resizable" placeholder="Address"></textarea>
+                <textarea name="party_address" class="resizable" placeholder="Party Address" required validate></textarea>
               </div>
             </div>
           </li>
           <li class="item-content item-input">
             <div class="item-inner margin-top">
-                <i style="font-size:48px;vertical-align: middle;margin-top: -9px;" class="material-icons color-green">add_a_photo</i>
-                Add Photo
+              <i style="font-size:48px;vertical-align: middle;margin-top: -9px;"
+                class="material-icons color-green">add_a_photo</i>
+              Add Location Photo
             </div>
           </li>
         </ul>
-        <a href="#" class="button button-outline button-round margin">Submit</a>
+        <a href="#" @click="addClient" class="button button-outline button-round margin">Submit</a>
       </form>
     </div>
   </div>
@@ -63,6 +64,106 @@
       pageInit: function () {
 
       }
-    }
+    },
+    methods: {
+      addClient: function () {
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 3000
+        }
+        function onSuccess(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          var party_name = $$('#clientvisit-form input[name=party_name]').val();
+          var party_email = $$('#clientvisit-form input[name=party_email]').val();
+          var party_phone = $$('#clientvisit-form input[name=party_phone]').val();
+          var party_address = $$('#clientvisit-form textarea[name=party_address]').val();
+          var obj = {
+            email: data.User.email,
+            latitude: latitude,
+            longitude: longitude,
+            party_name: party_name,
+            party_email: party_email,
+            party_phone: party_phone,
+            party_address: party_address,
+          };
+          app.request({
+            url: BaseURL + 'add-clientvisit',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            //contentType: 'application/json',
+            beforeSend: function (xhr) {
+              app.preloader.show();
+            },
+            error: function (xhr, status) {
+              alert(statusMessage(status));
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              if (data.ErrorCode == '0') {
+                app.dialog.alert('Record added successfully');
+              }
+              else {
+                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+              }
+            },
+            complete: function (xhr, status) {
+              app.preloader.hide();
+            }
+          })
+        };
+        function onError(error) {
+          var latitude = '';
+          var longitude = '';
+          var party_name = $$('#clientvisit-form input[name=party_name]').val();
+          var party_email = $$('#clientvisit-form input[name=party_email]').val();
+          var party_phone = $$('#clientvisit-form input[name=party_phone]').val();
+          var party_address = $$('#clientvisit-form textarea[name=party_address]').val();
+          var obj = {
+            email: data.User.email,
+            latitude: latitude,
+            longitude: longitude,
+            party_name: party_name,
+            party_email: party_email,
+            party_phone: party_phone,
+            party_address: party_address,
+          };
+          app.request({
+            url: BaseURL + 'add-clientvisit',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            //contentType: 'application/json',
+            beforeSend: function (xhr) {
+              app.preloader.show();
+            },
+            error: function (xhr, status) {
+              alert(statusMessage(status));
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              if (data.ErrorCode == '0') {
+                app.dialog.alert('Record added successfully', function(){
+                  app.views.main.router.navigate('/client-visit/');
+                });
+              }
+              else {
+                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+              }
+            },
+            complete: function (xhr, status) {
+              app.preloader.hide();
+            }
+          })
+        }
+        if ($$('#clientvisit-form')[0].checkValidity()) {
+          navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+        }
+      },
+    },
   }
 </script>

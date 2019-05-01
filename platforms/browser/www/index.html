@@ -217,6 +217,12 @@
         if (app.views.main.router.url == "/" || app.views.main.router.url == "/dashboard/" || app.views.main.router.url == "/user-dashboard/") {
           navigator.app.exitApp();
         }
+        else if (app.views.main.router.url == "/client-visit/") {
+          mainView.router.back('/user-dashboard/', {
+            force: true,
+            ignoreCache: true,
+          });
+        }
         else {
           mainView.router.back();
         }
