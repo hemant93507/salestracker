@@ -69,6 +69,12 @@ var routes = [
     name: 'employees',
   },
 
+  {
+    path: '/employee-detail/:email/',
+    componentUrl: './pages/employee-detail.html',
+    name: 'employee-detail',
+  },
+
   // Add Client
   {
     path: '/add-client/',

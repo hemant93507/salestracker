@@ -30,11 +30,12 @@
       <div class="block">
         <div class="row">
           <div class="col text-align-center">
-            <div class="gauge gauge-init" data-type="circle" data-value="0.35" data-value-text="35%"
-              data-value-text-color="#4caf50" data-value-font-size="36" data-value-font-weight="700"
-              data-border-width="20" data-label-text="Attendance Today" data-border-color="#4caf50"
-              data-border-bg-color="#ffeb3b" data-bg-color="#ffffff">
-            </div>
+            <!-- <div class="gauge gauge-init" data-type="circle" data-value="{{AttendancePercentage/100}}"
+              data-value-text="{{AttendancePercentage}}%" data-value-text-color="#4caf50" data-value-font-size="36"
+              data-value-font-weight="700" data-border-width="20" data-label-text="Attendance Today"
+              data-border-color="#4caf50" data-border-bg-color="#ffeb3b" data-bg-color="#ffffff">
+            </div> -->
+            <div class="gauge"></div>
           </div>
           <div class="col text-align-center">
             <div class="list no-hairlines">
@@ -43,7 +44,7 @@
                   <a href="#" class="item-link item-content">
                     <div class="item-inner">
                       <div class="item-title">Present</div>
-                      <div class="item-after">15</div>
+                      <div class="item-after">{{Present}}</div>
                     </div>
                   </a>
                 </li>
@@ -51,7 +52,7 @@
                   <a href="#" class="item-link item-content">
                     <div class="item-inner">
                       <div class="item-title">Absent</div>
-                      <div class="item-after">5</div>
+                      <div class="item-after">{{Absent}}</div>
                     </div>
                   </a>
                 </li>
@@ -72,18 +73,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="label-cell">20</td>
-              <td class="label-cell">Hemant</td>
-              <td class="label-cell">10:12 AM</td>
-              <td class="label-cell">07:14 PM</td>
-            </tr>
-            <tr>
-              <td class="label-cell">25</td>
-              <td class="label-cell">Abhishek</td>
-              <td class="label-cell">10:00 AM</td>
-              <td class="label-cell">07:05 PM</td>
-            </tr>
+            {{#each PresentClientList}}
+              <tr>
+                <!-- <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link">{{user_id}}</a></td> -->
+                <td class="label-cell"><a href="#" class="link">{{user_id}}</a></td>
+                <td class="label-cell">{{name}}</td>
+                <td class="label-cell">{{check_in}}</td>
+                <td class="label-cell">{{check_out}}</td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       </div>
@@ -96,6 +94,50 @@
       pageInit: function () {
         // $$('.panel-left .profile-menu a').attr('href','/admin-profile/');
         // $$('.panel-left .profile-menu .item-title').text('My Profile');
+        $$('.clientvisit-menu,.attendance-menu').hide();
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'admin-dashboard',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              var gauge = app.gauge.create({
+                labelText: 'amount of something',
+                el: '.gauge',
+                value: data.AttendancePercentage/100,
+                valueText: data.AttendancePercentage + '%',
+                valueTextColor: '#4caf50',
+                valueFontSize: '36',
+                valueFontWeight: '700',
+                borderWidth: '20',
+                labelText: 'Attendance Today',
+                borderColor: '#4caf50',
+                borderBgColor: '#ffeb3b',
+                bgColor: '#ffffff',
+              });
+              self.$setState({
+                Absent: data.Absent,
+                Present: data.Present,
+                AttendancePercentage: data.AttendancePercentage,
+                PresentClientList: data.PresentClientList,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
       }
     },
     methods: {

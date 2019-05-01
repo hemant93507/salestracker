@@ -1,0 +1,62 @@
+<template>
+  <div class="page" id="employeedetail-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Employee Details</div>
+      </div>
+    </div>
+    <div class="page-content">
+      {{email}}
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var self = this;
+        var email = this.$route.params.email;
+        var obj = {
+          email: email,
+        };
+        app.request({
+          url: BaseURL + 'employee-detail',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                id: data.EmployeeDetail.id,
+                name: data.EmployeeDetail.name,
+                email: data.EmployeeDetail.email,
+                mobile_number: data.EmployeeDetail.mobile_number,
+                address: data.EmployeeDetail.address,
+                gender: data.EmployeeDetail.gender,
+                dob: data.EmployeeDetail.dob,
+                doj: data.EmployeeDetail.doj,
+                profile_image: data.EmployeeDetail.profile_image,
+                id_proof: data.EmployeeDetail.id_proof,
+                address_proof_front: data.EmployeeDetail.address_proof_front,
+                address_proof_back: data.EmployeeDetail.address_proof_back,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      }
+    }
+  }
+</script>

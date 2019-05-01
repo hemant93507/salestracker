@@ -20,6 +20,7 @@
         <table>
           <thead>
             <tr>
+              <th class="label-cell color-green">Employee ID</th>
               <th class="label-cell color-green">Name</th>
               <th class="label-cell color-green">Email</th>
               <th class="label-cell color-green">Phone</th>
@@ -27,18 +28,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="label-cell">Abhishek</td>
-              <td class="label-cell">abhishek@techstreet.in</td>
-              <td class="label-cell">8556234598</td>
-              <td class="label-cell">Noida, Uttar Pradesh</td>
-            </tr>
-            <tr>
-              <td class="label-cell">Hemant</td>
-              <td class="label-cell">hemant@techstreet.in</td>
-              <td class="label-cell">9582457465</td>
-              <td class="label-cell">Noida, Uttar Pradesh</td>
-            </tr>
+            {{#each UserList}}
+              <tr>
+                <td class="label-cell">{{id}}</td>
+                <td class="label-cell">{{name}}</td>
+                <td class="label-cell">{{email}}</td>
+                <td class="label-cell">{{mobile_number}}</td>
+                <td class="label-cell">{{address}}</td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       </div>
@@ -49,7 +47,32 @@
   return {
     on: {
       pageInit: function () {
-
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'employee-list',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                UserList: data.UserList,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
       }
     }
   }
