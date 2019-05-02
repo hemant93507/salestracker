@@ -17,10 +17,10 @@
     </div>
     <div class="page-content">
       <div class="block margin text-align-center">
-        {{#js_if "this.gender === 'Male' || this.gender === 'male' "}}
-        <img class="img-round" width="100" src="img/male.png" />
-        {{else}}
+        {{#js_if "this.gender === 'Female' || this.gender === 'female' "}}
         <img class="img-round" width="100" src="img/female.png" />
+        {{else}}
+        <img class="img-round" width="100" src="img/male.png" />
         {{/js_if}}
         <h2 class="no-margin color-darkgray">{{name}}</h2>
         <h3 class="no-margin color-gray">{{email}}</h3>
