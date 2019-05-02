@@ -33,13 +33,13 @@
           </thead>
           <tbody>
             {{#each Result}}
-              <tr>
-                <td class="label-cell">{{party_name}}</td>
-                <td class="label-cell">{{party_email}}</td>
-                <td class="label-cell">{{party_phone}}</td>
-                <td class="label-cell">{{party_address}}</td>
-                <td class="label-cell">{{location_image}}</td>
-              </tr>
+            <tr>
+              <td class="label-cell">{{party_name}}</td>
+              <td class="label-cell">{{party_email}}</td>
+              <td class="label-cell">{{party_phone}}</td>
+              <td class="label-cell">{{party_address}}</td>
+              <td class="label-cell"><a @click="viewPhoto" data-img="{{location_image}}" href="#">View</a></td>
+            </tr>
             {{/each}}
           </tbody>
         </table>
@@ -49,11 +49,11 @@
 </template>
 <script>
   return {
-    data: function(){
+    data: function () {
       var CurrentMonth = moment().format('MMMM');
       var CurrentYear = moment().format('YYYY');
-      return{
-        CurrentMonth : CurrentMonth,
+      return {
+        CurrentMonth: CurrentMonth,
         CurrentYear: CurrentYear,
       }
     },
@@ -85,6 +85,17 @@
             app.preloader.hide();
           }
         })
+      },
+    },
+    methods: {
+      viewPhoto: function (e) {
+        // console.log($$(e.target).data('img'));
+        var myPhotoBrowserStandalone = app.photoBrowser.create({
+          photos: [
+            $$(e.target).data('img'),
+          ]
+        });
+        myPhotoBrowserStandalone.open();
       }
     },
   }
