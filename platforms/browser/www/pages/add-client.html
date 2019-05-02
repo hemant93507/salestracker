@@ -41,13 +41,14 @@
             <div class="item-inner">
               <div class="item-title item-floating-label">*Party Address</div>
               <div class="item-input-wrap">
-                <textarea name="party_address" class="resizable" placeholder="Party Address" required validate></textarea>
+                <textarea name="party_address" class="resizable" placeholder="Party Address" required
+                  validate></textarea>
               </div>
             </div>
           </li>
           <li class="item-content item-input">
             <div class="item-inner margin-top">
-              <i style="font-size:48px;vertical-align: middle;margin-top: -9px;"
+              <i @click="locationImage" id="locationImage" style="font-size:48px;vertical-align: middle;margin-top: -9px;"
                 class="material-icons color-green">add_a_photo</i>
               Add Location Photo
             </div>
@@ -59,6 +60,7 @@
   </div>
 </template>
 <script>
+  var location_image = '';
   return {
     on: {
       pageInit: function () {
@@ -89,6 +91,7 @@
             party_email: party_email,
             party_phone: party_phone,
             party_address: party_address,
+            location_image: location_image,
           };
           app.request({
             url: BaseURL + 'add-clientvisit',
@@ -105,7 +108,7 @@
             success: function (data, status, xhr) {
               console.log(data);
               if (data.ErrorCode == '0') {
-                app.dialog.alert('Record added successfully', function(){
+                app.dialog.alert('Record added successfully', function () {
                   app.views.main.router.navigate('/client-visit/');
                 });
               }
@@ -125,6 +128,23 @@
           navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
         }
       },
+      locationImage: function () {
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 100,
+          targetWidth: 512,
+          targetHeight: 512,
+          correctOrientation: true,
+          destinationType: Camera.DestinationType.DATA_URL,
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById('locationImage');
+          image.src = "data:image/jpeg;base64," + imageData;
+          profile_image = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          console.log(message);
+        }
+      }
     },
   }
 </script>

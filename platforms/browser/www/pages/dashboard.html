@@ -73,15 +73,22 @@
             </tr>
           </thead>
           <tbody>
+            {{#if Present}}
             {{#each PresentClientList}}
               <tr>
                 <!-- <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link">{{user_id}}</a></td> -->
-                <td class="label-cell"><a href="#" class="link">{{user_id}}</a></td>
+                <!-- <td class="label-cell"><a href="#" class="link">{{user_id}}</a></td> -->
+                <td class="label-cell">{{user_id}}</td>
                 <td class="label-cell">{{name}}</td>
                 <td class="label-cell">{{check_in}}</td>
                 <td class="label-cell">{{check_out}}</td>
               </tr>
             {{/each}}
+            {{else}}
+              <tr>
+                <td colspan="4" class="label-cell">No records found!</td>
+              </tr>
+            {{/if}}
           </tbody>
         </table>
       </div>

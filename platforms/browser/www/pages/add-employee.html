@@ -88,6 +88,29 @@
               </div>
             </div>
           </li>
+          <li class="item-content item-input">
+            <div class="item-inner margin-top">
+              <i @click="idProofImage" id="idProofImage" style="font-size:48px;vertical-align: middle;margin-top: -9px;"
+                class="material-icons color-green">add_a_photo</i>
+              Upload ID Proof
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner margin-top">
+              <i @click="addressProofFront" id="addressProofFront"
+                style="font-size:48px;vertical-align: middle;margin-top: -9px;"
+                class="material-icons color-green">add_a_photo</i>
+              Upload Address Proof(Front)
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner margin-top">
+              <i @click="addressProofBack" id="addressProofBack"
+                style="font-size:48px;vertical-align: middle;margin-top: -9px;"
+                class="material-icons color-green">add_a_photo</i>
+              Upload Address Proof(Back)
+            </div>
+          </li>
         </ul>
         <a href="#" @click="submit" class="button button-outline button-round margin">Submit</a>
       </form>
@@ -95,6 +118,9 @@
   </div>
 </template>
 <script>
+  var id_proof = '';
+  var address_proof_front = '';
+  var address_proof_back = '';
   return {
     on: {
       pageInit: function () {
@@ -135,6 +161,9 @@
           dob: dob,
           doj: doj,
           address: address,
+          id_proof: id_proof,
+          address_proof_front: address_proof_front,
+          address_proof_back: address_proof_back,
         };
         app.request({
           url: BaseURL + 'add-employee',
@@ -164,6 +193,57 @@
             SpinnerPlugin.activityStop();
           }
         })
+      },
+      idProofImage: function () {
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 100,
+          targetWidth: 512,
+          targetHeight: 512,
+          correctOrientation: true,
+          destinationType: Camera.DestinationType.DATA_URL,
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById('idProofImage');
+          image.src = "data:image/jpeg;base64," + imageData;
+          id_proof = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          console.log(message);
+        }
+      },
+      addressProofFront: function () {
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 100,
+          targetWidth: 512,
+          targetHeight: 512,
+          correctOrientation: true,
+          destinationType: Camera.DestinationType.DATA_URL,
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById('addressProofFront');
+          image.src = "data:image/jpeg;base64," + imageData;
+          address_proof_front = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          console.log(message);
+        }
+      },
+      addressProofBack: function () {
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 100,
+          targetWidth: 512,
+          targetHeight: 512,
+          correctOrientation: true,
+          destinationType: Camera.DestinationType.DATA_URL,
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById('addressProofBack');
+          image.src = "data:image/jpeg;base64," + imageData;
+          address_proof_back = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          console.log(message);
+        }
       }
     },
   }
