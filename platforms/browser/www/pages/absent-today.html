@@ -1,0 +1,74 @@
+<template>
+  <div class="page" id="attendance-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Absent Today</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell color-green">Employee ID</th>
+              <th class="label-cell color-green">Name</th>
+              <th class="label-cell color-green">Email</th>
+              <th class="label-cell color-green">Phone</th>
+              <th class="label-cell color-green">Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each AbsentList}}
+              <tr>
+                <td class="label-cell">{{id}}</td>
+                <td class="label-cell">{{name}}</td>
+                <td class="label-cell">{{email}}</td>
+                <td class="label-cell">{{mobile_number}}</td>
+                <td class="label-cell">{{address}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'absent-list',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                AbsentList: data.AbsentList,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      }
+    }
+  }
+</script>

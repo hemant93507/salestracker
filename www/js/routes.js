@@ -95,6 +95,19 @@ var routes = [
     componentUrl: './pages/dashboard.html',
     name: 'dashboard',
   },
+
+  {
+    path: '/present-today/',
+    componentUrl: './pages/present-today.html',
+    name: 'present-today',
+  },
+
+  {
+    path: '/absent-today/',
+    componentUrl: './pages/absent-today.html',
+    name: 'absent-today',
+  },
+
   {
     path: '/user-dashboard/',
     componentUrl: './pages/user-dashboard.html',
