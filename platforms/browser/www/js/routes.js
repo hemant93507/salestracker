@@ -75,6 +75,12 @@ var routes = [
     name: 'employee-detail',
   },
 
+  {
+    path: '/party-detail/:email/',
+    componentUrl: './pages/party-detail.html',
+    name: 'party-detail',
+  },
+
   // Add Client
   {
     path: '/add-client/',
@@ -100,6 +106,18 @@ var routes = [
     path: '/present-today/',
     componentUrl: './pages/present-today.html',
     name: 'present-today',
+  },
+
+  {
+    path: '/max-visits/',
+    componentUrl: './pages/max-visits.html',
+    name: 'max-visits',
+  },
+
+  {
+    path: '/min-visits/',
+    componentUrl: './pages/min-visits.html',
+    name: 'min-visits',
   },
 
   {

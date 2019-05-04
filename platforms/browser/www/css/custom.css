@@ -1,4 +1,11 @@
 /* Sales Tracker  - Start */
+.slider-image{
+    width: 100%;
+}
+.swiper-container{
+    height: 220px;
+    overflow: hidden;
+}
 .app-version{
     /* position: absolute;
     bottom: 24px;

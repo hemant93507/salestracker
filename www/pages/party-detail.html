@@ -7,26 +7,29 @@
             <i class="material-icons">arrow_back</i>
           </a>
         </div>
-        <div class="title">{{name}}</div>
+        <div class="title">{{party_name}}</div>
       </div>
     </div>
     <div class="page-content">
       <div class="swiper-container swiper-init" data-pagination='{"el": ".swiper-pagination"}'>
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img class="slider-image" src="{{id_proof}}" /></div>
-          <div class="swiper-slide"><img class="slider-image" src="{{address_proof_front}}" /></div>
-          <div class="swiper-slide"><img class="slider-image" src="{{address_proof_back}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" src="{{location_image}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" src="{{person_image}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" src="{{other_image}}" /></div>
         </div>
         <div class="swiper-pagination"></div>
+      </div>
+      <div class="block">
+          <iframe width="100%" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={{latitude}},{{longitude}}&amp;key=AIzaSyDB2nsxk7ReHnysyc8J1xWhlai-IfwDA1Y"></iframe>
       </div>
       <div class="list media-list no-hairlines no-margin">
         <ul class="user-profile-info">
           <li>
             <div class="item-content">
               <div class="item-inner">
-                <div class="item-subtitle color-green">Name</div>
+                <div class="item-subtitle color-green">Party Name</div>
                 <div class="item-title-row">
-                  <div class="item-title">{{name}}</div>
+                  <div class="item-title">{{party_name}}</div>
                 </div>
               </div>
             </div>
@@ -34,9 +37,9 @@
           <li>
             <div class="item-content">
               <div class="item-inner">
-                <div class="item-subtitle color-green">Email</div>
+                <div class="item-subtitle color-green">Party Email</div>
                 <div class="item-title-row">
-                  <div class="item-title">{{email}}</div>
+                  <div class="item-title">{{party_email}}</div>
                 </div>
               </div>
             </div>
@@ -44,9 +47,9 @@
           <li>
             <div class="item-content">
               <div class="item-inner">
-                <div class="item-subtitle color-green">Mobile</div>
+                <div class="item-subtitle color-green">Party Phone</div>
                 <div class="item-title-row">
-                  <div class="item-title">{{mobile_number}}</div>
+                  <div class="item-title">{{party_phone}}</div>
                 </div>
               </div>
             </div>
@@ -54,9 +57,9 @@
           <li>
             <div class="item-content">
               <div class="item-inner">
-                <div class="item-subtitle color-green">Address</div>
+                <div class="item-subtitle color-green">Party Address</div>
                 <div class="item-title-row">
-                  <div class="item-title">{{address}}</div>
+                  <div class="item-title">{{party_address}}</div>
                 </div>
               </div>
             </div>
@@ -76,7 +79,7 @@
           email: email,
         };
         app.request({
-          url: BaseURL + 'employee-detail',
+          url: BaseURL + 'party-details',
           method: 'POST',
           dataType: 'json',
           data: obj,
@@ -88,18 +91,16 @@
             console.log(data);
             if (data.ErrorCode == '0') {
               self.$setState({
-                id: data.EmployeeDetail.id,
-                name: data.EmployeeDetail.name,
-                email: data.EmployeeDetail.email,
-                mobile_number: data.EmployeeDetail.mobile_number,
-                address: data.EmployeeDetail.address,
-                gender: data.EmployeeDetail.gender,
-                dob: data.EmployeeDetail.dob,
-                doj: data.EmployeeDetail.doj,
-                profile_image: data.EmployeeDetail.profile_image,
-                id_proof: data.EmployeeDetail.id_proof,
-                address_proof_front: data.EmployeeDetail.address_proof_front,
-                address_proof_back: data.EmployeeDetail.address_proof_back,
+                contact_name: data.PartyDetails.contact_name,
+                latitude: data.PartyDetails.latitude,
+                longitude: data.PartyDetails.longitude,
+                party_name: data.PartyDetails.party_name,
+                party_email: data.PartyDetails.party_email,
+                party_phone: data.PartyDetails.party_phone,
+                party_address: data.PartyDetails.party_address,
+                location_image: data.PartyDetails.location_image,
+                person_image: data.PartyDetails.person_image,
+                other_image: data.PartyDetails.other_image,
               });
             }
           },

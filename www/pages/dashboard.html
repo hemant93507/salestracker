@@ -15,6 +15,139 @@
         </div>
       </div>
     </div>
+    <div class="toolbar tabbar">
+      <div class="toolbar-inner">
+        <a href="#tab-1" class="tab-link tab-link-active">Attendance</a>
+        <a href="#tab-2" class="tab-link">Site Visits</a>
+      </div>
+    </div>
+    <div class="tabs-animated-wrap">
+      <div class="tabs">
+        <div id="tab-1" class="page-content tab tab-active">
+          <div class="block">
+            <div class="row">
+              <div class="col text-align-center">
+                <div class="gauge gauge-init attendance-gauge" data-type="circle"
+                  data-value="{{AttendancePercentage/100}}" data-value-text="{{AttendancePercentage}}%"
+                  data-value-text-color="#4caf50" data-value-font-size="36" data-value-font-weight="700"
+                  data-border-width="20" data-label-text="Attendance Today" data-border-color="#4caf50"
+                  data-border-bg-color="#ffeb3b" data-bg-color="#ffffff">
+                </div>
+              </div>
+              <div class="col text-align-center">
+                <div class="list no-hairlines">
+                  <ul>
+                    <li>
+                      <a href="/present-today/" class="item-link item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Present</div>
+                          <div class="item-after">{{Present}}</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/absent-today/" class="item-link item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Absent</div>
+                          <div class="item-after">{{Absent}}</div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="block-title font-16" style="padding-left:8px">Attendance Today</div>
+          <div class="data-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="label-cell color-green">Employee ID</th>
+                  <th class="label-cell color-green">Employee Name</th>
+                  <th class="label-cell color-green">Check-In</th>
+                  <th class="label-cell color-green">Check-Out</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#if Present}}
+                {{#each PresentEmployeeList}}
+                <tr>
+                  <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{user_id}}</a>
+                  </td>
+                  <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{name}}</a>
+                  </td>
+                  <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{check_in}}</a>
+                  </td>
+                  <td class="label-cell"><a href="/employee-detail/{{email}}/"
+                      class="link color-black">{{check_out}}</a></td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr>
+                  <td colspan="4" class="label-cell">No records found!</td>
+                </tr>
+                {{/if}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="tab-2" class="page-content tab">
+          <div class="block-title font-16">Today's Stats</div>
+          <div class="block no-margin">
+            <div class="row">
+              <div class="col text-align-center">
+                <div class="list no-margin no-hairlines">
+                  <ul>
+                    <li>
+                      <a href="/max-visits/" class="item-link item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Maximum Visits</div>
+                          <div class="item-after">{{MaxVisits}}</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/min-visits/" class="item-link item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Minimum Visits</div>
+                          <div class="item-after">{{MinVisits}}</div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="block-title font-16">Visits Today</div>
+          <div class="data-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="label-cell color-green">Party Name</th>
+                  <th class="label-cell color-green">Contact Name</th>
+                  <th class="label-cell color-green">Party Email</th>
+                  <th class="label-cell color-green">Party Phone</th>
+                  <th class="label-cell color-green">Party Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each PartyVisitList}}
+                <tr>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_name}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{contact_name}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_email}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_phone}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_address}}</a></td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="popover dashboard-popover">
       <div class="popover-inner">
         <div class="list">
@@ -27,125 +160,67 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block">
-        <div class="row">
-          <div class="col text-align-center">
-            <!-- <div class="gauge gauge-init" data-type="circle" data-value="{{AttendancePercentage/100}}"
-              data-value-text="{{AttendancePercentage}}%" data-value-text-color="#4caf50" data-value-font-size="36"
-              data-value-font-weight="700" data-border-width="20" data-label-text="Attendance Today"
-              data-border-color="#4caf50" data-border-bg-color="#ffeb3b" data-bg-color="#ffffff">
-            </div> -->
-            <div class="gauge"></div>
-          </div>
-          <div class="col text-align-center">
-            <div class="list no-hairlines">
-              <ul>
-                <li>
-                  <a href="/present-today/" class="item-link item-content">
-                    <div class="item-inner">
-                      <div class="item-title">Present</div>
-                      <div class="item-after">{{Present}}</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="/absent-today/" class="item-link item-content">
-                    <div class="item-inner">
-                      <div class="item-title">Absent</div>
-                      <div class="item-after">{{Absent}}</div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="block-title font-16" style="padding-left:8px">Attendance Today</div>
-      <div class="data-table">
-        <table>
-          <thead>
-            <tr>
-              <th class="label-cell color-green">Employee ID</th>
-              <th class="label-cell color-green">Employee Name</th>
-              <th class="label-cell color-green">Check-In</th>
-              <th class="label-cell color-green">Check-Out</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#if Present}}
-            {{#each PresentClientList}}
-              <tr>
-                <!-- <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link">{{user_id}}</a></td> -->
-                <!-- <td class="label-cell"><a href="#" class="link">{{user_id}}</a></td> -->
-                <td class="label-cell">{{user_id}}</td>
-                <td class="label-cell">{{name}}</td>
-                <td class="label-cell">{{check_in}}</td>
-                <td class="label-cell">{{check_out}}</td>
-              </tr>
-            {{/each}}
-            {{else}}
-              <tr>
-                <td colspan="4" class="label-cell">No records found!</td>
-              </tr>
-            {{/if}}
-          </tbody>
-        </table>
-      </div>
+
     </div>
   </div>
 </template>
 <script>
   return {
+    data: function () {
+      var self = this;
+      var data = JSON.parse(localStorage.User);
+      var obj = {
+        email: data.User.email,
+      };
+      app.request({
+        url: BaseURL + 'admin-dashboard',
+        method: 'POST',
+        dataType: 'json',
+        data: obj,
+        //contentType: 'application/json',
+        beforeSend: function (xhr) {
+          app.preloader.show();
+        },
+        success: function (data, status, xhr) {
+          console.log(data);
+          if (data.ErrorCode == '0') {
+            var gauge = app.gauge.get('.attendance-gauge');
+            gauge.update({
+              labelText: 'amount of something',
+              el: '.attendance-gauge',
+              value: data.AttendancePercentage / 100,
+              valueText: data.AttendancePercentage + '%',
+              valueTextColor: '#4caf50',
+              valueFontSize: '36',
+              valueFontWeight: '700',
+              borderWidth: '20',
+              labelText: 'Attendance Today',
+              borderColor: '#4caf50',
+              borderBgColor: '#ffeb3b',
+              bgColor: '#ffffff',
+            });
+            self.$setState({
+              Absent: data.Absent,
+              Present: data.Present,
+              AttendancePercentage: data.AttendancePercentage,
+              PresentEmployeeList: data.PresentEmployeeList,
+              PartyVisitList: data.PartyVisitList,
+              MaxVisits: 10,
+              MinVisits: 6,
+            });
+          }
+        },
+        complete: function (xhr, status) {
+          app.preloader.hide();
+        }
+      })
+    },
     on: {
       pageInit: function () {
         // $$('.panel-left .profile-menu a').attr('href','/admin-profile/');
         // $$('.panel-left .profile-menu .item-title').text('My Profile');
         $$('.clientvisit-menu,.attendance-menu').hide();
         $$('.employees-menu').show();
-        var self = this;
-        var data = JSON.parse(localStorage.User);
-        var obj = {
-          email: data.User.email,
-        };
-        app.request({
-          url: BaseURL + 'admin-dashboard',
-          method: 'POST',
-          dataType: 'json',
-          data: obj,
-          //contentType: 'application/json',
-          beforeSend: function (xhr) {
-            app.preloader.show();
-          },
-          success: function (data, status, xhr) {
-            console.log(data);
-            if (data.ErrorCode == '0') {
-              var gauge = app.gauge.create({
-                labelText: 'amount of something',
-                el: '.gauge',
-                value: data.AttendancePercentage/100,
-                valueText: data.AttendancePercentage + '%',
-                valueTextColor: '#4caf50',
-                valueFontSize: '36',
-                valueFontWeight: '700',
-                borderWidth: '20',
-                labelText: 'Attendance Today',
-                borderColor: '#4caf50',
-                borderBgColor: '#ffeb3b',
-                bgColor: '#ffffff',
-              });
-              self.$setState({
-                Absent: data.Absent,
-                Present: data.Present,
-                AttendancePercentage: data.AttendancePercentage,
-                PresentClientList: data.PresentClientList,
-              });
-            }
-          },
-          complete: function (xhr, status) {
-            app.preloader.hide();
-          }
-        })
       }
     },
     methods: {

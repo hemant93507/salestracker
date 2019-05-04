@@ -7,11 +7,62 @@
             <i class="material-icons">arrow_back</i>
           </a>
         </div>
-        <div class="title">Employee Details</div>
+        <div class="title">{{name}}</div>
       </div>
     </div>
     <div class="page-content">
-      {{email}}
+      <div class="swiper-container swiper-init" data-pagination='{"el": ".swiper-pagination"}'>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img class="slider-image" src="{{id_proof}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" src="{{address_proof_front}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" src="{{address_proof_back}}" /></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="list media-list no-hairlines no-margin">
+        <ul class="user-profile-info">
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Name</div>
+                <div class="item-title-row">
+                  <div class="item-title">{{name}}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Email</div>
+                <div class="item-title-row">
+                  <div class="item-title">{{email}}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Mobile</div>
+                <div class="item-title-row">
+                  <div class="item-title">{{mobile_number}}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-subtitle color-green">Address</div>
+                <div class="item-title-row">
+                  <div class="item-title">{{address}}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
