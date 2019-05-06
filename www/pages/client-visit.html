@@ -25,21 +25,27 @@
           <thead>
             <tr>
               <th class="label-cell color-green">Party Name</th>
+              <th class="label-cell color-green">Contact Name</th>
               <th class="label-cell color-green">Party Email</th>
               <th class="label-cell color-green">Party Phone</th>
               <th class="label-cell color-green">Party Address</th>
-              <th class="label-cell color-green">Location Image</th>
             </tr>
           </thead>
           <tbody>
             {{#each Result}}
             <tr>
-              <td class="label-cell">{{party_name}}</td>
-              <td class="label-cell">{{party_email}}</td>
-              <td class="label-cell">{{party_phone}}</td>
-              <td class="label-cell">{{party_address}}</td>
-              <td class="label-cell"><a @click="viewPhoto" data-img="{{location_image}}" href="#">View</a></td>
+              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                  class="link color-black">{{party_name}}</a></td>
+              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                  class="link color-black">{{contact_name}}</a></td>
+              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                  class="link color-black">{{party_email}}</a></td>
+              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                  class="link color-black">{{party_phone}}</a></td>
+              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                  class="link color-black">{{party_address}}</a></td>
             </tr>
+            <!-- <td class="label-cell"><a @click="viewPhoto" data-img="{{location_image}}" href="#">View</a></td> -->
             {{/each}}
           </tbody>
         </table>

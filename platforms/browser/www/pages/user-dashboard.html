@@ -26,6 +26,40 @@
         </div>
       </div>
     </div>
+    <div class="sheet-modal my-sheet">
+      <div class="toolbar">
+        <div class="toolbar-inner">
+          <div class="left"></div>
+          <div class="right">
+            <a href="#" class="link sheet-close">Done</a>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-modal-inner">
+        <div class="block">
+          <div class="list">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Check In</div>
+                    <div class="item-after">{{CheckIn}}</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title">Duration</div>
+                      <div class="item-after">{{TimeSpentToday}}</div>
+                    </div>
+                  </div>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="page-content">
       <div class="block">
         <div class="list no-hairlines">
@@ -39,7 +73,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="item-link item-content">
+              <a href="#" class="item-link item-content{{SheetOpen}}" data-sheet=".my-sheet">
                 <div class="item-inner">
                   <div class="item-title">Time Spent Today</div>
                   <div class="item-after">{{TimeSpentToday}}</div>
@@ -77,6 +111,7 @@
         var self = this;
         var checkin_event = 'checkin';
         var checkin_text = 'Check In';
+        var SheetOpen = '';
         var data = JSON.parse(localStorage.User);
         var obj = {
           email: data.User.email,
@@ -93,12 +128,16 @@
               if (data.CheckedIn == true) {
                 checkin_event = 'checkout';
                 checkin_text = 'Check Out';
+                SheetOpen = ' sheet-open';
               }
               self.$setState({
+                CheckIn: data.CheckIn,
+                CheckOut: data.CheckOut,
                 TimeSpentToday: data.TimeSpentToday,
                 ClientVisitToday: data.ClientVisitToday,
                 checkin_event: checkin_event,
                 checkin_text: checkin_text,
+                SheetOpen: SheetOpen,
               });
             }
           },

@@ -38,7 +38,7 @@
                 <div class="list no-hairlines">
                   <ul>
                     <li>
-                      <a href="/present-today/" class="item-link item-content">
+                      <a href="{{PresentLink}}" class="item-link item-content">
                         <div class="item-inner">
                           <div class="item-title">Present</div>
                           <div class="item-after">{{Present}}</div>
@@ -46,7 +46,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="/absent-today/" class="item-link item-content">
+                      <a href="{{AbsentLink}}" class="item-link item-content">
                         <div class="item-inner">
                           <div class="item-title">Absent</div>
                           <div class="item-after">{{Absent}}</div>
@@ -100,18 +100,18 @@
                 <div class="list no-margin no-hairlines">
                   <ul>
                     <li>
-                      <a href="/max-visits/" class="item-link item-content">
+                      <a href="{{MaximumVisitLink}}" class="item-link item-content">
                         <div class="item-inner">
                           <div class="item-title">Maximum Visits</div>
-                          <div class="item-after">{{MaxVisits}}</div>
+                          <div class="item-after">{{MaximumVisitCount}}</div>
                         </div>
                       </a>
                     </li>
                     <li>
-                      <a href="/min-visits/" class="item-link item-content">
+                      <a href="{{MinimumVisitLink}}" class="item-link item-content">
                         <div class="item-inner">
                           <div class="item-title">Minimum Visits</div>
-                          <div class="item-after">{{MinVisits}}</div>
+                          <div class="item-after">{{MinimumVisitCount}}</div>
                         </div>
                       </a>
                     </li>
@@ -133,15 +133,26 @@
                 </tr>
               </thead>
               <tbody>
+                {{#if MinimumVisitCount}}
                 {{#each PartyVisitList}}
                 <tr>
-                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_name}}</a></td>
-                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{contact_name}}</a></td>
-                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_email}}</a></td>
-                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_phone}}</a></td>
-                  <td class="label-cell"><a href="/party-detail/{{party_email}}/" class="link color-black">{{party_address}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                      class="link color-black">{{party_name}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                      class="link color-black">{{contact_name}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                      class="link color-black">{{party_email}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                      class="link color-black">{{party_phone}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                      class="link color-black">{{party_address}}</a></td>
                 </tr>
                 {{/each}}
+                {{else}}
+                <tr>
+                  <td colspan="4" class="label-cell">No records found!</td>
+                </tr>
+                {{/if}}
               </tbody>
             </table>
           </div>
@@ -199,14 +210,37 @@
               borderBgColor: '#ffeb3b',
               bgColor: '#ffffff',
             });
+
+            var PresentLink = '#';
+            var AbsentLink = '#';
+            var MaximumVisitLink = '#';
+            var MinimumVisitLink = '#';
+
+            if (data.MaximumVisitCount > 0) {
+              MaximumVisitLink = '/max-visits/';
+            }
+            if (data.MinimumVisitCount > 0) {
+              MinimumVisitLink = '/min-visits/';
+            }
+            if (data.Present > 0) {
+              PresentLink = '/present-today/';
+            }
+            if (data.Absent > 0) {
+              AbsentLink = '/absent-today/';
+            }
+
             self.$setState({
               Absent: data.Absent,
               Present: data.Present,
               AttendancePercentage: data.AttendancePercentage,
               PresentEmployeeList: data.PresentEmployeeList,
               PartyVisitList: data.PartyVisitList,
-              MaxVisits: 10,
-              MinVisits: 6,
+              MaximumVisitCount: data.MaximumVisitCount,
+              MinimumVisitCount: data.MinimumVisitCount,
+              MaximumVisitLink: MaximumVisitLink,
+              MinimumVisitLink: MinimumVisitLink,
+              PresentLink: PresentLink,
+              AbsentLink: AbsentLink,
             });
           }
         },
