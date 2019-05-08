@@ -146,6 +146,7 @@
     },
     methods: {
       checkin: function () {
+        app.preloader.show();
         var self = this;
         var data = JSON.parse(localStorage.User);
         var options = {
@@ -171,9 +172,6 @@
               dataType: 'json',
               data: obj,
               //contentType: 'application/json',
-              beforeSend: function (xhr) {
-                app.preloader.show();
-              },
               error: function (xhr, status) {
                 alert(statusMessage(status));
               },
@@ -196,18 +194,19 @@
             })
           }
           function locationFromLatLon_failure(err) {
-            console.log(err);
+            app.preloader.hide();
           }
-          nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, lat, lon, { useLocale: true, maxResults: 1 });
+          nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
         };
         function onError(error) {
-          console.log(error);
+          app.preloader.hide();
         }
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-        
+
       },
       checkout: function () {
+        app.preloader.show();
         var self = this;
         var data = JSON.parse(localStorage.User);
         var obj = {
@@ -219,9 +218,6 @@
           dataType: 'json',
           data: obj,
           //contentType: 'application/json',
-          beforeSend: function (xhr) {
-            app.preloader.show();
-          },
           error: function (xhr, status) {
             alert(statusMessage(status));
           },

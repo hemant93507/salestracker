@@ -23,6 +23,14 @@
           </li>
           <li class="item-content item-input">
             <div class="item-inner">
+              <div class="item-title item-floating-label">*Contact Name</div>
+              <div class="item-input-wrap">
+                <input type="text" name="contact_name" required validate>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
               <div class="item-title item-floating-label">*Party Email</div>
               <div class="item-input-wrap">
                 <input type="email" name="party_email" required validate>
@@ -96,6 +104,7 @@
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           var party_name = $$('#clientvisit-form input[name=party_name]').val();
+          var contact_name = $$('#clientvisit-form input[name=contact_name]').val();
           var party_email = $$('#clientvisit-form input[name=party_email]').val();
           var party_phone = $$('#clientvisit-form input[name=party_phone]').val();
           var party_address = $$('#clientvisit-form textarea[name=party_address]').val();
@@ -103,7 +112,9 @@
             email: data.User.email,
             latitude: latitude,
             longitude: longitude,
+            location: '',
             party_name: party_name,
+            contact_name: contact_name,
             party_email: party_email,
             party_phone: party_phone,
             party_address: party_address,
