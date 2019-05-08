@@ -1,0 +1,149 @@
+<template>
+  <div class="page" id="clientvisitadmin-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Client Visits</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list show-hairlines-ios no-hairlines text-align-left no-margin-bottom margin-top">
+        <div class="row">
+          <div class="col-50">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="From Date" value="{{FromDate}}" name="FromDate">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-50">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="To Date" value="{{ToDate}}" name="ToDate">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-40">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <a href="#" @click="clientvisit" class="button button-outline">Search</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="data-table">
+
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        FromDate: moment().startOf('month').format('DD-MMM-Y'),
+        ToDate: moment().format('DD-MMM-Y')
+      }
+    },
+    on: {
+      pageInit: function () {
+        var FromDateCalendar = app.calendar.create({
+          inputEl: '#clientvisitadmin-page input[name=FromDate]',
+          openIn: 'customModal',
+          header: true,
+          dateFormat: 'dd-M-yyyy',
+          closeOnSelect: true
+        });
+        var ToDateCalendar = app.calendar.create({
+          inputEl: '#clientvisitadmin-page input[name=ToDate]',
+          openIn: 'customModal',
+          header: true,
+          dateFormat: 'dd-M-yyyy',
+          closeOnSelect: true
+        });
+      }
+    },
+    methods: {
+      clientvisit: function () {
+        var FromDate = $$('#clientvisitadmin-page input[name=FromDate]').val();
+        var ToDate = $$('#clientvisitadmin-page input[name=ToDate]').val();
+        var obj = {
+          from_date: FromDate,
+          to_date: ToDate,
+        };
+        app.request({
+          url: BaseURL + 'clientvisit-list',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              $$('#clientvisitadmin-page .page-content .data-table').html('');
+              var ClientVisitList = data.clientVisitList;
+              if (ClientVisitList) {
+                var tbody = '';
+                for (var i = 0; i < ClientVisitList.length; i++) {
+                  var party_name = ClientVisitList[i].party_name;
+                  var contact_name = ClientVisitList[i].contact_name;
+                  var party_email = ClientVisitList[i].party_email;
+                  var party_phone = ClientVisitList[i].party_phone;
+                  var party_address = ClientVisitList[i].party_address;
+                  var location = ClientVisitList[i].location;
+                  var tbody_el = `
+                  <tr>
+                    <td class="label-cell">${party_name}</td>
+                    <td class="label-cell">${contact_name}</td>
+                    <td class="label-cell">${party_email}</td>
+                    <td class="label-cell">${party_phone}</td>
+                    <td class="label-cell">${party_address}</td>
+                    <td class="label-cell">${location}</td>
+                  </tr>`;
+                  tbody = tbody + tbody_el;
+                }
+                var table = `<table>
+                  <thead>
+                    <tr>
+                      <th class="label-cell color-green">Party Name</th>
+                      <th class="label-cell color-green">Contact Name</th>
+                      <th class="label-cell color-green">Party Email</th>
+                      <th class="label-cell color-green">Party Phone</th>
+                      <th class="label-cell color-green">Party Address</th>
+                      <th class="label-cell color-green">Location</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${tbody}
+                  </tbody>
+                </table>`;
+                $$('#clientvisitadmin-page .page-content .data-table').append(table);
+              }
+            }
+            else {
+              $$('#clientvisitadmin-page .page-content .data-table').html('');
+              app.dialog.alert(data.ErrorMessage);
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      }
+    },
+  }
+</script>

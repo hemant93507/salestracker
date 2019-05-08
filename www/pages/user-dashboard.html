@@ -107,7 +107,9 @@
     on: {
       pageInit: function () {
         $$('.employees-menu').hide();
-        $$('.clientvisit-menu,.attendance-menu').show();
+        //$$('.clientvisit-menu,.attendance-menu').show();
+        $$('.panel-left .attendance-menu a').attr('href','/attendance/');
+        $$('.panel-left .clientvisit-menu a').attr('href','/client-visit/');
         var self = this;
         var checkin_event = 'checkin';
         var checkin_text = 'Check In';

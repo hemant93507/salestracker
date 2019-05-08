@@ -254,7 +254,9 @@
       pageInit: function () {
         // $$('.panel-left .profile-menu a').attr('href','/admin-profile/');
         // $$('.panel-left .profile-menu .item-title').text('My Profile');
-        $$('.clientvisit-menu,.attendance-menu').hide();
+        //$$('.clientvisit-menu,.attendance-menu').hide();
+        $$('.panel-left .attendance-menu a').attr('href','/attendance-adminview/');
+        $$('.panel-left .clientvisit-menu a').attr('href','/clientvisit-adminview/');
         $$('.employees-menu').show();
       }
     },
