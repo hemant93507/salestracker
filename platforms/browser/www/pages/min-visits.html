@@ -1,74 +1,77 @@
 <template>
-  <div class="page" id="attendance-page">
-    <div class="navbar">
-      <div class="navbar-inner sliding bg-color-white color-green">
-        <div class="left">
-          <a href="#" class="link back">
-            <i class="material-icons">arrow_back</i>
-          </a>
+    <div class="page" id="minvisit-page">
+      <div class="navbar">
+        <div class="navbar-inner sliding bg-color-white color-green">
+          <div class="left">
+            <a href="#" class="link back">
+              <i class="material-icons">arrow_back</i>
+            </a>
+          </div>
+          <div class="title">{{Name}}</div>
         </div>
-        <div class="title">Employee Name</div>
+      </div>
+      <div class="page-content">
+        <div class="data-table">
+          <table>
+            <thead>
+              <tr>
+                <th class="label-cell color-green">Party Name</th>
+                <th class="label-cell color-green">Contact Name</th>
+                <th class="label-cell color-green">Party Email</th>
+                <th class="label-cell color-green">Party Phone</th>
+                <th class="label-cell color-green">Party Address</th>
+                <th class="label-cell color-green">Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each Result}}
+              <tr>
+                <td class="label-cell">{{party_name}}</td>
+                <td class="label-cell">{{contact_name}}</td>
+                <td class="label-cell">{{party_email}}</td>
+                <td class="label-cell">{{party_phone}}</td>
+                <td class="label-cell">{{party_address}}</td>
+                <td class="label-cell">{{location}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div class="page-content">
-      <div class="data-table">
-        <table>
-          <thead>
-            <tr>
-              <th class="label-cell color-green">Party Name</th>
-              <th class="label-cell color-green">Contact Name</th>
-              <th class="label-cell color-green">Party Email</th>
-              <th class="label-cell color-green">Party Phone</th>
-              <th class="label-cell color-green">Party Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each MinVisits}}
-            <tr>
-              <td class="label-cell">{{id}}</td>
-              <td class="label-cell">{{name}}</td>
-              <td class="label-cell">{{email}}</td>
-              <td class="label-cell">{{mobile_number}}</td>
-              <td class="label-cell">{{address}}</td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</template>
-<script>
-  return {
-    on: {
-      pageInit: function () {
-        var self = this;
-        var data = JSON.parse(localStorage.User);
-        var obj = {
-          email: data.User.email,
-        };
-        app.request({
-          url: BaseURL + 'present-list',
-          method: 'POST',
-          dataType: 'json',
-          data: obj,
-          //contentType: 'application/json',
-          beforeSend: function (xhr) {
-            app.preloader.show();
-          },
-          success: function (data, status, xhr) {
-            console.log(data);
-            if (data.ErrorCode == '0') {
-              self.$setState({
-                PresentList: data.PresentList,
-              });
+  </template>
+  <script>
+    return {
+      on: {
+        pageInit: function () {
+          var self = this;
+          var data = JSON.parse(localStorage.User);
+          var obj = {
+            email: data.User.email,
+          };
+          app.request({
+            url: BaseURL + 'minvisit-list',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            //contentType: 'application/json',
+            beforeSend: function (xhr) {
+              app.preloader.show();
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              if (data.ErrorCode == '0') {
+                self.$setState({
+                  Name: data.Name,
+                  Result: data.Result,
+                });
+              }
+            },
+            complete: function (xhr, status) {
+              app.preloader.hide();
             }
-          },
-          complete: function (xhr, status) {
-            app.preloader.hide();
-          }
-        })
+          })
+        }
       }
     }
-  }
-</script>
+  </script>

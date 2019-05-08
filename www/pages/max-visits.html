@@ -1,5 +1,5 @@
 <template>
-  <div class="page" id="attendance-page">
+  <div class="page" id="maxvisit-page">
     <div class="navbar">
       <div class="navbar-inner sliding bg-color-white color-green">
         <div class="left">
@@ -7,7 +7,7 @@
             <i class="material-icons">arrow_back</i>
           </a>
         </div>
-        <div class="title">Employee Name</div>
+        <div class="title">{{Name}}</div>
       </div>
     </div>
     <div class="page-content">
@@ -20,16 +20,18 @@
               <th class="label-cell color-green">Party Email</th>
               <th class="label-cell color-green">Party Phone</th>
               <th class="label-cell color-green">Party Address</th>
+              <th class="label-cell color-green">Location</th>
             </tr>
           </thead>
           <tbody>
-            {{#each MaxVisits}}
+            {{#each Result}}
             <tr>
-              <td class="label-cell">{{id}}</td>
-              <td class="label-cell">{{name}}</td>
-              <td class="label-cell">{{email}}</td>
-              <td class="label-cell">{{mobile_number}}</td>
-              <td class="label-cell">{{address}}</td>
+              <td class="label-cell">{{party_name}}</td>
+              <td class="label-cell">{{contact_name}}</td>
+              <td class="label-cell">{{party_email}}</td>
+              <td class="label-cell">{{party_phone}}</td>
+              <td class="label-cell">{{party_address}}</td>
+              <td class="label-cell">{{location}}</td>
             </tr>
             {{/each}}
           </tbody>
@@ -48,7 +50,7 @@
           email: data.User.email,
         };
         app.request({
-          url: BaseURL + 'present-list',
+          url: BaseURL + 'maxvisit-list',
           method: 'POST',
           dataType: 'json',
           data: obj,
@@ -60,7 +62,8 @@
             console.log(data);
             if (data.ErrorCode == '0') {
               self.$setState({
-                PresentList: data.PresentList,
+                Name: data.Name,
+                Result: data.Result,
               });
             }
           },
