@@ -93,6 +93,7 @@
     },
     methods: {
       addClient: function () {
+        app.preloader.show();
         var self = this;
         var data = JSON.parse(localStorage.User);
         var options = {
@@ -103,55 +104,62 @@
         function onSuccess(position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
-          var party_name = $$('#clientvisit-form input[name=party_name]').val();
-          var contact_name = $$('#clientvisit-form input[name=contact_name]').val();
-          var party_email = $$('#clientvisit-form input[name=party_email]').val();
-          var party_phone = $$('#clientvisit-form input[name=party_phone]').val();
-          var party_address = $$('#clientvisit-form textarea[name=party_address]').val();
-          var obj = {
-            email: data.User.email,
-            latitude: latitude,
-            longitude: longitude,
-            location: '',
-            party_name: party_name,
-            contact_name: contact_name,
-            party_email: party_email,
-            party_phone: party_phone,
-            party_address: party_address,
-            location_image: location_image,
-            person_image: person_image,
-            other_image: other_image,
-          };
-          app.request({
-            url: BaseURL + 'add-clientvisit',
-            method: 'POST',
-            dataType: 'json',
-            data: obj,
-            //contentType: 'application/json',
-            beforeSend: function (xhr) {
-              app.preloader.show();
-            },
-            error: function (xhr, status) {
-              alert(statusMessage(status));
-            },
-            success: function (data, status, xhr) {
-              console.log(data);
-              if (data.ErrorCode == '0') {
-                app.dialog.alert('Record added successfully', function () {
-                  app.views.main.router.navigate('/client-visit/');
-                });
+          function locationFromLatLon_success(result) {
+            var firstResult = result[0];
+            var location = firstResult.subLocality + ',' + firstResult.locality + ',' + firstResult.subAdministrativeArea;
+            var party_name = $$('#clientvisit-form input[name=party_name]').val();
+            var contact_name = $$('#clientvisit-form input[name=contact_name]').val();
+            var party_email = $$('#clientvisit-form input[name=party_email]').val();
+            var party_phone = $$('#clientvisit-form input[name=party_phone]').val();
+            var party_address = $$('#clientvisit-form textarea[name=party_address]').val();
+            var obj = {
+              email: data.User.email,
+              latitude: latitude,
+              longitude: longitude,
+              location: location,
+              party_name: party_name,
+              contact_name: contact_name,
+              party_email: party_email,
+              party_phone: party_phone,
+              party_address: party_address,
+              location_image: location_image,
+              person_image: person_image,
+              other_image: other_image,
+            };
+
+            app.request({
+              url: BaseURL + 'add-clientvisit',
+              method: 'POST',
+              dataType: 'json',
+              data: obj,
+              //contentType: 'application/json',
+              error: function (xhr, status) {
+                alert(statusMessage(status));
+              },
+              success: function (data, status, xhr) {
+                console.log(data);
+                if (data.ErrorCode == '0') {
+                  app.dialog.alert('Record added successfully', function () {
+                    app.views.main.router.navigate('/client-visit/');
+                  });
+                }
+                else {
+                  window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                }
+              },
+              complete: function (xhr, status) {
+                app.preloader.hide();
               }
-              else {
-                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-              }
-            },
-            complete: function (xhr, status) {
-              app.preloader.hide();
-            }
-          })
+            })
+
+          }
+          function locationFromLatLon_failure(err) {
+            app.preloader.hide();
+          }
+          nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
         };
         function onError(error) {
-          console.log(error);
+          app.preloader.hide();
         }
         if ($$('#clientvisit-form')[0].checkValidity()) {
           navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
