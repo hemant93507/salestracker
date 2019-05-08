@@ -50,7 +50,21 @@
             <div class="item-inner margin-top">
               <img @click="locationImage" id="locationImage" src="img/upload.png"
                 style="width: 50px;height: 50px;vertical-align: middle;" />
-              Upload Location Photo
+              Upload Location Image
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <img @click="personImage" id="personImage" src="img/upload.png"
+                style="width: 50px;height: 50px;vertical-align: middle;" />
+              Upload Person Image
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <img @click="otherImage" id="otherImage" src="img/upload.png"
+                style="width: 50px;height: 50px;vertical-align: middle;" />
+              Upload Other Image
             </div>
           </li>
         </ul>
@@ -61,6 +75,8 @@
 </template>
 <script>
   var location_image = '';
+  var person_image = '';
+  var other_image = '';
   return {
     on: {
       pageInit: function () {
@@ -92,6 +108,8 @@
             party_phone: party_phone,
             party_address: party_address,
             location_image: location_image,
+            person_image: person_image,
+            other_image: other_image,
           };
           app.request({
             url: BaseURL + 'add-clientvisit',
@@ -140,6 +158,40 @@
           var image = document.getElementById('locationImage');
           image.src = "data:image/jpeg;base64," + imageData;
           location_image = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          console.log(message);
+        }
+      },
+      personImage: function () {
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 100,
+          targetWidth: 512,
+          targetHeight: 512,
+          correctOrientation: true,
+          destinationType: Camera.DestinationType.DATA_URL,
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById('personImage');
+          image.src = "data:image/jpeg;base64," + imageData;
+          person_image = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          console.log(message);
+        }
+      },
+      otherImage: function () {
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 100,
+          targetWidth: 512,
+          targetHeight: 512,
+          correctOrientation: true,
+          destinationType: Camera.DestinationType.DATA_URL,
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById('otherImage');
+          image.src = "data:image/jpeg;base64," + imageData;
+          other_image = "data:image/jpeg;base64," + imageData;
         }
         function onFail(message) {
           console.log(message);
