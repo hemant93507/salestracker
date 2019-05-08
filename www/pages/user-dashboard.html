@@ -48,13 +48,13 @@
                 </div>
               </li>
               <li>
-                  <div class="item-content">
-                    <div class="item-inner">
-                      <div class="item-title">Duration</div>
-                      <div class="item-after">{{TimeSpentToday}}</div>
-                    </div>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Duration</div>
+                    <div class="item-after">{{TimeSpentToday}}</div>
                   </div>
-                </li>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -156,45 +156,56 @@
         function onSuccess(position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
-          var obj = {
-            email: data.User.email,
-            latitude: latitude,
-            longitude: longitude,
-          };
-          app.request({
-            url: BaseURL + 'checkin',
-            method: 'POST',
-            dataType: 'json',
-            data: obj,
-            //contentType: 'application/json',
-            beforeSend: function (xhr) {
-              app.preloader.show();
-            },
-            error: function (xhr, status) {
-              alert(statusMessage(status));
-            },
-            success: function (data, status, xhr) {
-              console.log(data);
-              if (data.ErrorCode == '0') {
-                self.$setState({
-                  checkin_event: 'checkout',
-                  checkin_text: 'Check Out',
-                });
-                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+          function locationFromLatLon_success(result) {
+            var firstResult = result[0];
+            var location = firstResult.subLocality + ',' + firstResult.locality + ',' + firstResult.subAdministrativeArea;
+            var obj = {
+              email: data.User.email,
+              latitude: latitude,
+              longitude: longitude,
+              location: location,
+            };
+            app.request({
+              url: BaseURL + 'checkin',
+              method: 'POST',
+              dataType: 'json',
+              data: obj,
+              //contentType: 'application/json',
+              beforeSend: function (xhr) {
+                app.preloader.show();
+              },
+              error: function (xhr, status) {
+                alert(statusMessage(status));
+              },
+              success: function (data, status, xhr) {
+                console.log(data);
+                if (data.ErrorCode == '0') {
+                  self.$setState({
+                    checkin_event: 'checkout',
+                    checkin_text: 'Check Out',
+                  });
+                  window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                }
+                else {
+                  app.dialog.alert(data.ErrorMessage);
+                }
+              },
+              complete: function (xhr, status) {
+                app.preloader.hide();
               }
-              else {
-                app.dialog.alert(data.ErrorMessage);
-              }
-            },
-            complete: function (xhr, status) {
-              app.preloader.hide();
-            }
-          })
+            })
+          }
+          function locationFromLatLon_failure(err) {
+            console.log(err);
+          }
+          nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, lat, lon, { useLocale: true, maxResults: 1 });
         };
         function onError(error) {
           console.log(error);
         }
+
         navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+        
       },
       checkout: function () {
         var self = this;
