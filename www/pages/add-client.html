@@ -106,7 +106,7 @@
           var longitude = position.coords.longitude;
           function locationFromLatLon_success(result) {
             var firstResult = result[0];
-            var location = firstResult.subAdministrativeArea + ',' + firstResult.subLocality + ',' + firstResult.locality + ',' + firstResult.administrativeArea;
+            var location = firstResult.subAdministrativeArea + ', ' + firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
             var party_name = $$('#clientvisit-form input[name=party_name]').val();
             var contact_name = $$('#clientvisit-form input[name=contact_name]').val();
             var party_email = $$('#clientvisit-form input[name=party_email]').val();
