@@ -159,7 +159,7 @@
           var longitude = position.coords.longitude;
           function locationFromLatLon_success(result) {
             var firstResult = result[0];
-            var location = firstResult.subLocality + ',' + firstResult.locality + ',' + firstResult.subAdministrativeArea;
+            var location = firstResult.subAdministrativeArea + ',' + firstResult.administrativeArea + ',' + firstResult.subLocality + ',' + firstResult.locality;
             var obj = {
               email: data.User.email,
               latitude: latitude,
