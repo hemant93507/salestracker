@@ -53,6 +53,7 @@
             </tr>
           </thead>
           <tbody>
+            {{#if Result}}
             {{#each Result}}
               <tr>
                 <td class="label-cell">{{check_in}}</td>
@@ -62,6 +63,11 @@
                 <!-- <td class="label-cell">{{js "locationFromLatLon(this.latitude,this.longitude)"}}</td> -->
               </tr>
             {{/each}}
+            {{else}}
+              <tr>
+                <td colspan="4" class="label-cell">No records found!</td>
+              </tr>
+            {{/if}}
           </tbody>
         </table>
       </div>
