@@ -50,8 +50,8 @@ var mainView = app.views.create('.view-main', {
   }
 });
 
-//var BaseURL = 'http://brandstudioz.co.in/sales-tracker/public/api/';
-var BaseURL = 'http://192.168.1.6/sales-tracker/public/api/';
+var BaseURL = 'http://brandstudioz.co.in/sales-tracker/public/api/';
+//var BaseURL = 'http://192.168.1.6/sales-tracker/public/api/';
 
 function statusMessage(status) {
   if (status == 0) {
