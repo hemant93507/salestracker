@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block-title font-16" style="padding-left:8px">April, 2019</div>
+      <div class="block-title font-16" style="padding-left:8px">{{CurrentMonth}}, {{CurrentYear}}</div>
       <div class="data-table">
         <table>
           <thead>
@@ -61,11 +61,11 @@
 </template>
 <script>
   return {
-    data: function () {
+    data: function(){
       var CurrentMonth = moment().format('MMMM');
       var CurrentYear = moment().format('YYYY');
-      return {
-        CurrentMonth: CurrentMonth,
+      return{
+        CurrentMonth : CurrentMonth,
         CurrentYear: CurrentYear,
       }
     },
