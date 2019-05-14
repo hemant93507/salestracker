@@ -153,8 +153,8 @@
         var data = JSON.parse(localStorage.User);
         var options = {
           enableHighAccuracy: true,
-          timeout: 50000,
-          maximumAge: 30000
+          timeout: 5000,
+          maximumAge: 3000
         }
         function onSuccess(position) {
           var latitude = position.coords.latitude;
@@ -168,7 +168,6 @@
               longitude: longitude,
               location: location,
             };
-            alert(JSON.stringify(obj));
             app.request({
               url: BaseURL + 'checkin',
               method: 'POST',
@@ -193,19 +192,16 @@
               },
               complete: function (xhr, status) {
                 app.preloader.hide();
-                alert('api error');
               }
             })
           }
           function locationFromLatLon_failure(err) {
             app.preloader.hide();
-            alert('reverse geolocation error');
           }
           nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
         };
         function onError(error) {
           app.preloader.hide();
-          alert(JSON.stringify(error));
         }
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
