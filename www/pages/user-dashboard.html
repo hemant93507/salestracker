@@ -153,8 +153,8 @@
         var data = JSON.parse(localStorage.User);
         var options = {
           enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 10000
+          timeout: 50000,
+          maximumAge: 30000
         }
         function onSuccess(position) {
           var latitude = position.coords.latitude;
