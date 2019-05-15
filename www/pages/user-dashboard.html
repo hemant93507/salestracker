@@ -161,6 +161,7 @@
 
       },
       gpsON: function () {
+        var self = this;
         cordova.plugins.locationAccuracy.request(function (success) {
           app.preloader.show();
           self.permissionGranted();
@@ -218,6 +219,7 @@
         },{timeout: 5000,maximumAge: 3000});
       },
       requestPermission: function () {
+        var self = this;
         cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
           switch (status) {
             case cordova.plugins.diagnostic.permissionStatus.GRANTED:
