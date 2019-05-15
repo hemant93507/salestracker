@@ -175,6 +175,7 @@
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           function locationFromLatLon_success(result) {
+            alert(JSON.stringify(result[0]));
             var firstResult = result[0];
             var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
             var obj = {
