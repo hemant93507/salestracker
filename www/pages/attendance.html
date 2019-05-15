@@ -61,8 +61,7 @@
                 <td class="label-cell">{{check_out}}</td>
                 <td class="label-cell">{{time_spent}}</td>
                 <td class="label-cell">{{location}}</td>
-                <td class="label-cell">{{NA(checkout_location)}}</td>
-                <!-- <td class="label-cell">{{js "locationFromLatLon(this.latitude,this.longitude)"}}</td> -->
+                <td class="label-cell">{{js "NA(this.checkout_location)"}}</td>
               </tr>
             {{/each}}
             {{else}}

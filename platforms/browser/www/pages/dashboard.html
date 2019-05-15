@@ -80,7 +80,7 @@
                   <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{check_in}}</a></td>
                   <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{check_out}}</a></td>
                   <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{location}}</a></td>
-                  <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{NA(checkout_location)}}</a></td>
+                  <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{js "NA(this.checkout_location)"}}</a></td>
                 </tr>
                 {{/each}}
                 {{else}}
