@@ -147,101 +147,89 @@
       }
     },
     methods: {
-      // checkin: function () {
-      //   app.preloader.show();
-      //   var self = this;
-      //   var data = JSON.parse(localStorage.User);
-      //   var options = {
-      //     timeout: 5000,
-      //     maximumAge: 3000
-      //   }
-      //   function onSuccess(position) {
-      //     var latitude = position.coords.latitude;
-      //     var longitude = position.coords.longitude;
-      //     function locationFromLatLon_success(result) {
-      //       var firstResult = result[0];
-      //       var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
-      //       var obj = {
-      //         email: data.User.email,
-      //         latitude: latitude,
-      //         longitude: longitude,
-      //         location: location,
-      //       };
-      //       app.request({
-      //         url: BaseURL + 'checkin',
-      //         method: 'POST',
-      //         dataType: 'json',
-      //         data: obj,
-      //         //contentType: 'application/json',
-      //         error: function (xhr, status) {
-      //           alert(statusMessage(status));
-      //         },
-      //         success: function (data, status, xhr) {
-      //           console.log(data);
-      //           if (data.ErrorCode == '0') {
-      //             self.$setState({
-      //               checkin_event: 'checkout',
-      //               checkin_text: 'Check Out',
-      //             });
-      //             window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-      //           }
-      //           else {
-      //             app.dialog.alert(data.ErrorMessage);
-      //           }
-      //         },
-      //         complete: function (xhr, status) {
-      //           app.preloader.hide();
-      //         }
-      //       })
-      //     }
-      //     function locationFromLatLon_failure(err) {
-      //       app.preloader.hide();
-      //     }
-      //     nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
-      //   };
-      //   function onError(error) {
-      //     app.preloader.hide();
-      //   }
-
-      //   navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-
-      // },
       checkin: function () {
         var self = this;
         var data = JSON.parse(localStorage.User);
-        // Geolocation options
-        var options = {
-          timeout: 5000,
-          maximumAge: 3000
-        }
-        // After Allow
-        function onSuccess(position) {
-          cordova.plugins.locationAccuracy.request(function (success) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-          }, function (error) {
-            console.log("No Thanks");
-          }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-        };
-        // After Deny
-        function onError(error) {
-          //app.preloader.hide();
-        }
-
-        // navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
         cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
           if (canRequest) {
-            cordova.plugins.locationAccuracy.request(function (success) {
-              self.checkinUpdate1(); // Permission given but location OFF
-            }, function (error) {
-              console.log("No Thanks");
-            }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+            self.gpsON();
           } else {
-            self.checkinUpdate2(); // Permission not given
+            self.requestPermission();
           }
         });
 
+      },
+      gpsON: function () {
+        cordova.plugins.locationAccuracy.request(function (success) {
+          app.preloader.show();
+          self.permissionGranted();
+        }, function (error) {
+          console.log("No Thanks");
+        }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+      },
+      permissionGranted: function () {
+        app.preloader.show();
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          function locationFromLatLon_success(result) {
+            var firstResult = result[0];
+            var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
+            var obj = {
+              email: data.User.email,
+              latitude: latitude,
+              longitude: longitude,
+              location: location,
+            };
+            app.request({
+              url: BaseURL + 'checkin',
+              method: 'POST',
+              dataType: 'json',
+              data: obj,
+              //contentType: 'application/json',
+              error: function (xhr, status) {
+                alert(statusMessage(status));
+              },
+              success: function (data, status, xhr) {
+                console.log(data);
+                if (data.ErrorCode == '0') {
+                  self.$setState({
+                    checkin_event: 'checkout',
+                    checkin_text: 'Check Out',
+                  });
+                  window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                }
+                else {
+                  app.dialog.alert(data.ErrorMessage);
+                }
+              },
+              complete: function (xhr, status) {
+                app.preloader.hide();
+              }
+            })
+          }
+          function locationFromLatLon_failure(err) {
+            app.preloader.hide();
+          }
+          nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
+        }, function (error) {
+          app.preloader.hide();
+        },{timeout: 5000,maximumAge: 3000});
+      },
+      requestPermission: function () {
+        cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
+          switch (status) {
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+              self.permissionGranted();
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
+              self.permissionGranted();
+              break;
+          }
+        }, function (error) {
+          console.log(error);
+        }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
       },
       checkout: function () {
         app.preloader.show();
@@ -276,62 +264,6 @@
             app.preloader.hide();
           }
         })
-      },
-      checkinUpdate1: function () {
-        cordova.plugins.locationAccuracy.request(function (success) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            alert(latitude);
-          }, function (error) {
-            console.log(error);
-          },
-            {
-              timeout: 5000,
-              maximumAge: 3000
-            });
-        }, function (error) {
-          console.log("No Thanks");
-        }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-      },
-      checkinUpdate2: function () {
-        cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
-          switch (status) {
-            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
-              alert("Permission not requested");
-              break;
-            case cordova.plugins.diagnostic.permissionStatus.DENIED:
-              alert("Permission denied");
-              break;
-            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
-              alert("Permission permanently denied");
-              break;
-            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-              alert("Permission granted always");
-              break;
-            case cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
-              alert("Permission granted only when in use");
-              break;
-          }
-        }, function (error) {
-          alert(error);
-        }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
-
-        // navigator.geolocation.getCurrentPosition(function (position) {
-        //   cordova.plugins.locationAccuracy.request(function (success) {
-        //     var latitude = position.coords.latitude;
-        //     var longitude = position.coords.longitude;
-        //     alert(latitude);
-        //   }, function (error) {
-        //     console.log("No Thanks");
-        //   }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-        // }, function (error) {
-        //   console.log(error);
-        // },
-        // {
-        //   timeout: 5000,
-        //   maximumAge: 3000
-        // });
       },
       logout: function () {
         localStorage.removeItem("User");
