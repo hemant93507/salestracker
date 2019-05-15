@@ -104,6 +104,7 @@
                   var Checkin = AttendentList[i].check_in;
                   var Checkout = AttendentList[i].check_out;
                   var Location = AttendentList[i].location;
+                  var CheckoutLocation = AttendentList[i].checkout_location;
                   var tbody_el = `
                   <tr>
                     <td class="label-cell">${EmployeeID}</td>
@@ -111,6 +112,7 @@
                     <td class="label-cell">${Checkin}</td>
                     <td class="label-cell">${Checkout}</td>
                     <td class="label-cell">${Location}</td>
+                    <td class="label-cell">${CheckoutLocation}</td>
                   </tr>`;
                   tbody = tbody + tbody_el;
                 }
@@ -121,7 +123,8 @@
                       <th class="label-cell color-green">Employee Name</th>
                       <th class="label-cell color-green">Checkin</th>
                       <th class="label-cell color-green">Checkout</th>
-                      <th class="label-cell color-green">Location</th>
+                      <th class="label-cell color-green">Checkin Location</th>
+                      <th class="label-cell color-green">Checkout Location</th>
                     </tr>
                   </thead>
                   <tbody>
