@@ -1,61 +1,64 @@
 {
-  "prepare_queue": {
-    "installed": [],
-    "uninstalled": []
-  },
-  "config_munge": {
-    "files": {}
-  },
-  "installed_plugins": {
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
     },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
+    "config_munge": {
+        "files": {}
     },
-    "cordova-plugin-spinner": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
+    "installed_plugins": {
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-spinner": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-nativegeocoder": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-call-number": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        }
     },
-    "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-x-toast": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-media-capture": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-nativegeocoder": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-x-socialsharing": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-app-version": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "cordova-plugin-call-number": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
+    "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
+        }
     }
-  },
-  "dependent_plugins": {
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    },
-    "es6-promise-plugin": {
-      "PACKAGE_NAME": "com.techstreet.salestracker"
-    }
-  }
 }

@@ -415,7 +415,8 @@ module.exports.metadata =
     "es6-promise-plugin": "4.2.2",
     "cordova-plugin-x-socialsharing": "5.4.4",
     "cordova-plugin-app-version": "0.1.9",
-    "cordova-plugin-call-number": "1.0.1"
+    "cordova-plugin-call-number": "1.0.1",
+    "cordova-plugin-request-location-accuracy": "2.2.3"
 }
 // BOTTOM OF METADATA
 });
