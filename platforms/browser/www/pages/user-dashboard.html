@@ -183,6 +183,7 @@
               longitude: longitude,
               location: location,
             };
+            alert(JSON.stringify(obj));
             app.request({
               url: BaseURL + 'checkin',
               method: 'POST',
