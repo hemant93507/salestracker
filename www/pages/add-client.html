@@ -93,15 +93,45 @@
     },
     methods: {
       addClient: function () {
-        app.preloader.show();
+        var self = this;
+        if ($$('#clientvisit-form')[0].checkValidity()) {
+          cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
+            if (canRequest) {
+              self.gpsON();
+            } else {
+              self.requestPermission();
+            }
+          });
+        }
+      },
+      gpsON: function () {
+        var self = this;
+        cordova.plugins.locationAccuracy.request(function (success) {
+          app.preloader.show();
+          self.permissionGranted();
+        }, function (error) {
+          console.log("No Thanks");
+        }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+      },
+      requestPermission: function () {
+        var self = this;
+        cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
+          switch (status) {
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+              self.gpsON();
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
+              self.gpsON();
+              break;
+          }
+        }, function (error) {
+          console.log(error);
+        }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
+      },
+      permissionGranted: function () {
         var self = this;
         var data = JSON.parse(localStorage.User);
-        var options = {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 3000
-        }
-        function onSuccess(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           function locationFromLatLon_success(result) {
@@ -157,13 +187,9 @@
             app.preloader.hide();
           }
           nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
-        };
-        function onError(error) {
+        }, function (error) {
           app.preloader.hide();
-        }
-        if ($$('#clientvisit-form')[0].checkValidity()) {
-          navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-        }
+        }, { timeout: 5000, maximumAge: 3000 });
       },
       locationImage: function () {
         navigator.camera.getPicture(onSuccess, onFail, {
