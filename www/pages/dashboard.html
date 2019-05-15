@@ -67,7 +67,8 @@
                   <th class="label-cell color-green">Employee Name</th>
                   <th class="label-cell color-green">Check-In</th>
                   <th class="label-cell color-green">Check-Out</th>
-                  <th class="label-cell color-green">Location</th>
+                  <th class="label-cell color-green">Checkin Location</th>
+                  <th class="label-cell color-green">Checkout Location</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,6 +80,7 @@
                   <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{check_in}}</a></td>
                   <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{check_out}}</a></td>
                   <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{location}}</a></td>
+                  <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-black">{{NA(checkout_location)}}</a></td>
                 </tr>
                 {{/each}}
                 {{else}}
@@ -128,8 +130,7 @@
                   <th class="label-cell color-green">Party Email</th>
                   <th class="label-cell color-green">Party Phone</th>
                   <th class="label-cell color-green">Party Address</th>
-                  <th class="label-cell color-green">Checkin Location</th>
-                  <th class="label-cell color-green">Checkout Location</th>
+                  <th class="label-cell color-green">Location</th>
                 </tr>
               </thead>
               <tbody>
@@ -148,8 +149,6 @@
                       class="link color-black">{{party_address}}</a></td>
                   <td class="label-cell"><a href="/party-detail/{{party_email}}/"
                       class="link color-black">{{location}}</a></td>
-                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
-                        class="link color-black">{{NA(checkout_location)}}</a></td>
                 </tr>
                 {{/each}}
                 {{else}}
