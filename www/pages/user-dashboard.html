@@ -171,11 +171,9 @@
       },
       permissionGranted: function () {
         var self = this;
-        alert('ok');
         navigator.geolocation.getCurrentPosition(function (position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
-          alert(latitude);
           function locationFromLatLon_success(result) {
             var firstResult = result[0];
             var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
