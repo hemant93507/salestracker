@@ -157,16 +157,16 @@
           }
         });
       },
-      gpsON: function () {
+      gpsON: function (type) {
         var self = this;
         cordova.plugins.locationAccuracy.request(function (success) {
           app.preloader.show();
-          self.permissionGranted();
+          self.permissionGranted(type);
         }, function (error) {
           console.log("No Thanks");
         }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
       },
-      permissionGranted: function () {
+      permissionGranted: function (type) {
         var self = this;
         var data = JSON.parse(localStorage.User);
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -181,32 +181,62 @@
               longitude: longitude,
               location: location,
             };
-            app.request({
-              url: BaseURL + 'checkin',
-              method: 'POST',
-              dataType: 'json',
-              data: obj,
-              //contentType: 'application/json',
-              error: function (xhr, status) {
-                alert(statusMessage(status));
-              },
-              success: function (data, status, xhr) {
-                console.log(data);
-                if (data.ErrorCode == '0') {
-                  self.$setState({
-                    checkin_event: 'checkout',
-                    checkin_text: 'Check Out',
-                  });
-                  window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+            if (type == 'checkin') {
+              app.request({
+                url: BaseURL + 'checkin',
+                method: 'POST',
+                dataType: 'json',
+                data: obj,
+                //contentType: 'application/json',
+                error: function (xhr, status) {
+                  alert(statusMessage(status));
+                },
+                success: function (data, status, xhr) {
+                  console.log(data);
+                  if (data.ErrorCode == '0') {
+                    self.$setState({
+                      checkin_event: 'checkout',
+                      checkin_text: 'Check Out',
+                    });
+                    window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                  }
+                  else {
+                    app.dialog.alert(data.ErrorMessage);
+                  }
+                },
+                complete: function (xhr, status) {
+                  app.preloader.hide();
                 }
-                else {
-                  app.dialog.alert(data.ErrorMessage);
+              })
+            }
+            if (type == 'checkout') {
+              app.request({
+                url: BaseURL + 'checkout',
+                method: 'POST',
+                dataType: 'json',
+                data: obj,
+                //contentType: 'application/json',
+                error: function (xhr, status) {
+                  alert(statusMessage(status));
+                },
+                success: function (data, status, xhr) {
+                  console.log(data);
+                  if (data.ErrorCode == '0') {
+                    self.$setState({
+                      checkin_event: 'checkin',
+                      checkin_text: 'Check In',
+                    });
+                    window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                  }
+                  else {
+                    app.dialog.alert(data.ErrorMessage);
+                  }
+                },
+                complete: function (xhr, status) {
+                  app.preloader.hide();
                 }
-              },
-              complete: function (xhr, status) {
-                app.preloader.hide();
-              }
-            })
+              })
+            }
           }
           function locationFromLatLon_failure(err) {
             app.preloader.hide();
@@ -214,17 +244,17 @@
           nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
         }, function (error) {
           app.preloader.hide();
-        },{timeout: 5000,maximumAge: 3000});
+        }, { timeout: 5000, maximumAge: 3000 });
       },
-      requestPermission: function () {
+      requestPermission: function (type) {
         var self = this;
         cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
           switch (status) {
             case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-              self.gpsON();
+              self.gpsON(type);
               break;
             case cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
-              self.gpsON();
+              self.gpsON(type);
               break;
           }
         }, function (error) {
@@ -232,38 +262,14 @@
         }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
       },
       checkout: function () {
-        app.preloader.show();
         var self = this;
-        var data = JSON.parse(localStorage.User);
-        var obj = {
-          email: data.User.email,
-        };
-        app.request({
-          url: BaseURL + 'checkout',
-          method: 'POST',
-          dataType: 'json',
-          data: obj,
-          //contentType: 'application/json',
-          error: function (xhr, status) {
-            alert(statusMessage(status));
-          },
-          success: function (data, status, xhr) {
-            console.log(data);
-            if (data.ErrorCode == '0') {
-              self.$setState({
-                checkin_event: 'checkin',
-                checkin_text: 'Check In',
-              });
-              window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-            }
-            else {
-              app.dialog.alert(data.ErrorMessage);
-            }
-          },
-          complete: function (xhr, status) {
-            app.preloader.hide();
+        cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
+          if (canRequest) {
+            self.gpsON('checkin');
+          } else {
+            self.requestPermission('checkout');
           }
-        })
+        });
       },
       logout: function () {
         localStorage.removeItem("User");
