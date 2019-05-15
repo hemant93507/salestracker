@@ -149,8 +149,6 @@
     methods: {
       checkin: function () {
         var self = this;
-        var data = JSON.parse(localStorage.User);
-
         cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
           if (canRequest) {
             self.gpsON();
@@ -158,7 +156,6 @@
             self.requestPermission();
           }
         });
-
       },
       gpsON: function () {
         var self = this;
@@ -171,11 +168,11 @@
       },
       permissionGranted: function () {
         var self = this;
+        var data = JSON.parse(localStorage.User);
         navigator.geolocation.getCurrentPosition(function (position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
           function locationFromLatLon_success(result) {
-            alert(JSON.stringify(result[0]));
             var firstResult = result[0];
             var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
             var obj = {
@@ -184,7 +181,6 @@
               longitude: longitude,
               location: location,
             };
-            alert(JSON.stringify(obj));
             app.request({
               url: BaseURL + 'checkin',
               method: 'POST',
