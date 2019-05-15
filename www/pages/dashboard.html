@@ -128,7 +128,8 @@
                   <th class="label-cell color-green">Party Email</th>
                   <th class="label-cell color-green">Party Phone</th>
                   <th class="label-cell color-green">Party Address</th>
-                  <th class="label-cell color-green">Location</th>
+                  <th class="label-cell color-green">Checkin Location</th>
+                  <th class="label-cell color-green">Checkout Location</th>
                 </tr>
               </thead>
               <tbody>
@@ -147,6 +148,8 @@
                       class="link color-black">{{party_address}}</a></td>
                   <td class="label-cell"><a href="/party-detail/{{party_email}}/"
                       class="link color-black">{{location}}</a></td>
+                  <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                        class="link color-black">{{NA(checkout_location)}}</a></td>
                 </tr>
                 {{/each}}
                 {{else}}

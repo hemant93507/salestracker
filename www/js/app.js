@@ -76,6 +76,15 @@ function empty(val) {
   }
 }
 
+function NA(val) {
+  if (val == null || val == 'undefined') {
+    return 'NA';
+  }
+  else {
+    return val;
+  }
+}
+
 var reverse_location = '';
 function locationFromLatLon_success(result) {
   var firstResult = result[0];
