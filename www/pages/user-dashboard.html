@@ -175,13 +175,13 @@
           function locationFromLatLon_success(result) {
             var firstResult = result[0];
             var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
-            var obj = {
-              email: data.User.email,
-              latitude: latitude,
-              longitude: longitude,
-              location: location,
-            };
             if (type == 'checkin') {
+              var obj = {
+                email: data.User.email,
+                latitude: latitude,
+                longitude: longitude,
+                location: location,
+              };
               app.request({
                 url: BaseURL + 'checkin',
                 method: 'POST',
@@ -210,6 +210,12 @@
               })
             }
             if (type == 'checkout') {
+              var obj = {
+                email: data.User.email,
+                checkout_latitude: latitude,
+                checkout_longitude: longitude,
+                checkout_location: location,
+              };
               app.request({
                 url: BaseURL + 'checkout',
                 method: 'POST',
