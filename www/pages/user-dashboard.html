@@ -151,9 +151,9 @@
         var self = this;
         cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
           if (canRequest) {
-            self.gpsON();
+            self.gpsON('checkin');
           } else {
-            self.requestPermission();
+            self.requestPermission('checkout');
           }
         });
       },
