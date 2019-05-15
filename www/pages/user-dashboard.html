@@ -153,7 +153,7 @@
           if (canRequest) {
             self.gpsON('checkin');
           } else {
-            self.requestPermission('checkout');
+            self.requestPermission('checkin');
           }
         });
       },
@@ -265,7 +265,7 @@
         var self = this;
         cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
           if (canRequest) {
-            self.gpsON('checkin');
+            self.gpsON('checkout');
           } else {
             self.requestPermission('checkout');
           }
