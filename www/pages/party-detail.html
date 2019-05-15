@@ -13,9 +13,9 @@
     <div class="page-content">
       <div class="swiper-container swiper-init" data-pagination='{"el": ".swiper-pagination"}'>
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img class="slider-image" src="{{location_image}}" /></div>
-          <div class="swiper-slide"><img class="slider-image" src="{{person_image}}" /></div>
-          <div class="swiper-slide"><img class="slider-image" src="{{other_image}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Location Image" data-src="{{location_image}}" src="{{location_image}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Person Image" data-src="{{person_image}}" src="{{person_image}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Other Image" data-src="{{other_image}}" src="{{other_image}}" /></div>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -109,6 +109,31 @@
           }
         })
       }
-    }
+    },
+    methods: {
+      openImage: function (e) {
+        var image_src = $$(e.target).data('src');
+        var image_title = $$(e.target).data('title');
+        var dynamicPopup = app.popup.create({
+          content: `<div class="popup">
+            <div class="view">
+              <div class="page">
+                <div class="navbar">
+                  <div class="navbar-inner">
+                    <div class="title">${image_title}</div>
+                    <div class="right">
+                      <a class="link popup-close">Close</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="page-content">
+                  <img style="width:100%" src="${image_src}" />
+                </div>
+              </div>
+            </div>
+          </div>`,
+        }).open();
+      }
+    },
   }
 </script>

@@ -101,18 +101,19 @@
                 for (var i = 0; i < AttendentList.length; i++) {
                   var EmployeeID = AttendentList[i].id;
                   var EmployeeName = AttendentList[i].name;
+                  var EmployeeEmail = AttendentList[i].email;
                   var Checkin = AttendentList[i].check_in;
                   var Checkout = AttendentList[i].check_out;
                   var Location = AttendentList[i].location;
                   var CheckoutLocation = AttendentList[i].checkout_location;
                   var tbody_el = `
                   <tr>
-                    <td class="label-cell">${EmployeeID}</td>
-                    <td class="label-cell">${EmployeeName}</td>
-                    <td class="label-cell">${Checkin}</td>
-                    <td class="label-cell">${Checkout}</td>
-                    <td class="label-cell">${Location}</td>
-                    <td class="label-cell">${NA(CheckoutLocation)}</td>
+                    <td class="label-cell"><a href="/employee-detail/${EmployeeEmail}/" class="link color-blue">${EmployeeID}</a></td>
+                    <td class="label-cell"><a href="/employee-detail/${EmployeeEmail}/" class="link color-blue">${EmployeeName}</a></td>
+                    <td class="label-cell"><a href="/employee-detail/${EmployeeEmail}/" class="link color-blue">${Checkin}</a></td>
+                    <td class="label-cell"><a href="/employee-detail/${EmployeeEmail}/" class="link color-blue">${Checkout}</a></td>
+                    <td class="label-cell"><a href="/employee-detail/${EmployeeEmail}/" class="link color-blue">${Location}</a></td>
+                    <td class="label-cell"><a href="/employee-detail/${EmployeeEmail}/" class="link color-blue">${NA(CheckoutLocation)}</a></td>
                   </tr>`;
                   tbody = tbody + tbody_el;
                 }

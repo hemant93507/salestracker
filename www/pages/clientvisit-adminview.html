@@ -107,12 +107,12 @@
                   var location = ClientVisitList[i].location;
                   var tbody_el = `
                   <tr>
-                    <td class="label-cell">${party_name}</td>
-                    <td class="label-cell">${contact_name}</td>
-                    <td class="label-cell">${party_email}</td>
-                    <td class="label-cell">${party_phone}</td>
-                    <td class="label-cell">${party_address}</td>
-                    <td class="label-cell">${location}</td>
+                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_name}</a></td>
+                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${contact_name}</a></td>
+                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_email}</a></td>
+                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_phone}</a></td>
+                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_address}</a></td>
+                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${location}</a></td>
                   </tr>`;
                   tbody = tbody + tbody_el;
                 }
