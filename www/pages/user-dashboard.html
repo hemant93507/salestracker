@@ -207,21 +207,25 @@
 
       // },
       checkin: function () {
-        app.preloader.show();
         var self = this;
         var data = JSON.parse(localStorage.User);
+        // Geolocation options
         var options = {
           timeout: 5000,
           maximumAge: 3000
         }
-        // Allow
+        // After Allow
         function onSuccess(position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
+          cordova.plugins.locationAccuracy.request(function (success) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+          }, function (error) {
+            console.log("No Thanks");
+          }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         };
-        // Deny
+        // After Deny
         function onError(error) {
-          app.preloader.hide();
+          //app.preloader.hide();
         }
 
         // navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
@@ -229,12 +233,12 @@
         cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
           if (canRequest) {
             cordova.plugins.locationAccuracy.request(function (success) {
-              alert("Successfully requested accuracy: " + success.message);
+              self.checkinUpdate1(); // Permission given but location OFF
             }, function (error) {
-              alert("Accuracy request failed: error code=" + error.code + "; error message=" + error.message);
+              console.log("No Thanks");
             }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
           } else {
-            alert('request location permission and try again');
+            self.checkinUpdate2(); // Permission not given
           }
         });
 
@@ -272,6 +276,41 @@
             app.preloader.hide();
           }
         })
+      },
+      checkinUpdate1: function () {
+        cordova.plugins.locationAccuracy.request(function (success) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            alert(latitude);
+          }, function (error) {
+            console.log(error);
+          },
+          {
+            timeout: 5000,
+            maximumAge: 3000
+          });
+        }, function (error) {
+          console.log("No Thanks");
+        }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+      },
+      checkinUpdate2: function () {
+        alert('Permission not given');
+        // navigator.geolocation.getCurrentPosition(function (position) {
+        //   cordova.plugins.locationAccuracy.request(function (success) {
+        //     var latitude = position.coords.latitude;
+        //     var longitude = position.coords.longitude;
+        //     alert(latitude);
+        //   }, function (error) {
+        //     console.log("No Thanks");
+        //   }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+        // }, function (error) {
+        //   console.log(error);
+        // },
+        // {
+        //   timeout: 5000,
+        //   maximumAge: 3000
+        // });
       },
       logout: function () {
         localStorage.removeItem("User");
