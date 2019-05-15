@@ -221,10 +221,10 @@
         cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
           switch (status) {
             case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-              self.permissionGranted();
+              self.gpsON();
               break;
             case cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
-              self.permissionGranted();
+              self.gpsON();
               break;
           }
         }, function (error) {
