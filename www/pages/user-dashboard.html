@@ -295,12 +295,6 @@
         }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
       },
       checkinUpdate2: function () {
-        cordova.plugins.diagnostic.requestLocationAuthorization(function (success) {
-
-        }, function (error) {
-          console.log(error);
-        });
-
         cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
           switch (status) {
             case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
