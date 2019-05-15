@@ -286,16 +286,43 @@
           }, function (error) {
             console.log(error);
           },
-          {
-            timeout: 5000,
-            maximumAge: 3000
-          });
+            {
+              timeout: 5000,
+              maximumAge: 3000
+            });
         }, function (error) {
           console.log("No Thanks");
         }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
       },
       checkinUpdate2: function () {
-        alert('Permission not given');
+        cordova.plugins.diagnostic.requestLocationAuthorization(function (success) {
+
+        }, function (error) {
+          console.log(error);
+        });
+
+        cordova.plugins.diagnostic.requestLocationAuthorization(function (status) {
+          switch (status) {
+            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+              alert("Permission not requested");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+              alert("Permission denied");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+              alert("Permission permanently denied");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+              alert("Permission granted always");
+              break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
+              alert("Permission granted only when in use");
+              break;
+          }
+        }, function (error) {
+          alert(error);
+        }, cordova.plugins.diagnostic.locationAuthorizationMode.ALWAYS);
+
         // navigator.geolocation.getCurrentPosition(function (position) {
         //   cordova.plugins.locationAccuracy.request(function (success) {
         //     var latitude = position.coords.latitude;

@@ -416,7 +416,8 @@ module.exports.metadata =
     "cordova-plugin-x-socialsharing": "5.4.4",
     "cordova-plugin-app-version": "0.1.9",
     "cordova-plugin-call-number": "1.0.1",
-    "cordova-plugin-request-location-accuracy": "2.2.3"
+    "cordova-plugin-request-location-accuracy": "2.2.3",
+    "cordova.plugins.diagnostic": "3.9.2"
 }
 // BOTTOM OF METADATA
 });

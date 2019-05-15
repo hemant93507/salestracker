@@ -51,6 +51,9 @@
         },
         "cordova-plugin-request-location-accuracy": {
             "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
         }
     },
     "dependent_plugins": {
