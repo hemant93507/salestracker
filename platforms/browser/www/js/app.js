@@ -50,7 +50,7 @@ var mainView = app.views.create('.view-main', {
   }
 });
 
-var BaseURL = 'http://marushika.in/sales-tracker/public/api/';
+var BaseURL = 'http://brandstudioz.co.in/sales-tracker/public/api/';
 
 function statusMessage(status) {
   if (status == 0) {
