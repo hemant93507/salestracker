@@ -30,11 +30,11 @@
           <tbody>
             {{#each UserList}}
               <tr>
-                <td class="label-cell">{{id}}</td>
-                <td class="label-cell">{{name}}</td>
-                <td class="label-cell">{{email}}</td>
-                <td class="label-cell">{{mobile_number}}</td>
-                <td class="label-cell">{{address}}</td>
+                <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-blue">{{id}}</a></td>
+                <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-blue">{{name}}</a></td>
+                <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-blue">{{email}}</a></td>
+                <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-blue">{{mobile_number}}</a></td>
+                <td class="label-cell"><a href="/employee-detail/{{email}}/" class="link color-blue">{{address}}</a></td>
               </tr>
             {{/each}}
           </tbody>
