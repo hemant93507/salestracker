@@ -141,6 +141,27 @@ var routes = [
     componentUrl: './pages/user-dashboard.html',
     name: 'user-dashboard',
   },
+  
+  // Clients page
+  {
+    path: '/clients/',
+    componentUrl: './pages/clients.html',
+    name: 'clients',
+  },
+
+  // Add Firm Client
+  {
+    path: '/add-firm-client/',
+    componentUrl: './pages/add-firm-client.html',
+    name: 'add-firm-client',
+  },
+
+
+  {
+    path: '/client-checkin/',
+    componentUrl: './pages/client-checkin.html',
+    name: 'client-checkin',
+  },
 
   // Default route (404 page)
   {

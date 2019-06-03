@@ -1,98 +1,34 @@
 <template>
-  <div class="page">
-    <div class="navbar navbar-main bg-color-white color-green">
-      <div class="navbar-inner sliding">
+  <div class="page" id="client-attendance-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
         <div class="left">
-          <a href="#" class="link icon-only panel-open" data-panel="left">
-            <i class="icon material-icons">menu</i>
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
           </a>
         </div>
-        <div class="title">Dashboard</div>
-        <div class="right">
-          <a href="#" data-popover=".dashboard-popover" class="popover-open link icon-only">
-            <i class="icon material-icons">more_vert</i>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="popover dashboard-popover">
-      <div class="popover-inner">
-        <div class="list">
-          <ul>
-            <li><a class="color-black list-button item-link popover-close" href="#" onclick="shareApp()">Share App</a>
-            </li>
-            <li><a @click="logout" class="color-black list-button item-link popover-close" href="#">Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="sheet-modal my-sheet">
-      <div class="toolbar">
-        <div class="toolbar-inner">
-          <div class="left"></div>
-          <div class="right">
-            <a href="#" class="link sheet-close">Done</a>
-          </div>
-        </div>
-      </div>
-      <div class="sheet-modal-inner">
-        <div class="block">
-          <div class="list">
-            <ul>
-              <li>
-                <div class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title">Check In</div>
-                    <div class="item-after">{{CheckIn}}</div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title">Duration</div>
-                    <div class="item-after">{{TimeSpentToday}}</div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <div class="title">Client Checkin</div>
       </div>
     </div>
     <div class="page-content">
-      <div class="block">
-        <div class="list no-hairlines">
-          <ul>
-            <li>
-              <a href="#" class="item-link item-content">
-                <div class="item-inner">
-                  <div class="item-title">Client Visit Today</div>
-                  <div class="item-after">{{ClientVisitToday}}</div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="item-link item-content{{SheetOpen}}" data-sheet=".my-sheet">
-                <div class="item-inner">
-                  <div class="item-title">Time Spent Today</div>
-                  <div class="item-after">{{TimeSpentToday}}</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="block text-align-center">
-          <div class="row">
-            <div class="col-50">
-              <button @click="{{checkin_event}}" class="button button-round button-outline">{{checkin_text}}</button>
+      <form class="list no-hairlines margin" id="clientvisit-form">
+        <ul class="no-hairlines-between">
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Firm Name</div>
+              <div class="item-input-wrap input-dropdown-wrap">
+                <select name="firm_name" @change="changeFirm">
+                    <option value="">Select</option>
+                  {{#each List}}
+                    <option value="{{id}}">{{firm_name}}</option>
+                  {{/each}}
+                </select>
+              </div>
             </div>
-            <div class="col-50">
-              <a href="/client-visit/" class="button button-round button-outline">Client Visit</a>
-            </div>
-          </div>
-        </div>
-      </div>
+          </li>
+        </ul>
+        <a href="#" @click="{{checkin_event}}" class="button button-outline button-round margin checkin_btn">{{checkin_text}}</a>
+      </form>
     </div>
   </div>
 </template>
@@ -106,48 +42,79 @@
     },
     on: {
       pageInit: function () {
-        $$('.employees-menu').hide();
-        $$('.clients-menu').hide();
-        //$$('.clientvisit-menu,.attendance-menu').show();
-        $$('.panel-left .attendance-menu a').attr('href', '/attendance/');
-        $$('.panel-left .clientvisit-menu a').attr('href', '/client-visit/');
+        $$('.checkin_btn').hide();
         var self = this;
-        var checkin_event = 'checkin';
         var checkin_text = 'Check In';
-        var SheetOpen = '';
+        var checkin_event = 'checkin';
         var data = JSON.parse(localStorage.User);
         var obj = {
           email: data.User.email,
         };
         app.request({
-          url: BaseURL + 'user-dashboard',
+          url: BaseURL + 'get-firm-name',
           method: 'POST',
           dataType: 'json',
           data: obj,
           //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
           success: function (data, status, xhr) {
             console.log(data);
             if (data.ErrorCode == '0') {
-              if (data.CheckedIn == true) {
-                checkin_event = 'checkout';
-                checkin_text = 'Check Out';
-                SheetOpen = ' sheet-open';
-              }
               self.$setState({
-                CheckIn: data.CheckIn,
-                CheckOut: data.CheckOut,
-                TimeSpentToday: data.TimeSpentToday,
-                ClientVisitToday: data.ClientVisitToday,
-                checkin_event: checkin_event,
-                checkin_text: checkin_text,
-                SheetOpen: SheetOpen,
+                List: data.Result,
               });
             }
           },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
         })
       }
+      
     },
     methods: {
+      changeFirm: function () {
+        var firm_name = $$('#client-attendance-page select[name=firm_name]').val();
+        console.log(firm_name);
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+          firm_name: firm_name,
+        };
+        app.request({
+          url: BaseURL + 'get-client-checkin',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            $$('.checkin_btn').show();
+            if (data.Code == '0') {
+              console.log('checkout');
+              checkin_text = 'Check In';
+              var checkin_event = 'checkin';
+            }
+            else{
+              console.log('checkin');
+              checkin_text = 'Check Out';
+              var checkin_event = 'checkout';
+            }
+            self.$setState({
+                checkin_text: checkin_text,
+              });
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      },
       checkin: function () {
         var self = this;
         cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
@@ -173,18 +140,18 @@
         navigator.geolocation.getCurrentPosition(function (position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
+          var firm_name = $$('#client-attendance-page select[name=firm_name]').val();
           function locationFromLatLon_success(result) {
             var firstResult = result[0];
             var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
             if (type == 'checkin') {
               var obj = {
                 email: data.User.email,
-                latitude: latitude,
-                longitude: longitude,
-                location: location,
+                checkin_location: location,
+                firm_name: firm_name,
               };
               app.request({
-                url: BaseURL + 'checkin',
+                url: BaseURL + 'client-checkin',
                 method: 'POST',
                 dataType: 'json',
                 data: obj,

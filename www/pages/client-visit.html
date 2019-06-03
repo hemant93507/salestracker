@@ -9,7 +9,7 @@
         </div>
         <div class="title">Client Visit</div>
         <div class="right">
-          <a href="/add-client/" class="link icon-only">
+          <a href="/client-checkin/" class="link icon-only">
             <i class="icon material-icons">add_circle_outline</i>
           </a>
           <!-- <a href="#" class="link icon-only">
@@ -24,17 +24,22 @@
         <table>
           <thead>
             <tr>
-              <th class="label-cell color-green">Party Name</th>
+              <!-- <th class="label-cell color-green">Party Name</th>
               <th class="label-cell color-green">Contact Name</th>
               <th class="label-cell color-green">Party Email</th>
               <th class="label-cell color-green">Party Phone</th>
-              <th class="label-cell color-green">Party Address</th>
+              <th class="label-cell color-green">Party Address</th> -->
+              <th class="label-cell color-green">Firm Name</th>
+              <th class="label-cell color-green">Check In</th>
+              <th class="label-cell color-green">Location</th>
+              <th class="label-cell color-green">Check Out</th>
+              <th class="label-cell color-green">Location</th>
             </tr>
           </thead>
           <tbody>
             {{#if Result}}
             {{#each Result}}
-            <tr>
+            <!-- <tr>
               <td class="label-cell"><a href="/party-detail/{{party_email}}/"
                   class="link color-blue">{{party_name}}</a></td>
               <td class="label-cell"><a href="/party-detail/{{party_email}}/"
@@ -45,7 +50,7 @@
                   class="link color-blue">{{party_phone}}</a></td>
               <td class="label-cell"><a href="/party-detail/{{party_email}}/"
                   class="link color-blue">{{party_address}}</a></td>
-            </tr>
+            </tr> -->
             <!-- <td class="label-cell"><a @click="viewPhoto" data-img="{{location_image}}" href="#">View</a></td> -->
             {{/each}}
             {{else}}

@@ -1,0 +1,77 @@
+<template>
+  <div class="page" id="attendance-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Client Master</div>
+        <div class="right">
+          <a href="/add-firm-client/" class="link icon-only">
+            <i class="icon material-icons">add_circle_outline</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell color-green">Firm Name</th>
+              <th class="label-cell color-green">Contact Person</th>
+              <th class="label-cell color-green">Phone</th>
+              <th class="label-cell color-green">City</th>
+            </tr>
+          </thead> 
+          <tbody>
+            {{#each List}}
+              <tr>
+                <td class="label-cell">{{firm_name}}</td>
+                <td class="label-cell">{{contact_person}}</td>
+                <td class="label-cell">{{mobile_number}}</td>
+                <td class="label-cell">{{city}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var self = this;
+        var data = JSON.parse(localStorage.User);
+        var obj = {
+          email: data.User.email,
+        };
+        app.request({
+          url: BaseURL + 'get-firm-client',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                List: data.Result,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      }
+    }
+  }
+</script>

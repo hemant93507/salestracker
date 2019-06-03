@@ -1,0 +1,110 @@
+<template>
+  <div class="page" id="client-master-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Add Client</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list no-hairlines margin" id="add-client-form">
+        <ul class="no-hairlines-between">
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Firm Name</div>
+              <div class="item-input-wrap">
+                <input type="text" name="firm_name" required validate>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Contact Person</div>
+              <div class="item-input-wrap">
+                <input type="text" name="contact_person" required validate>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*Mobile</div>
+              <div class="item-input-wrap">
+                <input type="tel" name="mobile_number" required validate>
+              </div>
+            </div>
+          </li>
+          <li class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-floating-label">*City</div>
+              <div class="item-input-wrap">
+                <input type="text" name="city" required validate>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a href="#" @click="submit" class="button button-outline button-round margin">Submit</a>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  var id_proof = '';
+  var address_proof_front = '';
+  var address_proof_back = '';
+  return {
+    on: {
+      pageInit: function () {
+        
+      }
+    },
+    methods: {
+      submit: function () {
+        if ($$('#add-client-form')[0].checkValidity()) {
+          console.log("hiii");
+          var firm_name = $$('#client-master-page input[name=firm_name]').val();
+          var contact_person = $$('#client-master-page input[name=contact_person]').val();
+          var mobile_number = $$('#client-master-page input[name=mobile_number]').val();
+          var city = $$('#client-master-page input[name=city]').val();
+          var obj = {
+            firm_name: firm_name,
+            contact_person: contact_person,
+            mobile_number: mobile_number,
+            city: city,
+          };
+          app.request({
+            url: BaseURL + 'add-firm-client',
+            method: 'POST',
+            dataType: 'json',
+            data: obj,
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+              var spinnerOptions = { dimBackground: true };
+              SpinnerPlugin.activityStart('Loading...', spinnerOptions);
+            },
+            error: function (xhr, status) {
+              alert(statusMessage(status));
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              if (data.ErrorCode == '0') {
+                app.views.main.router.navigate({
+                  name: 'clients',
+                });
+              }
+              else {
+                window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+              }
+            },
+            complete: function (xhr, status) {
+              SpinnerPlugin.activityStop();
+            }
+          })
+        }
+      }
+    },
+  }
+</script>
