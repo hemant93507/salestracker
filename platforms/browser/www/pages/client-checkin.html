@@ -180,12 +180,11 @@
             if (type == 'checkout') {
               var obj = {
                 email: data.User.email,
-                checkout_latitude: latitude,
-                checkout_longitude: longitude,
                 checkout_location: location,
+                firm_name: firm_name,
               };
               app.request({
-                url: BaseURL + 'checkout',
+                url: BaseURL + 'client-checkout',
                 method: 'POST',
                 dataType: 'json',
                 data: obj,
