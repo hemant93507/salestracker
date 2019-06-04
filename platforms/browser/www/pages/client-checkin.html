@@ -214,6 +214,9 @@
           function custmSuccess(result) {
             app.preloader.hide();
             var firstResult = result[0];
+            app.dialog.alert("latitude: "+latitude);
+            app.dialog.alert("longitude: "+longitude);
+
             app.dialog.alert("postalCode: "+firstResult.postalCode);
             app.dialog.alert("administrativeArea: "+firstResult.administrativeArea);
             app.dialog.alert("subAdministrativeArea: "+firstResult.subAdministrativeArea);
