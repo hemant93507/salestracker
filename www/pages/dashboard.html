@@ -125,18 +125,26 @@
             <table>
               <thead>
                 <tr>
-                  <th class="label-cell color-green">Party Name</th>
+                  <!-- <th class="label-cell color-green">Party Name</th>
                   <th class="label-cell color-green">Contact Name</th>
                   <th class="label-cell color-green">Party Email</th>
                   <th class="label-cell color-green">Party Phone</th>
                   <th class="label-cell color-green">Party Address</th>
+                  <th class="label-cell color-green">Location</th> -->
+
+                  <th class="label-cell color-green">Employee Name</th>
+                  <th class="label-cell color-green">Firm Name</th>
+                  <th class="label-cell color-green">Check In</th>
+                  <th class="label-cell color-green">Location</th>
+                  <th class="label-cell color-green">Check Out</th>
                   <th class="label-cell color-green">Location</th>
                 </tr>
               </thead>
               <tbody>
-                {{#if MinimumVisitCount}}
+                <!-- {{#if MinimumVisitCount}} -->
+                {{#if PartyVisitList}}
                 {{#each PartyVisitList}}
-                <tr>
+                <!-- <tr>
                   <td class="label-cell"><a href="/party-detail/{{party_email}}/"
                       class="link color-blue">{{party_name}}</a></td>
                   <td class="label-cell"><a href="/party-detail/{{party_email}}/"
@@ -149,6 +157,14 @@
                       class="link color-blue">{{party_address}}</a></td>
                   <td class="label-cell"><a href="/party-detail/{{party_email}}/"
                       class="link color-blue">{{location}}</a></td>
+                </tr> -->
+                <tr>
+                  <td class="label-cell">{{name}}</td>
+                  <td class="label-cell">{{firm_name}}</td>
+                  <td class="label-cell">{{check_in}}</td>
+                  <td class="label-cell">{{checkin_location}}</td>
+                  <td class="label-cell">{{check_out}}</td>
+                  <td class="label-cell">{{checkout_location}}</td>
                 </tr>
                 {{/each}}
                 {{else}}

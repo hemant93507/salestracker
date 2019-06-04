@@ -145,7 +145,17 @@
           function locationFromLatLon_success(result) {
             var firstResult = result[0];
             //var location = firstResult.subLocality + ', ' + firstResult.locality + ', ' + firstResult.administrativeArea;
-            var location = firstResult.subThoroughfare+', '+firstResult.subLocality + ', '+firstResult.subAdministrativeArea+', ' + firstResult.locality + ', ' + firstResult.administrativeArea+', ' + firstResult.postalCode;
+            var i =0;
+            while(i < 1){
+              var location = firstResult.subThoroughfare+', '+firstResult.subLocality + ', '+firstResult.subAdministrativeArea+', ' + firstResult.locality + ', ' + firstResult.administrativeArea+', ' + firstResult.postalCode;
+
+              if(firstResult.subThoroughfare && firstResult.subLocality && firstResult.subAdministrativeArea && firstResult.locality && firstResult.administrativeArea && firstResult.postalCode){
+                i = 2;
+              }
+            }
+            alert(location);
+            //var location = firstResult.subThoroughfare+', '+firstResult.subLocality + ', '+firstResult.subAdministrativeArea+', ' + firstResult.locality + ', ' + firstResult.administrativeArea+', ' + firstResult.postalCode;
+            
             if (type == 'checkin') {
               var obj = {
                 email: data.User.email,
@@ -247,7 +257,7 @@
         function (error) {
           app.preloader.hide();
         },
-        { timeout: 8000, maximumAge: 3000, enableHighAccuracy: true });
+        { timeout: 10000, maximumAge: 3000, enableHighAccuracy: true });
       },
       requestPermission: function (type) {
         var self = this;

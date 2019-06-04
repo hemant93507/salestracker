@@ -33,6 +33,23 @@
           </div>
         </div>
         <div class="row">
+            <div class="col-100">
+              <div class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-floating-label">*User</div>
+                  <div class="item-input-wrap input-dropdown-wrap">
+                    <select name="user_email">
+                        <option value="all">All Users</option>
+                      {{#each Users}}
+                        <option value="{{email}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="row">
           <div class="col-40">
             <div class="item-content item-input">
               <div class="item-inner">
@@ -72,18 +89,47 @@
           dateFormat: 'dd-M-yyyy',
           closeOnSelect: true
         });
+        var self = this;
+        var obj = {
+        };
+        app.request({
+          url: BaseURL + 'all-users',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              self.$setState({
+                // Result: data.Result,
+                Users: data.Users,
+              });
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
       }
     },
     methods: {
       clientvisit: function () {
         var FromDate = $$('#clientvisitadmin-page input[name=FromDate]').val();
         var ToDate = $$('#clientvisitadmin-page input[name=ToDate]').val();
+        var UserEmail = $$('#clientvisitadmin-page select[name=user_email]').val();
+        //console.log(UserEmail);
         var obj = {
           from_date: FromDate,
           to_date: ToDate,
+          email: UserEmail,
         };
         app.request({
-          url: BaseURL + 'clientvisit-list',
+          // url: BaseURL + 'clientvisit-list',
+          url: BaseURL + 'get-clientvisit-list',
           method: 'POST',
           dataType: 'json',
           data: obj,
@@ -99,31 +145,36 @@
               if (ClientVisitList) {
                 var tbody = '';
                 for (var i = 0; i < ClientVisitList.length; i++) {
-                  var party_name = ClientVisitList[i].party_name;
-                  var contact_name = ClientVisitList[i].contact_name;
-                  var party_email = ClientVisitList[i].party_email;
-                  var party_phone = ClientVisitList[i].party_phone;
-                  var party_address = ClientVisitList[i].party_address;
-                  var location = ClientVisitList[i].location;
+                  var name = ClientVisitList[i].name;
+                  var firm_name = ClientVisitList[i].firm_name;
+                  var check_in = ClientVisitList[i].check_in;
+                  var checkin_location = ClientVisitList[i].checkin_location;
+                  var check_out = ClientVisitList[i].check_out;
+                  var checkout_location = ClientVisitList[i].checkout_location;
+                  if(check_out == null){
+                    check_out = "";
+                    checkout_location = "";
+                  }
+                  
                   var tbody_el = `
                   <tr>
-                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_name}</a></td>
-                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${contact_name}</a></td>
-                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_email}</a></td>
-                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_phone}</a></td>
-                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${party_address}</a></td>
-                    <td class="label-cell"><a href="/party-detail/${party_email}/" class="link color-blue">${location}</a></td>
+                    <td class="label-cell">${name}</td>
+                    <td class="label-cell">${firm_name}</td>
+                    <td class="label-cell">${check_in}</td>
+                    <td class="label-cell">${checkin_location}</td>
+                    <td class="label-cell">${check_out}</td>
+                    <td class="label-cell">${checkout_location}</td>
                   </tr>`;
                   tbody = tbody + tbody_el;
                 }
                 var table = `<table>
                   <thead>
                     <tr>
-                      <th class="label-cell color-green">Party Name</th>
-                      <th class="label-cell color-green">Contact Name</th>
-                      <th class="label-cell color-green">Party Email</th>
-                      <th class="label-cell color-green">Party Phone</th>
-                      <th class="label-cell color-green">Party Address</th>
+                      <th class="label-cell color-green">Employee Name</th>
+                      <th class="label-cell color-green">Firm Name</th>
+                      <th class="label-cell color-green">Check In</th>
+                      <th class="label-cell color-green">Location</th>
+                      <th class="label-cell color-green">Check Out</th>
                       <th class="label-cell color-green">Location</th>
                     </tr>
                   </thead>
