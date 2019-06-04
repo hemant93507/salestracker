@@ -217,7 +217,7 @@
           nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
         }, function (error) {
           app.preloader.hide();
-        }, { timeout: 5000, maximumAge: 3000 });
+        }, { timeout: 8000, maximumAge: 3000 });
       },
       requestPermission: function (type) {
         var self = this;
