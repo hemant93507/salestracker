@@ -128,7 +128,7 @@
       gpsON: function (type) {
         var self = this;
         cordova.plugins.locationAccuracy.request(function (success) {
-          app.preloader.show();
+          //app.preloader.show();
           self.permissionGranted(type);
         }, function (error) {
           console.log("No Thanks");
@@ -211,10 +211,27 @@
               })
             }
           }
+          function custmSuccess(result) {
+            app.preloader.hide();
+            var firstResult = result[0];
+            app.dialog.alert("postalCode: "+firstResult.postalCode);
+            app.dialog.alert("administrativeArea: "+firstResult.administrativeArea);
+            app.dialog.alert("subAdministrativeArea: "+firstResult.subAdministrativeArea);
+
+            app.dialog.alert("locality: "+firstResult.locality);
+            app.dialog.alert("subLocality: "+firstResult.subLocality);
+            app.dialog.alert("thoroughfare: "+firstResult.thoroughfare);
+            app.dialog.alert("subThoroughfare: "+firstResult.subThoroughfare);
+            app.dialog.alert("areasOfInterest: "+firstResult.areasOfInterest);
+            app.dialog.alert("done ");
+
+          }
           function locationFromLatLon_failure(err) {
             app.preloader.hide();
+            app.dialog.alert(err);
           }
-          nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
+          //nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
+          nativegeocoder.reverseGeocode(custmSuccess, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
         }, function (error) {
           app.preloader.hide();
         }, { timeout: 8000, maximumAge: 3000 });
