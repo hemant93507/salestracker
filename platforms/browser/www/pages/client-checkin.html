@@ -232,9 +232,11 @@
           }
           //nativegeocoder.reverseGeocode(locationFromLatLon_success, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
           nativegeocoder.reverseGeocode(custmSuccess, locationFromLatLon_failure, latitude, longitude, { useLocale: true, maxResults: 1 });
-        }, function (error) {
+        },
+        function (error) {
           app.preloader.hide();
-        }, { timeout: 8000, maximumAge: 3000 });
+        },
+        { timeout: 8000, maximumAge: 3000, enableHighAccuracy: true });
       },
       requestPermission: function (type) {
         var self = this;
