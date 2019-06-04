@@ -97,18 +97,20 @@
             console.log(data);
             $$('.checkin_btn').show();
             if (data.Code == '0') {
-              console.log('checkout');
+              //console.log('checkout');
               checkin_text = 'Check In';
               var checkin_event = 'checkin';
             }
             else{
-              console.log('checkin');
+              //console.log('checkin');
               checkin_text = 'Check Out';
               var checkin_event = 'checkout';
             }
             self.$setState({
                 checkin_text: checkin_text,
+                checkin_event: checkin_event,
               });
+              console.log(checkin_event);
           },
           complete: function (xhr, status) {
             app.preloader.hide();
