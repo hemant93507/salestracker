@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block-title font-16" style="padding-left:8px">{{CurrentMonth}}, {{CurrentYear}}</div>
+      <div class="block-title font-16" style="padding-left:8px">{{CurrentDay}}, {{CurrentMonth}}, {{CurrentYear}}</div>
       <div class="data-table">
         <table>
           <thead>
@@ -39,19 +39,26 @@
           <tbody>
             {{#if Result}}
             {{#each Result}}
-            <!-- <tr>
-              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
-                  class="link color-blue">{{party_name}}</a></td>
-              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
-                  class="link color-blue">{{contact_name}}</a></td>
-              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
-                  class="link color-blue">{{party_email}}</a></td>
-              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
-                  class="link color-blue">{{party_phone}}</a></td>
-              <td class="label-cell"><a href="/party-detail/{{party_email}}/"
-                  class="link color-blue">{{party_address}}</a></td>
-            </tr> -->
-            <!-- <td class="label-cell"><a @click="viewPhoto" data-img="{{location_image}}" href="#">View</a></td> -->
+              <!-- <tr>
+                <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                    class="link color-blue">{{party_name}}</a></td>
+                <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                    class="link color-blue">{{contact_name}}</a></td>
+                <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                    class="link color-blue">{{party_email}}</a></td>
+                <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                    class="link color-blue">{{party_phone}}</a></td>
+                <td class="label-cell"><a href="/party-detail/{{party_email}}/"
+                    class="link color-blue">{{party_address}}</a></td>
+              </tr> -->
+              <!-- <td class="label-cell"><a @click="viewPhoto" data-img="{{location_image}}" href="#">View</a></td> -->
+              <tr>
+                <td class="label-cell">{{firm_name}}</td>
+                <td class="label-cell">{{check_in}}</td>
+                <td class="label-cell">{{checkin_location}}</td>
+                <td class="label-cell">{{check_out}}</td>
+                <td class="label-cell">{{checkout_location}}</td>
+              </tr>
             {{/each}}
             {{else}}
               <tr>
@@ -69,9 +76,11 @@
     data: function(){
       var CurrentMonth = moment().format('MMMM');
       var CurrentYear = moment().format('YYYY');
+      var CurrentDay = moment().format('DD');
       return{
         CurrentMonth : CurrentMonth,
         CurrentYear: CurrentYear,
+        CurrentDay: CurrentDay,
       }
     },
     on: {
@@ -82,7 +91,8 @@
           email: data.User.email,
         };
         app.request({
-          url: BaseURL + 'client-visit',
+          //url: BaseURL + 'client-visit',
+          url: BaseURL + 'today-checkin-list',
           method: 'POST',
           dataType: 'json',
           data: obj,
@@ -94,6 +104,7 @@
             console.log(data);
             if (data.ErrorCode == '0') {
               self.$setState({
+                // Result: data.Result,
                 Result: data.Result,
               });
             }
