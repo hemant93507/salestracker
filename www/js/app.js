@@ -112,6 +112,7 @@ function locationFromLatLon(lat, lon) {
 
 function login() {
   alert('hi');
+  alert(localStorage.UUID);
   if ($$('#login-form')[0].checkValidity()) {
     var username = $$('#login-form input[name=email]').val();
     var password = $$('#login-form input[name=password]').val();
