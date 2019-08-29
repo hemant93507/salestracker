@@ -395,6 +395,14 @@ module.exports = [
         "clobbers": [
             "call"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-uniquedeviceid/www/uniqueid.js",
+        "id": "cordova-plugin-uniquedeviceid.UniqueDeviceID",
+        "pluginId": "cordova-plugin-uniquedeviceid",
+        "merges": [
+            "window.plugins.uniqueDeviceID"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -417,7 +425,8 @@ module.exports.metadata =
     "cordova-plugin-app-version": "0.1.9",
     "cordova-plugin-call-number": "1.0.1",
     "cordova-plugin-request-location-accuracy": "2.2.3",
-    "cordova.plugins.diagnostic": "3.9.2"
+    "cordova.plugins.diagnostic": "3.9.2",
+    "cordova-plugin-uniquedeviceid": "1.3.2"
 }
 // BOTTOM OF METADATA
 });

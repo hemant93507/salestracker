@@ -54,6 +54,9 @@
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.techstreet.salestracker"
+        },
+        "cordova-plugin-uniquedeviceid": {
+            "PACKAGE_NAME": "com.techstreet.salestracker"
         }
     },
     "dependent_plugins": {

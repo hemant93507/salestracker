@@ -26,6 +26,15 @@ var mainView = app.views.create('.view-main', {
   url: '/',
   on: {
     init: function (event, page) {
+      window.plugins.uniqueDeviceID.get(success, fail);
+      function success(uuid) {
+        localStorage.setItem('UUID',uuid);
+        alert(uuid);
+      };
+      function fail() {
+        alert('Something went wrong');
+      };
+
       var User = localStorage.User;
       if (User) {
         $$('.login-screen-section').hide();
