@@ -204,7 +204,6 @@
         window.plugins.uniqueDeviceID.get(success, fail);
         function success(uuid) {
           localStorage.setItem("UUID", uuid);
-          alert(localStorage.UUID);
         };
         function fail() {
           

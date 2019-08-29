@@ -108,6 +108,8 @@ function login() {
     var obj = {
       username: username,
       password: password,
+      uuid: localStorage.UUID,
+      device_info: JSON.stringify(device),
     };
     app.request({
       url: BaseURL + 'login',
