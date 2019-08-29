@@ -26,14 +26,6 @@ var mainView = app.views.create('.view-main', {
   url: '/',
   on: {
     init: function (event, page) {
-      window.plugins.uniqueDeviceID.get(success, fail);
-      function success(uuid) {
-        localStorage.setItem("UUID", uuid);
-      };
-      function fail() {
-        
-      };
-
       var User = localStorage.User;
       if (User) {
         $$('.login-screen-section').hide();
@@ -57,8 +49,6 @@ var mainView = app.views.create('.view-main', {
     },
   }
 });
-
-app.dialog.alert(localStorage.UUID);
 
 var BaseURL = 'http://marushika.in/sales-tracker/public/api/';
 
@@ -111,8 +101,15 @@ function locationFromLatLon(lat, lon) {
 }
 
 function login() {
-  alert('hi');
-  alert(localStorage.UUID);
+  window.plugins.uniqueDeviceID.get(success, fail);
+  function success(uuid) {
+    localStorage.setItem("UUID", uuid);
+    alert(localStorage.UUID);
+  };
+  function fail() {
+    alert('error');
+  };
+  
   if ($$('#login-form')[0].checkValidity()) {
     var username = $$('#login-form input[name=email]').val();
     var password = $$('#login-form input[name=password]').val();
