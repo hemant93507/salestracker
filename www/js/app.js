@@ -101,15 +101,6 @@ function locationFromLatLon(lat, lon) {
 }
 
 function login() {
-  window.plugins.uniqueDeviceID.get(success, fail);
-  function success(uuid) {
-    localStorage.setItem("UUID", uuid);
-    alert(localStorage.UUID);
-  };
-  function fail() {
-    alert('error');
-  };
-  
   if ($$('#login-form')[0].checkValidity()) {
     var username = $$('#login-form input[name=email]').val();
     var password = $$('#login-form input[name=password]').val();

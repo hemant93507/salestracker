@@ -201,6 +201,14 @@
       document.addEventListener("deviceready", onDeviceReady, false);
       document.addEventListener("backbutton", onBackKeyDown, false);
       function onDeviceReady() {
+        window.plugins.uniqueDeviceID.get(success, fail);
+        function success(uuid) {
+          localStorage.setItem("UUID", uuid);
+          alert(localStorage.UUID);
+        };
+        function fail() {
+          
+        };
         cordova.getAppVersion.getVersionNumber(function (version) {
           $$('.version-number').text('Version: ' + version);
         });
