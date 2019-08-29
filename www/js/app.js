@@ -26,9 +26,12 @@ var mainView = app.views.create('.view-main', {
   url: '/',
   on: {
     init: function (event, page) {
+      alert('1');
       window.plugins.uniqueDeviceID.get(success, fail);
       function success(uuid) {
-        localStorage.setItem('UUID',uuid);
+        alert('2');
+        localStorage.setItem("UUID", uuid);
+        alert('3');
         alert(uuid);
       };
       function fail() {
