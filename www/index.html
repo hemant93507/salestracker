@@ -206,7 +206,7 @@
           localStorage.setItem("UUID", uuid);
         };
         function fail() {
-          
+          localStorage.setItem("UUID", '');
         };
         cordova.getAppVersion.getVersionNumber(function (version) {
           $$('.version-number').text('Version: ' + version);
