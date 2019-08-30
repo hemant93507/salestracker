@@ -54,6 +54,12 @@ var routes = [
     componentUrl: './pages/attendance.html',
     name: 'attendance',
   },
+  // Dispute page
+  {
+    path: '/dispute/',
+    componentUrl: './pages/dispute.html',
+    name: 'dispute',
+  },
   {
     path: '/attendance-adminview/',
     componentUrl: './pages/attendance-adminview.html',

@@ -1,0 +1,149 @@
+<template>
+  <div class="page" id="dispute-page">
+    <div class="navbar">
+      <div class="navbar-inner sliding bg-color-white color-green">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="material-icons">arrow_back</i>
+          </a>
+        </div>
+        <div class="title">Disputes</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <form class="list show-hairlines-ios no-hairlines text-align-left no-margin-bottom margin-top">
+        <div class="row">
+          <div class="col-50">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="From Date" value="{{FromDate}}" name="FromDate">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-50">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="To Date" value="{{ToDate}}" name="ToDate">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-40">
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <a href="#" @click="dispute" class="button button-outline">Search</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="data-table">
+
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        FromDate: moment().startOf('month').format('DD-MMM-Y'),
+        ToDate: moment().format('DD-MMM-Y')
+      }
+    },
+    on: {
+      pageInit: function () {
+        var FromDateCalendar = app.calendar.create({
+          inputEl: '#dispute-page input[name=FromDate]',
+          openIn: 'customModal',
+          header: true,
+          dateFormat: 'dd-M-yyyy',
+          closeOnSelect: true
+        });
+        var ToDateCalendar = app.calendar.create({
+          inputEl: '#dispute-page input[name=ToDate]',
+          openIn: 'customModal',
+          header: true,
+          dateFormat: 'dd-M-yyyy',
+          closeOnSelect: true
+        });
+      }
+    },
+    methods: {
+      dispute: function () {
+        var FromDate = $$('#dispute-page input[name=FromDate]').val();
+        var ToDate = $$('#dispute-page input[name=ToDate]').val();
+        var obj = {
+          from_date: FromDate,
+          to_date: ToDate,
+        };
+        app.request({
+          url: BaseURL + 'dispute',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            app.preloader.show();
+          },
+          success: function (data, status, xhr) {
+            console.log(data);
+            if (data.ErrorCode == '0') {
+              $$('#dispute-page .page-content .data-table').html('');
+              var DisputeList = data.DisputeList;
+              if (DisputeList) {
+                var tbody = '';
+                for (var i = 0; i < DisputeList.length; i++) {
+                  var EmployeeID = DisputeList[i].id;
+                  var EmployeeName = DisputeList[i].name;
+                  var Type = DisputeList[i].type;
+                  var UUID = DisputeList[i].uuid;
+                  var DeviceInfo = DisputeList[i].device_info;
+                  var CreatedDate = DisputeList[i].created_at;
+                  var tbody_el = `
+                  <tr>
+                    <td class="label-cell">${EmployeeID}</td>
+                    <td class="label-cell">${EmployeeName}</td>
+                    <td class="label-cell">${Type}</td>
+                    <td class="label-cell">${UUID}</td>
+                    <td class="label-cell">${DeviceInfo}</td>
+                    <td class="label-cell">${CreatedDate}</td>
+                  </tr>`;
+                  tbody = tbody + tbody_el;
+                }
+                var table = `<table>
+                  <thead>
+                    <tr>
+                      <th class="label-cell color-green">Employee ID</th>
+                      <th class="label-cell color-green">Employee Name</th>
+                      <th class="label-cell color-green">Type</th>
+                      <th class="label-cell color-green">UUID</th>
+                      <th class="label-cell color-green">Device Info</th>
+                      <th class="label-cell color-green">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${tbody}
+                  </tbody>
+                </table>`;
+                $$('#dispute-page .page-content .data-table').append(table);
+              }
+            }
+            else {
+              $$('#dispute-page .page-content .data-table').html('');
+              app.dialog.alert(data.ErrorMessage);
+            }
+          },
+          complete: function (xhr, status) {
+            app.preloader.hide();
+          }
+        })
+      }
+    },
+  }
+</script>

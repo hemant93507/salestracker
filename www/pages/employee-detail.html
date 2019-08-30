@@ -18,6 +18,16 @@
         </div>
       </div>
     </div>
+    <div class="popover employee-popover">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a @click="resetDevice" class="color-black list-button item-link popover-close" href="#">Reset
+                Device</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="navbar">
       <div class="navbar-inner sliding bg-color-white color-green">
         <div class="left">
@@ -26,14 +36,22 @@
           </a>
         </div>
         <div class="title">{{name}}</div>
+        <div class="right">
+          <a href="#" data-popover=".employee-popover" class="popover-open link icon-only">
+            <i class="icon material-icons">more_vert</i>
+          </a>
+        </div>
       </div>
     </div>
     <div class="page-content">
       <div class="swiper-container swiper-init" data-pagination='{"el": ".swiper-pagination"}'>
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="ID Proof" data-src="{{id_proof}}" src="{{id_proof}}" /></div>
-          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Front Address Proof" data-src="{{address_proof_front}}" src="{{address_proof_front}}" /></div>
-          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Back Address Proof" data-src="{{address_proof_back}}" src="{{address_proof_back}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="ID Proof"
+              data-src="{{id_proof}}" src="{{id_proof}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Front Address Proof"
+              data-src="{{address_proof_front}}" src="{{address_proof_front}}" /></div>
+          <div class="swiper-slide"><img class="slider-image" @click="openImage" data-title="Back Address Proof"
+              data-src="{{address_proof_back}}" src="{{address_proof_back}}" /></div>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -150,6 +168,32 @@
             </div>
           </div>`,
         }).open();
+      },
+      resetDevice: function () {
+        var email = this.$route.params.email;
+        var obj = {
+          email: email,
+        };
+        app.request({
+          url: BaseURL + 'reset-device',
+          method: 'POST',
+          dataType: 'json',
+          data: obj,
+          //contentType: 'application/json',
+          beforeSend: function (xhr) {
+            var spinnerOptions = { dimBackground: false };
+            SpinnerPlugin.activityStart(null, spinnerOptions);
+          },
+          error: function (xhr, status) {
+            alert(statusMessage(status));
+          },
+          success: function (data, status, xhr) {
+            window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+          },
+          complete: function (xhr, status) {
+            SpinnerPlugin.activityStop();
+          }
+        })
       }
     },
   }
