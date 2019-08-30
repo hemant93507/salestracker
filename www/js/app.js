@@ -104,62 +104,64 @@ function login() {
   window.plugins.uniqueDeviceID.get(success, fail);
   function success(uuid) {
     localStorage.setItem("UUID", uuid);
+    if ($$('#login-form')[0].checkValidity()) {
+      var username = $$('#login-form input[name=email]').val();
+      var password = $$('#login-form input[name=password]').val();
+      console.log(username);
+      var obj = {
+        username: username,
+        password: password,
+        uuid: uuid,
+        device_info: JSON.stringify(device),
+      };
+      app.request({
+        url: BaseURL + 'login',
+        method: 'POST',
+        dataType: 'json',
+        data: obj,
+        //contentType: 'application/json',
+        beforeSend: function (xhr) {
+          var spinnerOptions = { dimBackground: true };
+          SpinnerPlugin.activityStart('Loading...', spinnerOptions);
+        },
+        error: function (xhr, status) {
+          alert(statusMessage(status));
+        },
+        success: function (data, status, xhr) {
+          console.log(data);
+          if (data.ErrorCode == '0') {
+            localStorage.setItem("User", JSON.stringify(data));
+            var user_group = data.User.user_group;
+            if (user_group == '1') {
+              app.views.main.router.navigate({
+                name: 'dashboard',
+              });
+            }
+            else {
+              app.views.main.router.navigate({
+                name: 'user-dashboard',
+              });
+            }
+          }
+          else {
+            window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+          }
+        },
+        complete: function (xhr, status) {
+          SpinnerPlugin.activityStop();
+        }
+      })
+    }
   };
   function fail() {
     localStorage.setItem("UUID", '');
+    window.plugins.toast.show('Telephone permission required', 'long', 'bottom');
   };
-  if ($$('#login-form')[0].checkValidity()) {
-    var username = $$('#login-form input[name=email]').val();
-    var password = $$('#login-form input[name=password]').val();
-    console.log(username);
-    var obj = {
-      username: username,
-      password: password,
-      uuid: localStorage.UUID,
-      device_info: JSON.stringify(device),
-    };
-    app.request({
-      url: BaseURL + 'login',
-      method: 'POST',
-      dataType: 'json',
-      data: obj,
-      //contentType: 'application/json',
-      beforeSend: function (xhr) {
-        var spinnerOptions = { dimBackground: true };
-        SpinnerPlugin.activityStart('Loading...', spinnerOptions);
-      },
-      error: function (xhr, status) {
-        alert(statusMessage(status));
-      },
-      success: function (data, status, xhr) {
-        console.log(data);
-        if (data.ErrorCode == '0') {
-          localStorage.setItem("User", JSON.stringify(data));
-          var user_group = data.User.user_group;
-          if (user_group == '1') {
-            app.views.main.router.navigate({
-              name: 'dashboard',
-            });
-          }
-          else {
-            app.views.main.router.navigate({
-              name: 'user-dashboard',
-            });
-          }
-        }
-        else {
-          window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
-        }
-      },
-      complete: function (xhr, status) {
-        SpinnerPlugin.activityStop();
-      }
-    })
-  }
 }
 
 function logout() {
   localStorage.removeItem("User");
+  localStorage.removeItem("UUID");
   app.views.main.router.navigate('/');
 }
 
