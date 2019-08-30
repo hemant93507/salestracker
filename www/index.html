@@ -238,6 +238,9 @@
         push.on('registration', (data) => {
           localStorage.setItem("fcm_token", data.registrationId);
         });
+        
+        var platform = device.platform;
+        checkVersion(platform);
       }
       function onBackKeyDown(e) {
         e.preventDefault();

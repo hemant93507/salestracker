@@ -1,6 +1,9 @@
 // Dom7
 var $$ = Dom7;
 
+var AppVersionIOS = '1.0';
+var AppVersionAndroid = '1.0';
+
 // install plugin to Framework7
 Framework7.use(Framework7Keypad);
 
@@ -167,6 +170,42 @@ function logout() {
 
 function testMe() {
   console.log('test me is running');
+}
+
+function checkVersion(platform) {
+  app.request({
+    url: BaseURL + '/version',
+    method: 'POST',
+    dataType: 'json',
+    // contentType: 'application/json',
+    success: function (data, status, xhr) {
+      if (platform == 'iOS') {
+        if (data.ios > AppVersionIOS) {
+          app.dialog.confirm('A new version of the application is available. Please update your app.', 'New Version Available',
+            function () {
+              navigator.app.exitApp();
+            },
+            function () {
+              navigator.app.exitApp();
+            }
+          );
+        }
+      }
+      if (platform == 'Android') {
+        if (data.android > AppVersionAndroid) {
+          app.dialog.confirm('A new version of the application is available. Please update your app.', 'New Version Available',
+            function () {
+              navigator.app.exitApp();
+            },
+            function () {
+              navigator.app.exitApp();
+            }
+          );
+        }
+      }
+    }
+  })
+
 }
 
 function shareApp() {
