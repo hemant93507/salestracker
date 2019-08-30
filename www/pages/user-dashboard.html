@@ -203,6 +203,11 @@
                     });
                     window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
                   }
+                  else if (data.ErrorCode == '199') {
+                    localStorage.removeItem("UUID");
+                    logout();
+                    window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                  }
                   else {
                     app.dialog.alert(data.ErrorMessage);
                   }
@@ -237,6 +242,11 @@
                       checkin_event: 'checkin',
                       checkin_text: 'Check In',
                     });
+                    window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
+                  }
+                  else if (data.ErrorCode == '199') {
+                    localStorage.removeItem("UUID");
+                    logout();
                     window.plugins.toast.show(data.ErrorMessage, 'long', 'bottom');
                   }
                   else {
