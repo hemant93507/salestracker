@@ -34,6 +34,7 @@
     <icon src="icon.png" />
     <splash src="splash.png" />
     <preference name="phonegap-version" value="cli-8.1.1" />
+    <preference name="android-targetSdkVersion" value="28" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="FadeSplashScreen" value="false" />
