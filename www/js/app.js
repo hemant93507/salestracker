@@ -1,8 +1,8 @@
 // Dom7
 var $$ = Dom7;
 
-var AppVersionIOS = '1.0';
-var AppVersionAndroid = '1.0';
+var AppVersionIOS = '1.1';
+var AppVersionAndroid = '1.1';
 
 // install plugin to Framework7
 Framework7.use(Framework7Keypad);
